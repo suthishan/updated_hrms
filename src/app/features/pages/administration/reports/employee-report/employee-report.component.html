@@ -1,0 +1,324 @@
+<div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between mb-3">
+        <app-breadcrumbs title="Employee Report" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+        <div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+            <div class="me-2 mb-2">
+                <div class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        <i class="ti ti-file-export me-1"></i>Export
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+        </div>
+    </div>
+    <!-- /Breadcrumb -->
+
+    <div class="row">
+        <div class="col-xl-6 d-flex">
+            <div class="row flex-fill">
+
+                <!-- Total Companies -->
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="overflow-hidden d-flex mb-2 align-items-center">
+                                <span class="me-2"><img src="assets/img/reports-img/employee-report-icon.svg" alt="Img" class="img-fluid"></span>
+                               <div>
+                                    <p class="fs-14 fw-normal mb-1 text-truncate">Total Employee</p>
+                                    <h5>600</h5>
+                               </div>
+                            </div>
+                            <div>
+                                <p class="fs-12 fw-normal d-flex align-items-center text-truncate "><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Total Companies -->
+
+                <!-- Total Companies -->
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="overflow-hidden d-flex mb-2 align-items-center">
+                                <span class="me-2"><img src="assets/img/reports-img/employee-report-success.svg" alt="Img" class="img-fluid"></span>
+                               <div>
+                                    <p class="fs-14 fw-normal mb-1 text-truncate">Active Employee</p>
+                                    <h5>600</h5>
+                               </div>
+                            </div>
+                            <div>
+                                <p class="fs-12 fw-normal d-flex align-items-center text-truncate "><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Total Companies -->
+
+                <!-- Inactive Companies -->
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="overflow-hidden d-flex mb-2 align-items-center">
+                                <span class="me-2"><img src="assets/img/reports-img/employee-report-info.svg" alt="Img" class="img-fluid"></span>
+                               <div>
+                                    <p class="fs-14 fw-normal mb-1 text-truncate">New Employee</p>
+                                    <h5>600</h5>
+                               </div>
+                            </div>
+                            <div>
+                                <p class="fs-12 fw-normal d-flex align-items-center text-truncate "><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Inactive Companies -->
+
+                <!-- Company Location -->
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="overflow-hidden d-flex mb-2 align-items-center">
+                                <span class="me-2"><img src="assets/img/reports-img/employee-report-danger.svg" alt="Img" class="img-fluid"></span>
+                               <div>
+                                    <p class="fs-14 fw-normal mb-1 text-truncate">Inactive Employee</p>
+                                        <h5>600</h5>
+                               </div>
+                            </div>
+                            <div>
+                                <p class="fs-12 fw-normal d-flex align-items-center text-truncate "><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Company Location -->
+            </div>
+        </div>
+        <div class="col-xl-6 d-flex">
+           <div class="card flex-fill">
+                <div class="card-header border-0 pb-0">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center row-gap-2">
+                        <div class="d-flex align-items-center ">
+                            <span class="me-2"><i class="ti ti-chart-bar text-danger"></i></span>
+                            <h5>Employee </h5>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <p class="d-inline-flex align-items-center me-3 mb-0">
+                                <i class="ti ti-square-filled fs-12 text-success me-2"></i>
+                                Active Employees
+                            </p>
+                            <p class="d-inline-flex align-items-center">
+                                <i class="ti ti-square-filled fs-12 text-gray-1 me-2 mb-0"></i>
+                                Inactive Employees
+                            </p>
+                        </div>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                                This Year
+                            </a>
+                            <ul class="dropdown-menu  dropdown-menu-end p-2">
+                                <li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1">2024</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1">2023</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1">2022</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body py-0">
+                    <div id="employee-reports"></div>
+                    <apx-chart
+                    [series]="employee_chart.series"
+                    [chart]="employee_chart.chart"
+                    [colors]="employee_chart.colors"
+                    [stroke]="employee_chart.stroke"
+                    [fill]="employee_chart.fill"
+                    [xaxis]="employee_chart.xaxis"
+                    [yaxis]="employee_chart.yaxis"
+                    [responsive]="employee_chart.responsive"
+                    [tooltip]="employee_chart.tooltip"
+                    [dataLabels]="employee_chart.dataLabels"
+                    [plotOptions]="employee_chart.plotOptions"
+                    [legend]="employee_chart.legend"
+                  ></apx-chart>
+                </div>
+            </div>
+        </div>					
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+            <h5>Employees List</h5>
+            <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+                <div class="me-3">
+                    <div class="input-icon position-relative">
+                        <span class="input-icon-addon">
+                          <i class="ti ti-calendar text-gray-9"></i>
+                        </span>
+                        <input type="text" class="form-control date-range bookingrange" bsDaterangepicker [(ngModel)]="bsRangeValue"  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy - dd/mm/yyyy">
+                      </div>
+                </div>
+                <div class="dropdown me-3">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Designation
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Present</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Absent</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown me-3">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Select Status
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Active</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Inactive</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Sort By : Last 7 Days
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="custom-datatable-filter table-responsive">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length">
+                            <label> Row Per Page
+                                @if(tableData.length > 0) {
+                                    <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize(pageSize)" class="form-select form-select-sm">
+                                      <option value="10">10</option>
+                                      <option value="25">25</option>
+                                      <option value="50">50</option>
+                                      <option value="100">100</option>
+                                    </select>
+                                  }
+                            Entries
+                            </label>
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                            <label>
+                                <input [(ngModel)]="searchDataValue" [ngModelOptions]="{ standalone: true }"
+                                    (ngModelChange)="searchData(searchDataValue)" type="search" class="form-control form-control-sm"
+                                    placeholder="Search..." />
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class=" table-responsive">
+                        <table matSort (matSortChange)="sortData($event)" class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="no-sort">
+                                        <div class="form-check form-check-md" (click)="selectAll(initChecked)" (keydown.enter)="selectAll(initChecked)" tabindex="0">
+                                            <input class="form-check-input" type="checkbox" id="select-all" [(ngModel)]="initChecked">
+                                        </div>
+                                    </th>
+                                    <th mat-sort-header="EmpID">Emp ID</th>
+                                    <th mat-sort-header="Name">Name</th>
+                                    <th mat-sort-header="Email">Email</th>
+                                    <th mat-sort-header="Department">Department</th>
+                                    <th mat-sort-header="Phone">Phone</th>
+                                    <th mat-sort-header="JoiningDate">Joining Date</th>
+                                    <th mat-sort-header="Status">Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (data of tableData; track data) {
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-md">
+                                            <input class="form-check-input" type="checkbox"  [(ngModel)]="data.isSelected">
+                                        </div>
+                                    </td>
+                                    <td><a [routerLink]="routes.employeeDetails" class="link-default">{{data.EmpID}}</a></td>
+                                    <td>
+                                        <div class="d-flex align-items-center file-name-icon">
+                                            <a [routerLink]="routes.employeeDetails" class="avatar avatar-md avatar-rounded">
+                                                <img src="assets/img/users/{{data?.Image}}" class="img-fluid" alt="img">
+                                            </a>
+                                            <div class="ms-2">
+                                                <h6 class="fw-medium"><a [routerLink]="routes.employeeDetails">{{data.Name}}</a></h6>
+                                                <span class="fs-12">{{data.Role}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                        <td>{{data.Email}}</td>
+                                        <td>{{data.Department}}</td>
+                                        <td>{{data.Phone}}</td>
+                                        <td>{{data.JoiningDate}}</td>
+                                        <td>
+                                            <span class="badge d-inline-flex align-items-center badge-xs" [ngClass]="data.Status === 'Active'? 'badge-success':'badge-danger'">
+                                                <i class="ti ti-point-filled me-1"></i>{{data.Status}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    }
+                                    @if (tableData.length === 0) {
+                                    <tr>
+                                    <td colspan="8">
+                                        <h5 class="no-record">No matching records found</h5>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <app-custom-pagination></app-custom-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

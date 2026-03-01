@@ -1,0 +1,153 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "template": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/template",
+            "polyfills": [
+                            "zone.js"
+                        ],
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": [
+                  "import"
+                ]
+              }
+            },
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "./node_modules/ngx-lightbox/lightbox.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "src/assets/fontawesome/css/fontawesome.min.css",
+              "src/assets/fontawesome/css/all.min.css",
+              "src/assets/icons/fontawesome/css/all.min.css",
+              "src/assets/icons/fontawesome/css/fontawesome.min.css",
+              "src/assets/icons/tabler-icons/tabler-icons.css",
+              "src/assets/icons/feather/css/iconfont.css",
+              "src/assets/icons/ionic/ionicons.css",
+              "src/assets/icons/pe7/pe-icon-7.css",
+              "src/assets/icons/material/materialdesignicons.css",
+              "src/assets/icons/simpleline/simple-line-icons.css",
+              "src/assets/icons/themify/themify.css",
+              "src/assets/icons/typicons/typicons.css",
+              "src/assets/icons/weather/weathericons.css",
+              "src/assets/icons/boxicons/css/boxicons.min.css",
+              "src/assets/icons/bootstrap/bootstrap-icons.min.css",
+              "src/assets/icons/remix/fonts/remixicon.css",
+              "src/assets/icons/flags/flags.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "src/assets/scss/main.scss",
+              "src/custom-theme.scss",
+              "src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
+            
+          },
+          "configurations": {
+            "production": {
+                "optimization": {
+                  "scripts": true,
+                  "styles": true,
+                  "fonts": false
+                },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": { 
+              "buildTarget": "template:build:production"
+            },
+            "development": {
+              "buildTarget": "template:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": 
+            [
+              "zone.js",
+              "zone.js/testing",
+              "@angular/localize/init"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "standalone": true,
+      "type": "component"
+    }
+  },
+  "cli": {
+    "analytics": "eb1527b4-fac2-49d9-b484-150d131ba2cf"
+  }
+}

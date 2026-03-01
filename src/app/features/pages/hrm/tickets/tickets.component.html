@@ -1,0 +1,153 @@
+<div class="page-wrapper">
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+</div>
+
+<!-- Add Ticket -->
+<div class="modal fade" id="add_ticket">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Ticket</h4>
+                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ti ti-x"></i>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" placeholder="Enter Title">
+                            </div>
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Event Category</label>
+                                <mat-select placeholder="Select"
+                                    class="select custom-mat-select">
+                                    <mat-option value="1">Select</mat-option>
+                                    <mat-option value="2">Internet Issue</mat-option>
+                                    <mat-option value="3">Redistribute</mat-option>
+                                    <mat-option value="4">Computer</mat-option>
+                                    <mat-option value="0">Complaint</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-control" placeholder="Enter Subject">
+                            </div>
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Assign To</label>
+                                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values4" class="form-control" [placeholder]="'Add new'"></tag-input>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ticket Description</label>
+                                <textarea class="form-control" placeholder="Add Question"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Priority</label>
+                                <mat-select placeholder="Select"
+                                    class="select custom-mat-select">
+                                    <mat-option value="1">Select</mat-option>
+                                    <mat-option value="2">High</mat-option>
+                                    <mat-option value="3">Low</mat-option>
+                                    <mat-option value="4">Medium</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="mb-0">
+                                <label [htmlFor]="" class="form-label">Status</label>
+                                <mat-select placeholder="Select"
+                                    class="select custom-mat-select">
+                                    <mat-option value="1">Select</mat-option>
+                                    <mat-option value="2">Closed</mat-option>
+                                    <mat-option value="3">Reopened</mat-option>
+                                    <mat-option value="4">Inprogress</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0);" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</a>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Ticket</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Add Ticket -->
+
+<!-- Edit Ticket -->
+<div class="modal fade" id="edit_ticket">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Ticket</h4>
+                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ti ti-x"></i>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" placeholder="Enter Title" value="Laptop Issue">
+                            </div>
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Event Category</label>
+                                <mat-select placeholder="Redistribute"
+                                    class="select custom-mat-select">
+                                    <mat-option value="1">Select</mat-option>
+                                    <mat-option value="2">Internet Issue</mat-option>
+                                    <mat-option value="3">Redistribute</mat-option>
+                                    <mat-option value="4">Computer</mat-option>
+                                    <mat-option value="0">Complaint</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-control" placeholder="Enter Subject" value="Hardware Issues">
+                            </div>
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Assign To</label>
+                                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values4" class="form-control" [placeholder]="'Add new'"></tag-input>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ticket Description</label>
+                                <textarea class="form-control" placeholder="Add Question"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Priority</label>
+                                <mat-select placeholder="High"
+                                    class="select custom-mat-select">
+                                    <mat-option value="1">Select</mat-option>
+                                    <mat-option value="2">High</mat-option>
+                                    <mat-option value="3">Low</mat-option>
+                                    <mat-option value="4">Medium</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="mb-0">
+                                <label [htmlFor]="" class="form-label">Status</label>
+                                <mat-select placeholder="Reopened"
+                                    class="select custom-mat-select">
+                                    <mat-option value="1">Select</mat-option>
+                                    <mat-option value="2">Closed</mat-option>
+                                    <mat-option value="3">Reopened</mat-option>
+                                    <mat-option value="4">Inprogress</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0);" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</a>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Edit Ticket -->
+

@@ -1,0 +1,119 @@
+<div class="card">
+  <div class="card-body">
+    <div class="border-bottom mb-3 pb-3">
+      <h4>Approval Settings</h4>
+    </div>
+    <form>
+      <div class="border-bottom mb-3">
+        <div class="row">
+          <div class="col-md-12 d-flex">
+            <div class="flex-fill">
+              <h6 class="mb-3">Expense Approval</h6>
+              <div class="d-flex justify align-items-start flex-wrap row-gap-3 pb-2 mb-2">
+                <h5>Default Expense Approval</h5>
+
+                  <div class="form-check ms-3">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label [htmlFor]="" class="form-check-label" for="exampleRadios1">
+                      Sequence Approval (Chain)
+                    </label>
+                    </div>
+                    <div class="form-check ms-3">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1">
+                    <label [htmlFor]="" class="form-check-label" for="exampleRadios2">
+                      Simultaneous Approval
+                    </label>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center flex-wrap roe-gap-3 mb-3">
+                  <div class="me-3">
+                    <label [htmlFor]="" class="form-label mb-0">Expense Approvers</label>
+                  </div>
+                  <div class="flex-fill">
+                    <mat-select placeholder="Select"
+                                            class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1">CEO</mat-option>
+                      <mat-option value="1">Manager</mat-option>
+                      <mat-option value="1">Team Lead</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="border-bottom mb-3">
+        <div class="row">
+          <div class="col-md-12 d-flex">
+            <div class="flex-fill">
+              <h6 class="mb-3">Leave Approval</h6>
+              <div class="d-flex justify align-items-start flex-wrap row-gap-3 pb-2 mb-2">
+                <h5>Default Expense Approval</h5>
+                <div class="form-check ms-3">
+                  <input class="form-check-input" type="radio" name="exampleRadioss" id="sequence" value="option1" checked>
+                  <label [htmlFor]="" class="form-check-label" for="sequence">
+                    Sequence Approval (Chain)
+                  </label>
+                  </div>
+                  <div class="form-check ms-3">
+                  <input class="form-check-input" type="radio" name="exampleRadioss" id="sequence1" value="option1">
+                  <label [htmlFor]="" class="form-check-label" for="sequence1">
+                    Simultaneous Approval
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center flex-wrap roe-gap-3 mb-3">
+                  <div class="me-3">
+                    <label [htmlFor]="" class="form-label mb-0">Leave Approvers</label>
+                  </div>
+                  <div class="flex-fill">
+                    <mat-select placeholder="Select"
+                                            class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1">CEO</mat-option>
+                      <mat-option value="1">Manager</mat-option>
+                      <mat-option value="1">Team Lead</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-bottom mb-3">
+        <div class="row">
+          <div class="col-md-12 d-flex">
+            <div class="flex-fill">
+              <h6 class="mb-3">Offer Approval</h6>
+              <div class="d-flex justify align-items-start flex-wrap row-gap-3 pb-2 mb-2">
+                <h5>Default Expense Approval</h5>
+                <div class="form-check ms-3">
+                  <input class="form-check-input" type="radio" name="exampleRadioss" id="sequence3" value="option1" checked>
+                  <label [htmlFor]="" class="form-check-label" for="sequence3">
+                    Sequence Approval (Chain)
+                  </label>
+                  </div>
+                  <div class="form-check ms-3">
+                  <input class="form-check-input" type="radio" name="exampleRadioss" id="sequence4" value="option1">
+                  <label [htmlFor]="" class="form-check-label" for="sequence4">
+                    Simultaneous Approval
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-end">
+        <button type="button" class="btn btn-outline-light border me-3">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

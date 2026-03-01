@@ -1,0 +1,268 @@
+<div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between mb-3">
+        <app-breadcrumbs title="Leaves" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+        <div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+            <div class="me-2 mb-2">
+                <div class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        <i class="ti ti-file-export me-1"></i>Export
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mb-2">
+                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add_leaves" class="btn btn-primary d-flex align-items-center"><i class="ti ti-circle-plus me-2"></i>Add Leave</a>
+            </div>
+            <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+        </div>
+    </div>
+    <!-- /Breadcrumb -->
+
+
+    <!-- Leaves Info -->
+     <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-green-img">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-2">
+                                <span class="avatar avatar-md rounded-circle bg-white d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-user-check text-success fs-18"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-1">Total Present</p>
+                            <h4>180/200</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pink-img">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-2">
+                                <span class="avatar avatar-md rounded-circle bg-white d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-user-edit text-pink fs-18"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-1">Planned Leaves</p>
+                            <h4>10</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-yellow-img">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-2">
+                                <span class="avatar avatar-md rounded-circle bg-white d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-user-exclamation text-warning fs-18"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-1">Unplanned Leaves</p>
+                            <h4>10</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-blue-img">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-2">
+                                <span class="avatar avatar-md rounded-circle bg-white d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-user-question text-info fs-18"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-1">Pending Requests</p>
+                            <h4>15</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     <!-- /Leaves Info -->
+
+    <!-- Leaves list -->
+    <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+            <h5>Leave List</h5>
+            <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+                <div class="me-3">
+                    <div class="input-icon position-relative">
+                        <span class="input-icon-addon">
+                          <i class="ti ti-calendar text-gray-9"></i>
+                        </span>
+                        <input type="text" class="form-control date-range bookingrange" bsDaterangepicker [(ngModel)]="bsRangeValue"  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy - dd/mm/yyyy">
+                      </div>
+                </div>
+                <div class="dropdown me-3">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Leave Type
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Medical Leave</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Casual Leave</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Annual Leave</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Sort By : Last 7 Days
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="custom-datatable-filter table-responsive">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length">
+                            <label> Row Per Page
+                                @if(tableData.length > 0) {
+                                    <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize(pageSize)" class="form-select form-select-sm">
+                                      <option value="10">10</option>
+                                      <option value="25">25</option>
+                                      <option value="50">50</option>
+                                      <option value="100">100</option>
+                                    </select>
+                                  }
+                            Entries
+                            </label>
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                            <label>
+                                <input [(ngModel)]="searchDataValue" [ngModelOptions]="{ standalone: true }"
+                                    (ngModelChange)="searchData(searchDataValue)" type="search" class="form-control form-control-sm"
+                                    placeholder="Search..." />
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class=" table-responsive">
+                        <table matSort (matSortChange)="sortData($event)" class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="no-sort">
+                                        <div class="form-check form-check-md" (click)="selectAll(initChecked)" (keydown.enter)="selectAll(initChecked)" tabindex="0">
+                                            <input class="form-check-input" type="checkbox" id="select-all" [(ngModel)]="initChecked">
+                                        </div>
+                                    </th>
+                                    <th mat-sort-header="Employee">Employee</th>
+                                    <th mat-sort-header="LeaveType">Leave Type</th>
+                                    <th mat-sort-header="From">From</th>
+                                    <th mat-sort-header="To">To</th>
+                                    <th mat-sort-header="NoOfDays">No of Days</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (data of tableData; track data.Employee) {
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-md">
+                                            <input class="form-check-input" type="checkbox"  [(ngModel)]="data.isSelected">
+                                        </div>
+                                    </td>
+                                        <td>
+                                            <div class="d-flex align-items-center file-name-icon">
+                                                <a href="javascript:void(0);" class="avatar avatar-md avatar-rounded">
+                                                    <img src="assets/img/users/{{data?.Image}}" class="img-fluid" alt="img">
+                                                </a>
+                                                <div class="ms-2">
+                                                    <h6 class="fw-medium"><a href="javascript:void(0);">{{data.Employee}}</a></h6>
+                                                    <span class="fs-12 fw-normal ">{{data.Role}}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <p class="fs-14 fw-medium d-flex align-items-center mb-0">{{data.LeaveType}}</p>
+                                                <a href="javascript:void(0);" class="ms-2" tooltip="I am currently experiencing a fever and design & Development" placement="right">
+                                                    <i class="ti ti-info-circle text-info"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>{{data.From}}</td>
+                                        <td>{{data.To}}</td>
+                                        <td>{{data.NoOfDays}}</td>
+                                        <td>
+                                            <div class="action-icon d-inline-flex">
+                                                <a href="javascript:void(0);" class="me-2" data-bs-toggle="modal" data-bs-target="#edit_leaves"><i class="ti ti-edit"></i></a>
+                                                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                    @if (tableData.length === 0) {
+                                    <tr>
+                                    <td colspan="8">
+                                        <h5 class="no-record">No matching records found</h5>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <app-custom-pagination></app-custom-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Leaves list -->
+
+</div>

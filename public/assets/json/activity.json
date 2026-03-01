@@ -1,0 +1,82 @@
+{
+  "data": [
+    {
+      "Title": "We scheduled a meeting for next week",
+      "Activity_Type": "Meeting",
+      "Due_Date": "16 Jan 2024",
+      "Owner": "Hendry Milner",
+      "Created_Date": "14 Jan 2024"
+    },
+    {
+      "Title": "Had conversation with Fred regarding task",
+      "Activity_Type": "Calls",
+      "Due_Date": "24 Jan 2024",
+      "Owner": "Guilory Berggren",
+      "Created_Date": "21 Jan 2024"
+    },
+    {
+      "Title": "Analysing latest time estimation for new project",
+      "Activity_Type": "Tasks",
+      "Due_Date": "23 Feb 2024",
+      "Owner": "Jami Carlile",
+      "Created_Date": "20 Feb 2024"
+    },
+    {
+      "Title": "Store and manage contact data",
+      "Activity_Type": "Email",
+      "Due_Date": "18 Mar 2024",
+      "Owner": "Theresa Nelson",
+      "Created_Date": "15 Mar 2024"
+    },
+    {
+      "Title": "Call John and discuss about project",
+      "Activity_Type": "Calls",
+      "Due_Date": "14 Apr 2024",
+      "Owner": "Smith Cooper",
+      "Created_Date": "12 Apr 2024"
+    },
+    {
+      "Title": "Will have a meeting before project start",
+      "Activity_Type": "Meeting",
+      "Due_Date": "22 May 2024",
+      "Owner": "Martin Lewis",
+      "Created_Date": "20 May 2024"
+    },
+    {
+      "Title": "Will have a meeting before project start",
+      "Activity_Type": "Meeting",
+      "Due_Date": "22 May 2024",
+      "Owner": "Martin Lewis",
+      "Created_Date": "20 May 2024"
+    },
+    {
+      "Title": "Built landing pages",
+      "Activity_Type": "Email",
+      "Due_Date": "08 Jul 2024",
+      "Owner": "Newell Egan",
+      "Created_Date": "06 Jul 2024"
+    },
+    {
+      "Title": "Discussed budget proposal with Edwin",
+      "Activity_Type": "Calls",
+      "Due_Date": "05 Sep 2024",
+      "Owner": "Janet Carlson",
+      "Created_Date": "02 Sep 2024"
+    },
+    {
+      "Title": "Attach final proposal for upcoming project",
+      "Activity_Type": "Tasks",
+      "Due_Date": "18 Nov 2024",
+      "Owner": "Craig Brown",
+      "Created_Date": "15 Nov 2024"
+    },
+    {
+      "Title": "Regarding latest updates in project",
+      "Activity_Type": "Meeting",
+      "Due_Date": "12 Dec 2024",
+      "Owner": "Daniel Byrne",
+      "Created_Date": "10 Dec 2024"
+    }
+  ],
+  "totalData": 10
+}

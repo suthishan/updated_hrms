@@ -1,0 +1,132 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "empId": "Emp-001",
+      "name": "Anthony Lewis",
+      "image": "user-11.jpg",
+      "designation": "Accountant",
+      "joiningDate": "14 Jun 2025",
+      "probationEndDate": "12 Sep 2025",
+      "reviewerName": "William Parsons",
+      "reviewerImage": "user-01.jpg",
+      "status": "Pending"
+    },
+    {
+      "id": 2,
+      "empId": "Emp-002",
+      "name": "Brian Villalobos",
+      "image": "user-12.jpg",
+      "designation": "App Developer",
+      "joiningDate": "25 May 2025",
+      "probationEndDate": "24 Jul 2025",
+      "reviewerName": "Lucille Tomberlin",
+      "reviewerImage": "user-02.jpg",
+      "status": "Completed",
+      "action":"refresh"
+    },
+    {
+      "id": 3,
+      "empId": "Emp-003",
+      "name": "Harvey Smith",
+      "image": "user-13.jpg",
+      "designation": "Technician",
+      "joiningDate": "10 May 2025",
+      "probationEndDate": "08 Aug 2025",
+      "reviewerName": "Frederick Johnson",
+      "reviewerImage": "user-03.jpg",
+      "status": "In Review",
+      "action":"edit"
+    },
+    {
+      "id": 4,
+      "empId": "Emp-004",
+      "name": "Stephan Peralt",
+      "image": "user-14.jpg",
+      "designation": "Web Developer",
+      "joiningDate": "28 Apr 2025",
+      "probationEndDate": "27 Jul 2025",
+      "reviewerName": "Sarah Henry",
+      "reviewerImage": "user-04.jpg",
+      "status": "Failed",
+      "action":"refresh"
+    },
+    {
+      "id": 5,
+      "empId": "Emp-005",
+      "name": "Doglas Martini",
+      "image": "user-15.jpg",
+      "designation": "Sales Executive Officer",
+      "joiningDate": "15 Apr 2025",
+      "probationEndDate": "14 Jun 2025",
+      "reviewerName": "Thomas Miller",
+      "reviewerImage": "user-05.jpg",
+      "status": "Extended"
+    },
+    {
+      "id": 6,
+      "empId": "Emp-006",
+      "name": "Linda Ray",
+      "image": "user-16.jpg",
+      "designation": "Designer",
+      "joiningDate": "20 Mar 2025",
+      "probationEndDate": "18 Jun 2025",
+      "reviewerName": "Melissa Shelton",
+      "reviewerImage": "user-06.jpg",
+      "status": "Completed",
+      "action":"refresh"
+    },
+    {
+      "id": 7,
+      "empId": "Emp-007",
+      "name": "Elliot Murray",
+      "image": "user-17.jpg",
+      "designation": "Account Manager",
+      "joiningDate": "10 Mar 2025",
+      "probationEndDate": "08 Jun 2025",
+      "reviewerName": "James Rodriguez",
+      "reviewerImage": "user-07.jpg",
+      "status": "In Review",
+      "action":"edit"
+    },
+    {
+      "id": 8,
+      "empId": "Emp-008",
+      "name": "Rebecca Smtih",
+      "image": "user-18.jpg",
+      "designation": "SEO Analyst",
+      "joiningDate": "17 Feb 2025",
+      "probationEndDate": "18 Apr 2025",
+      "reviewerName": "Regina Chavez",
+      "reviewerImage": "user-08.jpg",
+      "status": "Completed",
+      "action":"delete"
+    },
+    {
+      "id": 9,
+      "empId": "Emp-009",
+      "name": "Connie Waters",
+      "image": "user-20.jpg",
+      "designation": "Admin",
+      "joiningDate": "02 Feb 2025",
+      "probationEndDate": "03 Apr 2025",
+      "reviewerName": "Joshua Dillon",
+      "reviewerImage": "user-09.jpg",
+      "status": "Failed",
+      "action":"refresh"
+    },
+    {
+      "id": 10,
+      "empId": "Emp-010",
+      "name": "Lori Broaddus",
+      "image": "user-19.jpg",
+      "designation": "Business Analyst",
+      "joiningDate": "24 Jan 2025",
+      "probationEndDate": "24 Apr 2025",
+      "reviewerName": "Diana Riddle",
+      "reviewerImage": "user-10.jpg",
+      "status": "Pending"
+    }
+  ],
+  "totalData": 10
+}

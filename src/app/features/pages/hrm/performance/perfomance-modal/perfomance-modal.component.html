@@ -1,0 +1,1445 @@
+		<!-- Add Appraisal -->
+		<div class="modal fade" id="add_performance_appraisal">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Appraisal</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Employee</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Anthony Lewis</mat-option>
+											<mat-option value="1">Brian Villalobos</mat-option>
+											<mat-option value="1">Harvey Smith</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date3">
+										<label class="form-label">Appraisal Date</label>
+										<div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date3"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<ul class="nav appraisal-tab nav-pills mb-3" id="pills-tab" role="tablist">
+										<li class="nav-item" role="presentation">
+										  <button class="nav-link border   active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#technical" type="button" role="tab" aria-selected="true">Technical</button>
+										</li>
+										<li class="nav-item" role="presentation">
+										  <button class="nav-link border" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#organization" type="button" role="tab" aria-selected="false">Organizational</button>
+										</li>
+									  </ul>
+								</div>
+								<div class="col-md-12">
+									<div class="tab-content appraisal-tab-content" id="pills-tabContent">
+										<div class="tab-pane fade show active" id="technical" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+											<div class="card">
+												<div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+													<h5>Technical Competencies</h5>
+												</div>
+												<div class="card-body p-0">
+													<div class="table-responsive">
+														<table class="table ">
+															<thead class="thead-light">
+																<tr>
+																	<th>Indicator</th>
+																	<th>Expected Value</th>
+																	<th>Set Value</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>
+																		Customer Experience
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Marketing
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Management
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Administration
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Presentation Skill
+																	</td>
+																	<td>
+																		Expert / Leader
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Quality Of Work
+																	</td>
+																	<td>
+																		Expert / Leader
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Efficiency
+																	</td>
+																	<td>
+																		Expert / Leader
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="organization" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+											<div class="card">
+												<div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+													<h5>Organizational Competencies</h5>
+												</div>
+												<div class="card-body p-0">
+													<div class="table-responsive">
+														<table class="table ">
+															<thead class="thead-light">
+																<tr>
+																	<th>Indicator</th>
+																	<th>Expected Value</th>
+																	<th>Set Value</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>
+																		Integrity
+																	</td>
+																	<td>
+																		Beginner
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Professionalism
+																	</td>
+																	<td>
+																		Beginner
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Team Work
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Critical Thinking
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Conflict Management
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Attendance
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Ability To Meet Deadline
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="Select" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									  </div>								
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add Appraisal</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Appraisal -->
+
+		<!-- Edit  Appraisal -->
+		<div class="modal fade" id="edit_performance_appraisal">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit  Appraisal</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Employee</label>
+										 <mat-select placeholder="Anthony Lewis" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Anthony Lewis</mat-option>
+											<mat-option value="1">Brian Villalobos</mat-option>
+											<mat-option value="1">Harvey Smith</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date1">
+										<label class="form-label">Appraisal Date</label>
+										<div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date1"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<ul class="nav appraisal-tab nav-pills mb-3" id="pills-tab2" role="tablist">
+										<li class="nav-item" role="presentation">
+										  <button class="nav-link border   active" id="pills-home-tab2" data-bs-toggle="pill" data-bs-target="#edit_technical" type="button" role="tab" aria-selected="true">Technical</button>
+										</li>
+										<li class="nav-item" role="presentation">
+										  <button class="nav-link border" id="pills-profile-tab2" data-bs-toggle="pill" data-bs-target="#edit_organization" type="button" role="tab" aria-selected="false">Organizational</button>
+										</li>
+									  </ul>
+								</div>
+								<div class="col-md-12">
+									<div class="tab-content appraisal-tab-content" id="pills-tabContent2">
+										<div class="tab-pane fade show active" id="edit_technical" role="tabpanel" aria-labelledby="pills-home-tab2" tabindex="0">
+											<div class="card">
+												<div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+													<h5>Technical Competencies</h5>
+												</div>
+												<div class="card-body p-0">
+													<div class="table-responsive">
+														<table class="table ">
+															<thead class="thead-light">
+																<tr>
+																	<th>Indicator</th>
+																	<th>Expected Value</th>
+																	<th>Set Value</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>
+																		Customer Experience
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Marketing
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Management
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Administration
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Presentation Skill
+																	</td>
+																	<td>
+																		Expert / Leader
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Quality Of Work
+																	</td>
+																	<td>
+																		Expert / Leader
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Efficiency
+																	</td>
+																	<td>
+																		Expert / Leader
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="edit_organization" role="tabpanel" aria-labelledby="pills-profile-tab2" tabindex="0">
+											<div class="card">
+												<div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+													<h5>Organizational Competencies</h5>
+												</div>
+												<div class="card-body p-0">
+													<div class="table-responsive">
+														<table class="table ">
+															<thead class="thead-light">
+																<tr>
+																	<th>Indicator</th>
+																	<th>Expected Value</th>
+																	<th>Set Value</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>
+																		Integrity
+																	</td>
+																	<td>
+																		Beginner
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Professionalism
+																	</td>
+																	<td>
+																		Beginner
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Team Work
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Critical Thinking
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Conflict Management
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Attendance
+																	</td>
+																	<td>
+																		Intermediate
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Ability To Meet Deadline
+																	</td>
+																	<td>
+																		Advanced
+																	</td>
+																	<td>
+																		 <mat-select placeholder="None" class="select custom-mat-select">
+																			<mat-option value="1">None</mat-option>
+																			<mat-option value="1"> Beginner</mat-option>
+																			<mat-option value="1"> Intermediate</mat-option>
+																			<mat-option value="1"> Advanced</mat-option>
+																			<mat-option value="1"> Expert / Leader</mat-option>
+																		</mat-select>
+																	</td>
+																</tr>
+																
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									  </div>								
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add Appraisal</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit  Appraisal -->
+
+		<!-- Add Indicator -->
+		<div class="modal fade" id="add_performance_indicator">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add New Indicator</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Designation</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Web Designer</mat-option>
+											<mat-option value="1">Web Developer</mat-option>
+											<mat-option value="1">IOS Developer</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<h6 class="fw-medium">Technical</h6>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Customer Experience</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Marketing</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Expert/Leader</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Management</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Medium</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Administration</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Presentation Skills</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Quality of Work</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Efficiency</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<h6 class="fw-medium">Organizational</h6>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Integrity</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Professionalism</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Team Work</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Critical Thinking</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Conflict Management</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Attendance</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Ability To Meet Deadline</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add Indicator</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Indicator -->
+
+		<!-- Edit Indicator -->
+		<div class="modal fade" id="edit_performance-indicator">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit New Indicator</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Designation</label>
+										 <mat-select placeholder="Web Designer" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Web Designer</mat-option>
+											<mat-option value="1">Web Developer</mat-option>
+											<mat-option value="1">IOS Developer</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<h6 class="fw-medium">Technical</h6>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Customer Experience</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Marketing</label>
+										 <mat-select placeholder="Expert/Leader" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Expert/Leader</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Management</label>
+										 <mat-select placeholder="Intermediate" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Medium</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Administration</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Presentation Skills</label>
+										 <mat-select placeholder="None" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Quality of Work</label>
+										 <mat-select placeholder="None" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Efficiency</label>
+										 <mat-select placeholder="None" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<h6 class="fw-medium">Organizational</h6>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Integrity</label>
+										 <mat-select placeholder="None" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Professionalism</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Team Work</label>
+										 <mat-select placeholder="None" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">None</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Critical Thinking</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Conflict Management</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Attendance</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3">
+										<label class="form-label">Ability To Meet Deadline</label>
+										 <mat-select placeholder="Advanced" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Advanced</mat-option>
+											<mat-option value="1">Intermediate</mat-option>
+											<mat-option value="1">Average</mat-option>
+										</mat-select>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Indicator -->
+
+        <!-- Add Goal Type -->
+        <div class="modal fade" id="add_goal_type">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Goal Type</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="modal-body pb-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Goal Type </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Description </label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <div>
+                                            <label class="form-label">Status</label>
+                                             <mat-select placeholder="Select" class="select custom-mat-select">
+                                                <mat-option value="1">Select</mat-option>
+                                                <mat-option value="1">Active</mat-option>
+                                                <mat-option value="1">Inactive</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Goal Type</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Add Goal Type -->
+
+        <!-- Edit Goal Type -->
+        <div class="modal fade" id="edit_goal_type">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Goal Type</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="modal-body pb-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Goal Type </label>
+                                        <input type="text" class="form-control" value="Performance Goals">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Description </label>
+                                        <textarea class="form-control">Goals that focus on enhancing an employee's performance in their current role.</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                         <mat-select placeholder="Active" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="1">Inactive</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Edit Goal Type -->
+
+        <!-- Add Goal Tracking -->
+        <div class="modal fade" id="add_goal">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Goal Tracking</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="modal-body pb-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Goal Type</label>
+                                         <mat-select placeholder="Select" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Development Goals</mat-option>
+                                            <mat-option value="1">Project Goals</mat-option>
+                                            <mat-option value="1">Project Goals</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subject </label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Target Achievement</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 ngx-date2">
+                                        <label class="form-label">Start Date </label>
+                                        <div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date2"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 ngx-date4">
+                                        <label class="form-label">End Date </label>
+                                        <div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date4"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                         <mat-select placeholder="Select" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="1">Inactive</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Goal Tracking</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Add Goal Tracking -->
+
+        <!-- Edit Indicator -->
+        <div class="modal fade" id="edit_goal">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Goal Tracking</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="modal-body pb-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Goal Type</label>
+                                         <mat-select placeholder="Development Goals" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Development Goals</mat-option>
+                                            <mat-option value="1">Project Goals</mat-option>
+                                            <mat-option value="1">Project Goals</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subject </label>
+                                        <input type="text" class="form-control" value="Programming Skills">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Target Achievement</label>
+                                        <input type="text" class="form-control" value="Complete a HTML course ">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 ngx-date5">
+                                        <label class="form-label">Start Date </label>
+                                        <div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date5"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 ngx-date6">
+                                        <label class="form-label">End Date </label>
+                                        <div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date6"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control">Improve proficiency</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                         <mat-select placeholder="Active" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="1">Inactive</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Edit Indicator -->

@@ -1,0 +1,158 @@
+<div class="card">
+  <div class="card-header px-0 mx-3">
+      <div class="d-flex align-items-center justify-content-between">
+          <h4>Ban IP Address</h4>
+          <a href="javascript:void(0);" class="btn btn-primary btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#add_ban" ><i class="ti ti-circle-plus me-2"></i>Add IP Address</a>
+      </div>
+  </div>
+  <div class="card-body pb-0 ">
+      <div class="row bx-3">
+          <div class="col-lg-6">
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-between border-bottom mb-2 pb-2">
+                          <div class="d-flex align-items-center">
+                              <span class="d-inline-flex me-2"><i class="ti ti-ban"></i></span>
+                              <p class="fs-14 fw-medium text-dark">198.120.16.01</p>
+                          </div>
+                          <div class="d-flex align-items-center">
+                              <a href="javascript:void(0);" class="link-default me-2" data-bs-toggle="modal" data-bs-target="#edit_ban" ><i class="ti ti-edit"></i></a>
+                              <a href="javascript:void(0);" class="link-default" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+                          </div>
+                      </div>
+                      <div>
+                          <p><span class="me-2"><i class="ti ti-info-circle"></i></span>Temporarily block to protect user accounts from internet fraudsters</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-between border-bottom mb-2 pb-2">
+                          <div class="d-flex align-items-center">
+                              <span class="d-inline-flex me-2"><i class="ti ti-ban"></i></span>
+                              <p class="fs-14 fw-medium text-dark">198.160.11.20</p>
+                          </div>
+                          <div class="d-flex align-items-center">
+                              <a href="javascript:void(0);" class="link-default me-2" data-bs-toggle="modal" data-bs-target="#edit_ban" ><i class="ti ti-edit"></i></a>
+                              <a href="javascript:void(0);" class="link-default" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+                          </div>
+                      </div>
+                      <div>
+                          <p><span class="me-2"><i class="ti ti-info-circle"></i></span>Unauthorized access attempts, or other signs of a potential security</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-between border-bottom mb-2 pb-2">
+                          <div class="d-flex align-items-center">
+                              <span class="d-inline-flex me-2"><i class="ti ti-ban"></i></span>
+                              <p class="fs-14 fw-medium text-dark">198.123.10.2</p>
+                          </div>
+                          <div class="d-flex align-items-center">
+                              <a href="javascript:void(0);" class="link-default me-2" data-bs-toggle="modal" data-bs-target="#edit_ban" ><i class="ti ti-edit"></i></a>
+                              <a href="javascript:void(0);" class="link-default" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+                          </div>
+                      </div>
+                      <div>
+                          <p><span class="me-2"><i class="ti ti-info-circle"></i></span>Attempts to scrape large amounts of HR data from the system without authorization.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="card mb-3">
+                  <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-between border-bottom mb-2 pb-2">
+                          <div class="d-flex align-items-center">
+                              <span class="d-inline-flex me-2"><i class="ti ti-ban"></i></span>
+                              <p class="fs-14 fw-medium text-dark">198.110.01.05</p>
+                          </div>
+                          <div class="d-flex align-items-center">
+                              <a href="javascript:void(0);" class="link-default me-2" data-bs-toggle="modal" data-bs-target="#edit_ban" ><i class="ti ti-edit"></i></a>
+                              <a href="javascript:void(0);" class="link-default" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+                          </div>
+                      </div>
+                      <div>
+                          <p><span class="me-2"><i class="ti ti-info-circle"></i></span>Found downloading or uploading inappropriate content</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+        <!-- Add New IP Addres -->
+		<div class="modal fade" id="add_ban">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add New IP Address</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">IP Address</label>
+										<input type="text" class="form-control" placeholder="Enter Currency Name">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Reason</label>
+										<textarea class="form-control" rows="3"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<a href="javascript:void(0);" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</a>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add IP Address</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add New Currency -->
+
+        <!-- Edit IP Address -->
+		<div class="modal fade" id="edit_ban">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit IP Address</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">IP Address</label>
+										<input type="text" class="form-control" value="198.120.16.01">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Reason</label>
+										<textarea class="form-control">Temporarily block to protect user accounts from internet fraudsters</textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<a href="javascript:void(0);" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</a>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit IP Address -->

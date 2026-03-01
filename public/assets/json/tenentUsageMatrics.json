@@ -1,0 +1,105 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "BrightWave Innovations",
+      "image": "company-01.svg",
+      "plan": "Advanced (Monthly)",
+      "activeUsers": 82,
+      "mostModuleUsage": "HRM, CRM",
+      "storageUsage": "12.4 GB",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Stellar Dynamics",
+      "image": "company-02.svg",
+      "plan": "Basic (Yearly)",
+      "activeUsers": 90,
+      "mostModuleUsage": "Recruitment",
+      "storageUsage": "10.8 GB",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Quantum Nexus",
+      "image": "company-03.svg",
+      "plan": "Advanced (Monthly)",
+      "activeUsers": 104,
+      "mostModuleUsage": "Finance & Accounts",
+      "storageUsage": "8.5 GB",
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "name": "EcoVision Enterprises",
+      "image": "company-04.svg",
+      "plan": "Advanced (Monthly)",
+      "activeUsers": 80,
+      "mostModuleUsage": "HRM",
+      "storageUsage": "6.0 GB",
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "name": "Aurora Technologies",
+      "image": "company-05.svg",
+      "plan": "Enterprise (Monthly)",
+      "activeUsers": 120,
+      "mostModuleUsage": "CRM",
+      "storageUsage": "15.2 GB",
+      "status": "Active"
+    },
+    {
+      "id": 6,
+      "name": "BlueSky Ventures",
+      "image": "company-06.svg",
+      "plan": "Advanced (Monthly)",
+      "activeUsers": 100,
+      "mostModuleUsage": "Finance & Accounts",
+      "storageUsage": "12.5 GB",
+      "status": "Active"
+    },
+    {
+      "id": 7,
+      "name": "TerraFusion Energy",
+      "image": "company-07.svg",
+      "plan": "Enterprise (Yearly)",
+      "activeUsers": 110,
+      "mostModuleUsage": "HRM, Recruitment",
+      "storageUsage": "10.7 GB",
+      "status": "Active"
+    },
+    {
+      "id": 8,
+      "name": "UrbanPulse Design",
+      "image": "company-08.svg",
+      "plan": "Basic (Monthly)",
+      "activeUsers": 125,
+      "mostModuleUsage": "Recruitment",
+      "storageUsage": "9.4 GB",
+      "status": "Inactive"
+    },
+    {
+      "id": 9,
+      "name": "Nimbus Networks",
+      "image": "company-09.svg",
+      "plan": "Basic (Yearly)",
+      "activeUsers": 115,
+      "mostModuleUsage": "HRM, CRM",
+      "storageUsage": "8.2 GB",
+      "status": "Active"
+    },
+    {
+      "id": 10,
+      "name": "Epicurean Delights",
+      "image": "company-10.svg",
+      "plan": "Advanced (Monthly)",
+      "activeUsers": 85,
+      "mostModuleUsage": "Finance & Accounts",
+      "storageUsage": "7.5 GB",
+      "status": "Active"
+    }
+  ],
+   "totalData": 10
+}

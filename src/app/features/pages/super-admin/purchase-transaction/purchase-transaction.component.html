@@ -1,0 +1,310 @@
+<div class="content">
+
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between mb-3">
+    <app-breadcrumbs title="Purchase Transaction" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+
+      <div class=" mb-2">
+        <div class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+            <i class="ti ti-file-export me-1"></i>Export
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+    </div>
+  </div>
+  <!-- /Breadcrumb -->
+
+
+
+  <div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+      <h5>Transaction List</h5>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+        <div class="me-3">
+          <div class="input-icon-end position-relative">
+							<app-date-range-picker />
+							<span class="input-icon-addon">
+								<i class="ti ti-chevron-down"></i>
+							</span>
+						</div>
+        </div>
+        <div class="dropdown me-3">
+          <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+            Payment Method
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Credit Card</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Paypal</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Debit Card</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown me-3">
+          <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+            Select Status
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Paid</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Unpaid</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+            Sort By : Last 7 Days
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+
+      <div class="custom-datatable-filter table-responsive">
+        <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length">
+                <label> Row Per Page
+                    @if(tableData.length > 0) {
+                  <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize(pageSize)" class="form-select form-select-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                }
+                  Entries
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                  <label>
+                      <input [(ngModel)]="searchDataValue" [ngModelOptions]="{ standalone: true }"
+                          (ngModelChange)="searchData(searchDataValue)" type="search" class="form-control form-control-sm"
+                          placeholder="Search..." />
+                  </label>
+              </div>
+          </div>
+          </div>
+            <div class=" table-responsive">
+              <table matSort (matSortChange)="sortData($event)" class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th class="no-sort">
+											<div class="form-check form-check-md" (click)="selectAll(initChecked)" (keydown.enter)="selectAll(initChecked)" tabindex="0">
+												<input class="form-check-input" type="checkbox" id="select-all" [(ngModel)]="initChecked">
+											</div>
+										</th>
+
+                    <th  mat-sort-header="InvoiceID">	Invoice ID</th>
+                    <th  mat-sort-header="CompanyName">Customer</th>
+                    <th  mat-sort-header="Email">Email</th>
+                    <th  mat-sort-header="Amount">Amount</th>
+                    <th  mat-sort-header="CreatedDate">Created Date</th>
+                    <th  mat-sort-header="PaymentMethod">PaymentMethod</th>
+                    <th  mat-sort-header="Status">Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (data of tableData; track data) {
+                  <tr>
+                    <td>
+											<div class="form-check form-check-md">
+												<input class="form-check-input" type="checkbox"  [(ngModel)]="data.isSelected">
+											</div>
+										</td>
+                    <td>{{data.InvoiceID}}</td>
+                    <td>
+											<div class="d-flex align-items-center file-name-icon">
+												<a href="javascript:void(0);" class="avatar avatar-md border rounded-circle">
+													<img src="assets/img/company/{{data?.Image}}" class="img-fluid" alt="img">
+												</a>
+												<div class="ms-2">
+													<h6 class="fw-medium"><a href="javascript:void(0);">{{data.CompanyName}}</a></h6>
+												</div>
+											</div>
+										</td>
+										<td>{{data.Email}}</td>
+										<td>
+											${{data.Amount}}
+										</td>
+										<td>{{data.CreatedDate}}</td>
+										<td>{{data.PaymentMethod}}</td>
+										<td>
+											<span class="badge d-inline-flex align-items-center badge-xs" [ngClass]="data.Status === 'Paid'? 'badge-success':'badge-danger'">
+												<i class="ti ti-point-filled me-1"></i>{{data.Status}}
+											</span>
+										</td>
+										<td>
+											<div class="action-icon d-inline-flex">
+												<a href="javascript:void(0);" class="me-2" data-bs-toggle="modal" data-bs-target="#view_invoice"><i class="ti ti-file-invoice"></i></a>
+												<a href="javascript:void(0);" class="me-2"><i class="ti ti-download"></i></a>
+												<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+											</div>
+										</td>
+                  </tr>
+                  }
+                  @if (tableData.length === 0) {
+                  <tr>
+                    <td colspan="9">
+                      <h5 class="no-record">No matching records found</h5>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          <app-custom-pagination></app-custom-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+		<!-- Invoices -->
+		<div class="modal fade" id="view_invoice">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-body p-5">
+						<div class="row justify-content-between align-items-center mb-3">
+							<div class="col-md-6">
+                 <div class="mb-4 invoice-logo">
+                                                <img src="assets/img/logo.svg" class="img-fluid logo" alt="logo">
+												<img src="assets/img/logo-white.svg" class="img-fluid logo-white d-none" alt="logo">
+                                            </div>
+								
+							</div>
+							<div class="col-md-6">
+								<div class=" text-end mb-3">
+									<h5 class="text-dark mb-1">Invoice</h5>
+									<p class="mb-1 fw-normal"><i class="ti ti-file-invoice me-1"></i>INV0287</p>
+									<p class="mb-1 fw-normal"><i class="ti ti-calendar me-1"></i>Issue date : 12 Sep 2024 </p>
+									<p class="fw-normal"><i class="ti ti-calendar me-1"></i>Due date : 12 Oct 2024 </p>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-3 d-flex justify-content-between">
+							<div class="col-md-7">
+								<p class="text-dark mb-2 fw-medium fs-16">Invoice From :</p>
+								<div>
+									<p class="mb-1">SmartHR</p>
+									<p class="mb-1">367 Hillcrest Lane, Irvine, California,
+										United States</p>
+									<p class="mb-1">smarthr&#64;example.com</p>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<p class="text-dark mb-2 fw-medium fs-16 text-end">Invoice To :</p>
+								<div>
+									<p class="mb-1 text-end">BrightWave Innovations</p>
+									<p class="mb-1 text-end">367 Hillcrest Lane, Irvine, California,
+										United States</p>
+									<p class="mb-1 text-end">michael&#64;example.com</p>
+								</div>
+							</div>
+						</div>
+						<div class="mb-4">
+							<div class="table-responsive mb-3">
+								<table class="table">
+									<thead class="thead-light">
+										<tr>
+											<th>Plan</th>
+											<th class="text-end">Billing Cycle</th>
+											<th class="text-end">Created Date</th>
+											<th class="text-end">Expiring On</th>
+											<th class="text-end">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Advanced (Monthly)</td>
+											<td class="text-end">30 Days</td>
+											<td class="text-end">12 Sep 2024</td>
+											<td class="text-end">12 Oct 2024</td>
+											<td class="text-end">$200</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mb-3 d-flex justify-content-between">
+							<div class="col-md-4">
+								<div>
+									<h6 class="mb-4">Payment info:</h6>
+									<p class="mb-0">Credit Card - 123***********789</p>
+									<div class="d-flex justify-content-between align-items-center mb-2 pe-3">
+										<p class="mb-0">Amount</p>
+										<p class="text-dark fw-medium mb-2">$200.00</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="d-flex justify-content-between align-items-center pe-3">
+									<p class="text-dark fw-medium mb-0">Sub Total</p>
+									<p class="mb-2">$200.00</p>
+								</div>
+								<div class="d-flex justify-content-between align-items-center pe-3">
+									<p class="text-dark fw-medium mb-0">Tax </p>
+									<p class="mb-2">$0.00</p>
+								</div>
+								<div class="d-flex justify-content-between align-items-center pe-3">
+									<p class="text-dark fw-medium mb-0">Total</p>
+									<p class="text-dark fw-medium mb-2">$200.00</p>
+								</div>
+							</div>
+						</div>
+						<div class="card border mb-0">
+							<div class="card-body">
+								<p class="text-dark fw-medium mb-2">Terms & Conditions:</p>
+								<p class="fs-12 fw-normal d-flex align-items-baseline mb-2"><i class="ti ti-point-filled text-primary me-1"></i>All payments must be made according to the agreed schedule. Late payments may incur additional fees.</p>
+								<p class="fs-12 fw-normal d-flex align-items-baseline"><i class="ti ti-point-filled text-primary me-1"></i>We are not liable for any indirect, incidental, or consequential damages, including loss of profits, revenue, or data.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Invoices -->
+

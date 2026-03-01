@@ -1,0 +1,508 @@
+<!-- Page Wrapper -->
+		<div class="page-wrapper">
+			<div class="content">
+
+				<!-- Breadcrumb -->
+				<div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+					<div class="my-auto mb-2">
+						<h2 class="mb-1">Notice Period Tracker</h2>
+						<nav>
+							<ol class="breadcrumb mb-0">
+								<li class="breadcrumb-item">
+									<a [routerLink]="routes.index"><i class="ti ti-smart-home"></i></a>
+								</li>
+								<li class="breadcrumb-item">
+									HRM
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">Notice Period Tracker</li>
+							</ol>
+						</nav>
+					</div>
+					<div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+						<div class="mb-2 me-2">
+							<div class="dropdown">
+								<a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+									<i class="ti ti-file-export me-1"></i>Export
+								</a>
+								<ul class="dropdown-menu  dropdown-menu-end p-3">
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+						<div class="mb-2">
+							<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#add_modal" class="btn btn-primary d-flex align-items-center"><i class="ti ti-circle-plus me-2"></i>Add New Employee</a>
+						</div>
+						<div class="head-icons ms-2">
+							<app-collapse-header/>
+						</div>
+					</div>
+				</div>
+				<!-- /Breadcrumb -->
+
+				<div class="card">
+					<div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+						<h5>Notice Period Tracker</h5>
+						<div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+							<div class="me-3">
+								<div class="input-icon position-relative">
+									<span class="input-icon-addon">
+										<i class="ti ti-calendar text-gray-9"></i>
+									</span>
+									<app-date-range-picker/>
+								</div>
+							</div>
+							<div class="dropdown me-3">
+								<a href="javascript:void(0);"
+									class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+									data-bs-toggle="dropdown">
+									Designation
+								</a>
+								<ul class="dropdown-menu  dropdown-menu-end p-3">
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Accountant</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">App Developer</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Technician</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Web Developer</a>
+									</li>
+								</ul>
+							</div>
+							<div class="dropdown">
+								<a href="javascript:void(0);"
+									class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+									data-bs-toggle="dropdown">
+									Sort By : Last 7 Days
+								</a>
+								<ul class="dropdown-menu  dropdown-menu-end p-3">
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="card-body p-0">
+			<div class="custom-datatable-filter table-responsive">
+				<div class="dataTables_wrapper dt-bootstrap5 no-footer">
+					<div class="row">
+						<div class="col-sm-12 col-md-6">
+							<div class="dataTables_length">
+								<label>Row Per Page
+									@if(tableData.length > 0) {
+									<select [(ngModel)]="pageSize"
+										(ngModelChange)="changePageSize(pageSize)"
+										class="form-select form-select-sm">
+										<option value="10">10</option>
+										<option value="25">25</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+									</select>
+									}
+									Entries
+								</label>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<div id="DataTables_Table_0_filter" class="dataTables_filter">
+								<label>
+									<input [(ngModel)]="searchDataValue"
+										[ngModelOptions]="{ standalone: true }"
+										(ngModelChange)="searchData(searchDataValue)" type="search"
+										class="form-control form-control-sm"
+										placeholder="Search" />
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class=" table-responsive">
+						<table matSort (matSortChange)="sortData($event)"
+							class="mat-sort table datanew table-center datatable dataTable  mb-0">
+							<thead class="thead-light">
+								<tr>
+									<th class="no-sort">
+										<div class="form-check form-check-md" (click)="selectAll(initChecked)"
+											(keydown.enter)="selectAll(initChecked)" tabindex="0">
+											<input class="form-check-input" type="checkbox" id="select-all"
+												[(ngModel)]="initChecked">
+										</div>
+									</th>
+
+									<th mat-sort-header="id">Emp ID</th>
+									<th mat-sort-header="name">Name</th>
+									<th mat-sort-header="email">Designation</th>
+									<th mat-sort-header="role">Start Date</th>
+									<th mat-sort-header="assign">End  Date</th>
+									<th mat-sort-header="resolve">Total Days</th>
+									<th mat-sort-header="status2">Completed</th>
+									<th mat-sort-header="status3">Remaining</th>
+									<th mat-sort-header="Status">Availability</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								@for (data of tableData; track data.id) {
+								<tr>
+									<td>
+										<div class="form-check form-check-md">
+											<input class="form-check-input" type="checkbox"
+												[(ngModel)]="data.isSelected">
+										</div>
+									</td>
+										<td>
+											<a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#probation_details">{{data.empId}}</a>
+										</td>
+										<td>
+											<div class="d-flex align-items-center file-name-icon">
+												<a href="javascript:void(0)" class="avatar avatar-md border avatar-rounded">
+													<img src="assets/img/users/{{data.image}}" class="img-fluid" alt="img">
+												</a>
+												<div class="ms-2">
+													<a class="fw-medium fs-14">{{data.name}}</a>
+												</div>
+											</div>
+										</td>
+										<td>{{data.designation}}</td>
+										<td>
+											{{data.startDate}}
+										</td>
+										<td>{{data.endDate}}</td>
+										<td>{{data.totalDays}}</td>
+										<td>{{data.completed}}</td>
+										<td>{{data.remaining}}</td>
+										<td>
+											<span class="badge d-inline-flex align-items-center badge-xs"
+											[class]="data.status == 'Active'?'badge-pink-transparent':data.status == 'Closing Soon'?'badge-purple-transparent':'badge-success-transparent'">
+												{{data.status}}
+											</span>
+										</td>
+										<td>
+											<div class="action-icon d-inline-flex">
+												<a href="javascript:void(0)" class="me-2" data-bs-toggle="offcanvas" data-bs-target="#probation_details"><i class="ti ti-eye"></i></a>
+											</div>
+										</td>
+									</tr>
+								}
+								@if (tableData.length === 0) {
+								<tr>
+									<td colspan="9">
+										<h5 class="no-record">No matching records found</h5>
+									</td>
+								</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+					<app-custom-pagination></app-custom-pagination>
+				</div>
+			</div>
+		</div>
+				</div>
+
+			</div>
+
+			<app-footer/>
+
+		</div>
+		<!-- /Page Wrapper -->
+
+		<!-- Add Probation -->
+		<div class="modal fade" id="add_modal">
+			<div class="modal-dialog modal-dialog-centered modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Employee</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="d-flex align-items-center flex-wrap row-gap-3 w-100 rounded p-3 mb-4">                                                
+										<div class="d-flex align-items-center justify-content-center avatar avatar-xxl rounded-circle border border-dashed me-2 flex-shrink-0 text-dark frames">
+											<i class="ti ti-photo"></i>
+										</div>                                              
+										<div class="profile-upload">
+											<div class="mb-2">
+												<h6 class="mb-1">Upload Profile Image</h6>
+												<p class="fs-12">Image should be below 4 mb</p>
+											</div>
+											<div class="profile-uploader d-flex align-items-center">
+												<div class="drag-upload-btn btn btn-sm btn-primary me-2">
+													Upload
+													<input type="file" class="form-control image-sign" multiple="">
+												</div>
+												<a href="javascript:void(0);" class="btn btn-light btn-sm">Cancel</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Employee Name <span class="text-danger"> *</span></label>
+										<input type="text" class="form-control">
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Designation <span class="text-danger"> *</span></label>
+										<mat-select class="select custom-mat-select" placeholder="Select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Accountant</mat-option>
+											<mat-option value="1">App Developer</mat-option>
+											<mat-option value="1">Technician</mat-option>
+											<mat-option value="1">Web Developer</mat-option>
+											<mat-option value="1">Sales Executive Officer</mat-option>
+										</mat-select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Joining Date <span class="text-danger"> *</span> </label>
+										<div class="input-icon-end position-relative ngxdate">
+											<input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy" bsDatepicker container=".ngxdate"  [bsConfig]="{ adaptivePosition: true,dateInputFormat:'DD-MM-YYYY' }">
+											<span class="input-icon-addon">
+												<i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										</div>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Probation End Date <span class="text-danger"> *</span> </label>
+										<div class="input-icon-end position-relative ngxdate2">
+											<input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy" bsDatepicker container=".ngxdate2"  [bsConfig]="{ adaptivePosition: true,dateInputFormat:'DD-MM-YYYY' }">
+											<span class="input-icon-addon">
+												<i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										</div>
+									</div>	
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add Empolee</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Probation -->
+
+		<!-- Edit Probation -->
+		<div class="modal fade" id="edit_modal">
+			<div class="modal-dialog modal-dialog-centered modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Employee</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="d-flex align-items-center flex-wrap row-gap-3 w-100 rounded p-3 mb-4">                                                
+										<div class="d-flex align-items-center justify-content-center avatar avatar-xxl rounded-circle border border-dashed me-2 flex-shrink-0 text-dark frames">
+											<i class="ti ti-photo"></i>
+										</div>                                              
+										<div class="profile-upload">
+											<div class="mb-2">
+												<h6 class="mb-1">Upload Profile Image</h6>
+												<p class="fs-12">Image should be below 4 mb</p>
+											</div>
+											<div class="profile-uploader d-flex align-items-center">
+												<div class="drag-upload-btn btn btn-sm btn-primary me-2">
+													Upload
+													<input type="file" class="form-control image-sign" multiple="">
+												</div>
+												<a href="javascript:void(0);" class="btn btn-light btn-sm">Cancel</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Employee Name <span class="text-danger"> *</span></label>
+										<input type="text" class="form-control" value="Anthony Lewis">
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Designation <span class="text-danger"> *</span></label>
+										<mat-select class="select custom-mat-select" placeholder="Accountant">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Accountant</mat-option>
+											<mat-option value="1">App Developer</mat-option>
+											<mat-option value="1">Technician</mat-option>
+											<mat-option value="1">Web Developer</mat-option>
+											<mat-option value="1">Sales Executive Officer</mat-option>
+										</mat-select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Joining Date <span class="text-danger"> *</span> </label>
+										<div class="input-icon-end position-relative ngxdate3">
+											<input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy"  bsDatepicker container=".ngxdate3"  [bsConfig]="{ adaptivePosition: true,dateInputFormat:'DD-MM-YYYY' }">
+											<span class="input-icon-addon">
+												<i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										</div>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Probation End Date <span class="text-danger"> *</span> </label>
+										<div class="input-icon-end position-relative ngxdate4">
+											<input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy"  bsDatepicker container=".ngxdate4"  [bsConfig]="{ adaptivePosition: true,dateInputFormat:'DD-MM-YYYY' }">
+											<span class="input-icon-addon">
+												<i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										</div>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Reviewer <span class="text-danger"> *</span></label>
+										<mat-select class="select custom-mat-select" placeholder="William Parsons">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">William Parsons</mat-option>
+											<mat-option value="1">Lucille Tomberlin</mat-option>
+											<mat-option value="1">Frederick Johnson</mat-option>
+											<mat-option value="1">Sarah Henry</mat-option>
+											<mat-option value="1">Thomas Miller</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Probation -->
+
+		<!-- Details -->
+		<div class="offcanvas offcanvas-end offcanvas-medium" tabindex="-1" id="probation_details">
+			<div class="offcanvas-header border-bottom">
+				<h4 class="d-flex align-items-center">Employee Details</h4>
+				<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+					<i class="ti ti-x"></i>
+				</button>
+			</div>
+			<div class="offcanvas-body">
+				<div class="card bg-light">
+					<div class="card-body">
+						<div class="d-flex align-items-center flex-wrap flex-md-nowrap row-gap-3">
+							<span class="avatar avatar-ld avatar-rounded flex-shrink-0 me-3">
+								<img src="assets/img/users/user-03.jpg" alt="Img">
+							</span>
+							<div>
+								<p class="mb-0"><a href="javascript:void(0)" class="text-dark fw-semibold">Anthony Lewis</a></p>
+								<span class="badge badge-soft-dark text-dark d-inline-flex align-items-center badge-xs">
+									<i class="ti ti-point-filled me-1"></i>Accountant
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<div class="d-flex align-items-center justify-content-between mb-1">
+						<p class="mb-0">Completed Days</p>
+						<p class="text-dark mb-0">70 Days</p>
+					</div>
+					<div class="progress progress-xs flex-grow-1 mb-2">
+						<div class="progress-bar bg-purple rounded" role="progressbar" style="width: 80%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+
+				<div class="mb-4 pb-4 border-bottom">
+					<div class="fs-14 fw-semibold text-dark mb-3">Basic Information</div>
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<span><i class="ti ti-id me-1"></i>Employee ID</span>
+						<p class="fs-13 text-dark mb-0">EMP0001</p>
+					</div>
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<span><i class="ti ti-star me-1"></i>Team</span>
+						<p class="fs-13 text-dark mb-0">Finance</p>
+					</div>
+					<div class="d-flex align-items-center justify-content-between mb-0">
+						<span><i class="ti ti-calendar-check me-1"></i>Date of Join</span>
+						<p class="fs-13 text-dark mb-0">14 Jan 2025</p>
+					</div>
+				</div>
+
+				<div>
+					<div class="fs-14 fw-semibold text-dark mb-3">Notice Period</div>
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<span><i class="ti ti-calendar me-1"></i>Notice Start Date</span>
+						<p class="fs-13 text-dark mb-0">14 Jan 2026</p>
+					</div>
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<span><i class="ti ti-calendar me-1"></i>Notice End Date</span>
+						<p class="fs-13 text-dark mb-0">14 Mar 2026</p>
+					</div>
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<span><i class="ti ti-calendar-stats me-1"></i>Notice Duration</span>
+						<p class="fs-13 text-dark mb-0">6 months</p>
+					</div>
+					<div class="d-flex align-items-center justify-content-between mb-0">
+						<span><i class="ti ti-user-edit me-1"></i>Handover Status</span>
+						<span class="badge badge-soft-info">Pending</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Details -->
+
+		<!-- Delete Modal -->
+		<div class="modal fade" id="delete_modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<span class="avatar avatar-xl bg-transparent-danger text-danger mb-3">
+							<i class="ti ti-trash-x fs-36"></i>
+						</span>
+						<h4 class="mb-1">Confirm Delete</h4>
+						<p class="mb-3">You want to delete all the marked items, this cant be undone once you delete.</p>
+						<div class="d-flex justify-content-center">
+							<a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</a>
+							<a href="javascript:void(0)" class="btn btn-danger">Yes, Delete</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete Modal -->

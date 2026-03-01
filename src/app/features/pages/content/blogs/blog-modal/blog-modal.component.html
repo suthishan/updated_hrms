@@ -1,0 +1,348 @@
+
+
+		<!-- Add Blog -->
+        <div class="modal fade" id="add_blog">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Blog</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form >
+                        <div class="modal-body pb-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="d-flex align-items-center flex-wrap row-gap-3 bg-light w-100 rounded p-3 mb-4">                                                
+                                        <div class="d-flex align-items-center justify-content-center avatar avatar-xxl rounded-circle border border-dashed me-2 flex-shrink-0 text-dark frames">
+                                            <img src="assets/img/profiles/avatar-30.jpg" alt="img" class="rounded-circle">
+                                        </div>                                              
+                                        <div class="profile-upload">
+                                            <div class="mb-2">
+                                                <h6 class="mb-1">Featured Image</h6>
+                                                <p class="fs-12">Image should be below 4 mb</p>
+                                            </div>
+                                            <div class="profile-uploader d-flex align-items-center">
+                                                <div class="drag-upload-btn btn btn-sm btn-primary me-2">
+                                                    Upload
+                                                    <input type="file" class="form-control image-sign" multiple="">
+                                                </div>
+                                                <a href="javascript:void(0);" class="btn btn-light btn-sm">Cancel</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Blog Title <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>                                  
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3 ">
+                                        <label [htmlFor]="" class="form-label">Category <span class="text-danger"> *</span></label>
+                                        <mat-select placeholder="Select" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="2">Evlovution</mat-option>
+                                            <mat-option value="3">Guide</mat-option>
+                                            <mat-option value="4">Security</mat-option>
+                                        </mat-select >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3 ">
+                                        <label class="form-label">Tags <span class="text-danger"> *</span></label>
+                                        <p-chips class="form-control" [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="values1"></p-chips>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3 ">
+                                        <label [htmlFor]="" class="form-label">Status</label>
+                                        <mat-select placeholder="Select" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="2">Active</mat-option>
+                                            <mat-option value="3">Inactive</mat-option>
+                                        </mat-select >
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <div class="summernote">
+                                            <ngx-editor [editor]="editor1" placeholder="Write a new comment, send your team notification by typing &#64; followed by their name">
+                                              <ngx-editor-menu [editor]="editor1" [toolbar]="toolbar">
+                                              </ngx-editor-menu>
+                                            </ngx-editor>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Blog</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Add Blog -->
+        
+        <!-- Edit Blog -->
+        <div class="modal fade" id="edit_blog">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Blog</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form >
+                        <div class="modal-body pb-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="d-flex align-items-center flex-wrap row-gap-3 bg-light w-100 rounded p-3 mb-4">                                                
+                                        <div class="d-flex align-items-center justify-content-center avatar avatar-xxl rounded-circle border border-dashed me-2 flex-shrink-0 text-dark frames">
+                                            <img src="assets/img/profiles/avatar-30.jpg" alt="img" class="rounded-circle">
+                                        </div>                                              
+                                        <div class="profile-upload">
+                                            <div class="mb-2">
+                                                <h6 class="mb-1">Featured Image</h6>
+                                                <p class="fs-12">Image should be below 4 mb</p>
+                                            </div>
+                                            <div class="profile-uploader d-flex align-items-center">
+                                                <div class="drag-upload-btn btn btn-sm btn-primary me-2">
+                                                    Upload
+                                                    <input type="file" class="form-control image-sign" multiple="">
+                                                </div>
+                                                <a href="javascript:void(0);" class="btn btn-light btn-sm">Cancel</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Blog Title <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>                                  
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3 ">
+                                        <label [htmlFor]="" class="form-label">Category <span class="text-danger"> *</span></label>
+                                        <mat-select placeholder="Evlovution" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="2">Evlovution</mat-option>
+                                            <mat-option value="3">Guide</mat-option>
+                                            <mat-option value="4">Security</mat-option>
+                                        </mat-select >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3 ">
+                                        <label class="form-label">Tags <span class="text-danger"> *</span></label>
+                                        <input class="input-tags form-control" placeholder="Add new" type="text" data-role="tagsinput"  name="Label" value="HRMS,Recruitment,HRTech">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3 ">
+                                        <label [htmlFor]="" class="form-label">Status</label>
+                                        <mat-select placeholder="Active" class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="2">Active</mat-option>
+                                            <mat-option value="3">Inactive</mat-option>
+                                        </mat-select >
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <div class="summernote">
+                                            <ngx-editor [editor]="editor" placeholder="Write a new comment, send your team notification by typing &#64; followed by their name">
+                                              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                                              </ngx-editor-menu>
+                                            </ngx-editor>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Edit Blog -->
+
+    <!-- Add Categories -->
+    <div class="modal fade" id="add_blog-category"> 
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Blog Category</h4>
+                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ti ti-x"></i>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pb-0">
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Tag</label><p-chips class="form-control" [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="values1"></p-chips>
+
+                            </div>									
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label [htmlFor]="" class="form-label">Status</label>
+                                <mat-select placeholder="Active" class="select custom-mat-select">
+                                    <mat-option value="1">Active</mat-option>
+                                    <mat-option value="2">Inactive</mat-option>                                          
+                                </mat-select >
+                            </div>									
+                        </div> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Tag</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <!-- /Add Categories -->
+
+    <!-- Edit Categories -->
+    <div class="modal fade" id="edit_blog-category">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Blog Category</h4>
+                    <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ti ti-x"></i>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body pb-0">
+                        <div class="row">
+                           
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Tag</label><p-chips class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="values1"></p-chips>
+                                </div>									
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label [htmlFor]="" class="form-label">Status</label>
+                                    <mat-select placeholder="Active" class="select custom-mat-select">
+										<mat-option value="1">Active</mat-option>
+										<mat-option value="2">Inactive</mat-option>                                          
+                                    </mat-select >
+                                </div>									
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+	<!-- /Edit Categories -->
+
+        <!-- Add Tag -->
+        <div class="modal fade" id="add_blog-tags">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Blog Tag</h4>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <form>
+                        <div class="modal-body pb-0">
+                            <div class="row">                               
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tag</label>
+                                        <p-chips class="form-control" [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="values1"></p-chips>
+                                    </div>									
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label [htmlFor]="" class="form-label">Status</label>
+                                        <mat-select placeholder="Active" class="select custom-mat-select">
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="2">Inactive</mat-option>                                          
+                                        </mat-select >
+                                    </div>									
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Tag</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    	<!-- /Add Tag -->
+
+		<!-- Edit Tag -->
+		<div class="modal fade" id="edit_blog-tags">
+			<div class="modal-dialog modal-dialog-centered modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Blog Tag</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">							
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Tag</label><p-chips class="form-control" [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="values1"></p-chips>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label [htmlFor]="" class="form-label">Status</label>
+										<mat-select placeholder="Active" class="select custom-mat-select">
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="2">Inactive</mat-option>  										
+										</mat-select>
+									</div>									
+								</div> 
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Tag -->
+
+		

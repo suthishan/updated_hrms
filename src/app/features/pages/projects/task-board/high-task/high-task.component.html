@@ -1,0 +1,1112 @@
+<div class="d-flex align-items-start overflow-auto project-status pb-4">
+  <div class="p-3 rounded bg-transparent-secondary w-100 me-3">
+    <div class="bg-white p-2 rounded mb-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="bg-transparent-purple p-1 d-flex rounded-circle me-2"
+            ><span class="bg-purple rounded-circle d-block p-1"></span
+          ></span>
+          <h5 class="me-2">To Do</h5>
+          <span class="badge bg-light rounded-pill">02</span>
+        </div>
+        <div class="dropdown">
+          <a
+            href="javascript:void(0);"
+            class="d-inline-flex align-items-center"
+            data-bs-toggle="dropdown"
+          >
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-3">
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_task"
+                ><i class="ti ti-edit me-2"></i>Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_modal"
+                ><i class="ti ti-trash me-2"></i>Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="kanban-drag-wrap"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="lstTodo"
+      [cdkDropListConnectedTo]="[
+        pendingList,
+        inprogressList,
+        reviewList,
+        onHoldList,
+        completedList
+      ]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (data of lstTodo; track data) {
+      <div cdkDrag>
+        <div class="card kanban-card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-outline-dark me-2">Web Layout</span>
+                <span
+                  class="badge badge-xs d-flex align-items-center justify-content-center"
+                  [ngClass]="
+                    data.taskpriority === 'High'
+                      ? 'bg-danger'
+                      : data.taskpriority === 'Medium'
+                      ? 'bg-warning'
+                      : 'bg-success'
+                  "
+                  ><i class="fas fa-circle fs-6 me-1"></i
+                  >{{ data.taskpriority }}</span
+                >
+              </div>
+              <div class="dropdown">
+                <a
+                  href="javascript:void(0);"
+                  class="d-inline-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="ti ti-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edit_task"
+                      ><i class="ti ti-edit me-2"></i>Edit</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_modal"
+                      ><i class="ti ti-trash me-2"></i>Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-2">
+              <h6 class="d-flex align-items-center">
+                {{ data.taskname }}
+              </h6>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+              <div
+                class="progress progress-sm flex-fill"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  [ngClass]="
+                    data.percentage < 21
+                      ? 'bg-danger'
+                      : data.percentage > 20 && data.percentage < 51
+                      ? 'bg-warning'
+                      : data.percentage > 50 && data.percentage < 100
+                      ? 'bg-purple'
+                      : 'bg-success'
+                  "
+                  [style.width]="data.percentage + '%'"
+                ></div>
+              </div>
+              <span class="d-block ms-2 text-gray-9 fw-medium"
+                >{{ data.percentage }}%</span
+              >
+            </div>
+            <p class="fw-medium mb-0">
+              Due on :
+              <span class="text-gray-9"> {{ data.duedate }}</span>
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between border-top pt-2 mt-2"
+            >
+              <div class="avatar-list-stacked avatar-group-sm me-3">
+                @for (imgdata of data.share; track imgdata) {
+                <span class="avatar avatar-rounded">
+                  <img
+                    class="border border-white"
+                    src="assets/img/profiles/{{ imgdata }}"
+                    alt="img"
+                  />
+                </span>
+                }
+
+                <span class="avatar avatar-rounded bg-primary fs-12"> 1+ </span>
+              </div>
+              <div class="d-flex align-items-center">
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark me-2"
+                  ><i class="ti ti-message-circle text-gray me-1"></i>14</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark"
+                  ><i class="ti ti-paperclip text-gray me-1"></i>14</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="pt-2">
+      <a
+        href="javascript:void(0);"
+        class="btn btn-white border border-dashed d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_task"
+      >
+        <i class="ti ti-plus me-2"></i> New Task
+      </a>
+    </div>
+  </div>
+  <div class="p-3 rounded bg-transparent-secondary w-100 me-3">
+    <div class="bg-white p-2 rounded mb-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="bg-soft-pink p-1 d-flex rounded-circle me-2"
+            ><span class="bg-pink rounded-circle d-block p-1"></span
+          ></span>
+          <h5 class="me-2">Pending</h5>
+          <span class="badge bg-light rounded-pill">13</span>
+        </div>
+        <div class="dropdown">
+          <a
+            href="javascript:void(0);"
+            class="d-inline-flex align-items-center"
+            data-bs-toggle="dropdown"
+          >
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-3">
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_task"
+                ><i class="ti ti-edit me-2"></i>Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_modal"
+                ><i class="ti ti-trash me-2"></i>Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="kanban-drag-wrap"
+      cdkDropList
+      #pendingList="cdkDropList"
+      [cdkDropListData]="lstPending"
+      [cdkDropListConnectedTo]="[
+        inprogressList,
+        reviewList,
+        onHoldList,
+        completedList,
+        todoList
+      ]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (data of lstPending; track data) {
+      <div cdkDrag>
+        <div class="card kanban-card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-outline-dark me-2">Web Layout</span>
+                <span
+                  class="badge badge-xs d-flex align-items-center justify-content-center"
+                  [ngClass]="
+                    data.taskpriority === 'High'
+                      ? 'bg-danger'
+                      : data.taskpriority === 'Medium'
+                      ? 'bg-warning'
+                      : 'bg-success'
+                  "
+                  ><i class="fas fa-circle fs-6 me-1"></i
+                  >{{ data.taskpriority }}</span
+                >
+              </div>
+              <div class="dropdown">
+                <a
+                  href="javascript:void(0);"
+                  class="d-inline-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="ti ti-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edit_task"
+                      ><i class="ti ti-edit me-2"></i>Edit</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_modal"
+                      ><i class="ti ti-trash me-2"></i>Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-2">
+              <h6 class="d-flex align-items-center">
+                {{ data.taskname }}
+              </h6>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+              <div
+                class="progress progress-sm flex-fill"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  [ngClass]="
+                    data.percentage < 21
+                      ? 'bg-danger'
+                      : data.percentage > 20 && data.percentage < 51
+                      ? 'bg-warning'
+                      : data.percentage > 50 && data.percentage < 100
+                      ? 'bg-purple'
+                      : 'bg-success'
+                  "
+                  [style.width]="data.percentage + '%'"
+                ></div>
+              </div>
+              <span class="d-block ms-2 text-gray-9 fw-medium"
+                >{{ data.percentage }}%</span
+              >
+            </div>
+            <p class="fw-medium mb-0">
+              Due on :
+              <span class="text-gray-9"> {{ data.duedate }}</span>
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between border-top pt-2 mt-2"
+            >
+              <div class="avatar-list-stacked avatar-group-sm me-3">
+                @for (imgdata of data.share; track imgdata) {
+                <span class="avatar avatar-rounded">
+                  <img
+                    class="border border-white"
+                    src="assets/img/profiles/{{ imgdata }}"
+                    alt="img"
+                  />
+                </span>
+                }
+
+                <span class="avatar avatar-rounded bg-primary fs-12"> 1+ </span>
+              </div>
+              <div class="d-flex align-items-center">
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark me-2"
+                  ><i class="ti ti-message-circle text-gray me-1"></i>14</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark"
+                  ><i class="ti ti-paperclip text-gray me-1"></i>14</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="pt-2">
+      <a
+        href="javascript:void(0);"
+        class="btn btn-white border border-dashed d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_task"
+      >
+        <i class="ti ti-plus me-2"></i> New Task
+      </a>
+    </div>
+  </div>
+  <div class="p-3 rounded bg-transparent-secondary w-100 me-3">
+    <div class="bg-white p-2 rounded mb-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="bg-soft-skyblue p-1 d-flex rounded-circle me-2"
+            ><span class="bg-skyblue rounded-circle d-block p-1"></span
+          ></span>
+          <h5 class="me-2">Inprogress</h5>
+          <span class="badge bg-light rounded-pill">04</span>
+        </div>
+        <div class="dropdown">
+          <a
+            href="javascript:void(0);"
+            class="d-inline-flex align-items-center"
+            data-bs-toggle="dropdown"
+          >
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-3">
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_task"
+                ><i class="ti ti-edit me-2"></i>Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_modal"
+                ><i class="ti ti-trash me-2"></i>Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="kanban-drag-wrap"
+      cdkDropList
+      #inprogressList="cdkDropList"
+      [cdkDropListData]="lstInprogress"
+      [cdkDropListConnectedTo]="[
+        pendingList,
+        reviewList,
+        onHoldList,
+        completedList,
+        todoList
+      ]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (data of lstInprogress; track data) {
+      <div cdkDrag>
+        <div class="card kanban-card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-outline-dark me-2">Web Layout</span>
+                <span
+                  class="badge badge-xs d-flex align-items-center justify-content-center"
+                  [ngClass]="
+                    data.taskpriority === 'High'
+                      ? 'bg-danger'
+                      : data.taskpriority === 'Medium'
+                      ? 'bg-warning'
+                      : 'bg-success'
+                  "
+                  ><i class="fas fa-circle fs-6 me-1"></i
+                  >{{ data.taskpriority }}</span
+                >
+              </div>
+              <div class="dropdown">
+                <a
+                  href="javascript:void(0);"
+                  class="d-inline-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="ti ti-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edit_task"
+                      ><i class="ti ti-edit me-2"></i>Edit</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_modal"
+                      ><i class="ti ti-trash me-2"></i>Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-2">
+              <h6 class="d-flex align-items-center">
+                {{ data.taskname }}
+              </h6>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+              <div
+                class="progress progress-sm flex-fill"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  [ngClass]="
+                    data.percentage < 21
+                      ? 'bg-danger'
+                      : data.percentage > 20 && data.percentage < 51
+                      ? 'bg-warning'
+                      : data.percentage > 50 && data.percentage < 100
+                      ? 'bg-purple'
+                      : 'bg-success'
+                  "
+                  [style.width]="data.percentage + '%'"
+                ></div>
+              </div>
+              <span class="d-block ms-2 text-gray-9 fw-medium"
+                >{{ data.percentage }}%</span
+              >
+            </div>
+            <p class="fw-medium mb-0">
+              Due on :
+              <span class="text-gray-9"> {{ data.duedate }}</span>
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between border-top pt-2 mt-2"
+            >
+              <div class="avatar-list-stacked avatar-group-sm me-3">
+                @for (imgdata of data.share; track imgdata) {
+                <span class="avatar avatar-rounded">
+                  <img
+                    class="border border-white"
+                    src="assets/img/profiles/{{ imgdata }}"
+                    alt="img"
+                  />
+                </span>
+                }
+
+                <span class="avatar avatar-rounded bg-primary fs-12"> 1+ </span>
+              </div>
+              <div class="d-flex align-items-center">
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark me-2"
+                  ><i class="ti ti-message-circle text-gray me-1"></i>14</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark"
+                  ><i class="ti ti-paperclip text-gray me-1"></i>14</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="pt-2">
+      <a
+        href="javascript:void(0);"
+        class="btn btn-white border border-dashed d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_task"
+      >
+        <i class="ti ti-plus me-2"></i> New Task
+      </a>
+    </div>
+  </div>
+  <div class="p-3 rounded bg-transparent-secondary w-100 me-3">
+    <div class="bg-white p-2 rounded mb-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="bg-soft-success p-1 d-flex rounded-circle me-2"
+            ><span class="bg-success rounded-circle d-block p-1"></span
+          ></span>
+          <h5 class="me-2">Completed</h5>
+          <span class="badge bg-light rounded-pill">10</span>
+        </div>
+        <div class="dropdown">
+          <a
+            href="javascript:void(0);"
+            class="d-inline-flex align-items-center"
+            data-bs-toggle="dropdown"
+          >
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-3">
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_task"
+                ><i class="ti ti-edit me-2"></i>Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_modal"
+                ><i class="ti ti-trash me-2"></i>Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="kanban-drag-wrap"
+      cdkDropList
+      #completedList="cdkDropList"
+      [cdkDropListData]="lstCompleted"
+      [cdkDropListConnectedTo]="[
+        pendingList,
+        inprogressList,
+        reviewList,
+        onHoldList,
+        todoList
+      ]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (data of lstCompleted; track data) {
+      <div cdkDrag>
+        <div class="card kanban-card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-outline-dark me-2">Web Layout</span>
+                <span
+                  class="badge badge-xs d-flex align-items-center justify-content-center"
+                  [ngClass]="
+                    data.taskpriority === 'High'
+                      ? 'bg-danger'
+                      : data.taskpriority === 'Medium'
+                      ? 'bg-warning'
+                      : 'bg-success'
+                  "
+                  ><i class="fas fa-circle fs-6 me-1"></i
+                  >{{ data.taskpriority }}</span
+                >
+              </div>
+              <div class="dropdown">
+                <a
+                  href="javascript:void(0);"
+                  class="d-inline-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="ti ti-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edit_task"
+                      ><i class="ti ti-edit me-2"></i>Edit</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_modal"
+                      ><i class="ti ti-trash me-2"></i>Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-2">
+              <h6 class="d-flex align-items-center">
+                {{ data.taskname }}
+              </h6>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+              <div
+                class="progress progress-sm flex-fill"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  [ngClass]="
+                    data.percentage < 21
+                      ? 'bg-danger'
+                      : data.percentage > 20 && data.percentage < 51
+                      ? 'bg-warning'
+                      : data.percentage > 50 && data.percentage < 100
+                      ? 'bg-purple'
+                      : 'bg-success'
+                  "
+                  [style.width]="data.percentage + '%'"
+                ></div>
+              </div>
+              <span class="d-block ms-2 text-gray-9 fw-medium"
+                >{{ data.percentage }}%</span
+              >
+            </div>
+            <p class="fw-medium mb-0">
+              Due on :
+              <span class="text-gray-9"> {{ data.duedate }}</span>
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between border-top pt-2 mt-2"
+            >
+              <div class="avatar-list-stacked avatar-group-sm me-3">
+                @for (imgdata of data.share; track imgdata) {
+                <span class="avatar avatar-rounded">
+                  <img
+                    class="border border-white"
+                    src="assets/img/profiles/{{ imgdata }}"
+                    alt="img"
+                  />
+                </span>
+                }
+
+                <span class="avatar avatar-rounded bg-primary fs-12"> 1+ </span>
+              </div>
+              <div class="d-flex align-items-center">
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark me-2"
+                  ><i class="ti ti-message-circle text-gray me-1"></i>14</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark"
+                  ><i class="ti ti-paperclip text-gray me-1"></i>14</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="pt-2">
+      <a
+        href="javascript:void(0);"
+        class="btn btn-white border border-dashed d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_task"
+      >
+        <i class="ti ti-plus me-2"></i> New Task
+      </a>
+    </div>
+  </div>
+  <div class="p-3 rounded bg-transparent-secondary w-100 me-3">
+    <div class="bg-white p-2 rounded mb-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="bg-soft-warning p-1 d-flex rounded-circle me-2"
+            ><span class="bg-warning rounded-circle d-block p-1"></span
+          ></span>
+          <h5 class="me-2">On-hold</h5>
+          <span class="badge bg-light rounded-pill">10</span>
+        </div>
+        <div class="dropdown">
+          <a
+            href="javascript:void(0);"
+            class="d-inline-flex align-items-center"
+            data-bs-toggle="dropdown"
+          >
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-3">
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_task"
+                ><i class="ti ti-edit me-2"></i>Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_modal"
+                ><i class="ti ti-trash me-2"></i>Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="kanban-drag-wrap"
+      cdkDropList
+      #onHoldList="cdkDropList"
+      [cdkDropListData]="lstHold"
+      [cdkDropListConnectedTo]="[
+        pendingList,
+        inprogressList,
+        reviewList,
+        completedList,
+        todoList
+      ]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (data of lstHold; track data) {
+      <div cdkDrag>
+        <div class="card kanban-card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-outline-dark me-2">Web Layout</span>
+                <span
+                  class="badge badge-xs d-flex align-items-center justify-content-center"
+                  [ngClass]="
+                    data.taskpriority === 'High'
+                      ? 'bg-danger'
+                      : data.taskpriority === 'Medium'
+                      ? 'bg-warning'
+                      : 'bg-success'
+                  "
+                  ><i class="fas fa-circle fs-6 me-1"></i
+                  >{{ data.taskpriority }}</span
+                >
+              </div>
+              <div class="dropdown">
+                <a
+                  href="javascript:void(0);"
+                  class="d-inline-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="ti ti-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edit_task"
+                      ><i class="ti ti-edit me-2"></i>Edit</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_modal"
+                      ><i class="ti ti-trash me-2"></i>Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-2">
+              <h6 class="d-flex align-items-center">
+                {{ data.taskname }}
+              </h6>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+              <div
+                class="progress progress-sm flex-fill"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  [ngClass]="
+                    data.percentage < 21
+                      ? 'bg-danger'
+                      : data.percentage > 20 && data.percentage < 51
+                      ? 'bg-warning'
+                      : data.percentage > 50 && data.percentage < 100
+                      ? 'bg-purple'
+                      : 'bg-success'
+                  "
+                  [style.width]="data.percentage + '%'"
+                ></div>
+              </div>
+              <span class="d-block ms-2 text-gray-9 fw-medium"
+                >{{ data.percentage }}%</span
+              >
+            </div>
+            <p class="fw-medium mb-0">
+              Due on :
+              <span class="text-gray-9"> {{ data.duedate }}</span>
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between border-top pt-2 mt-2"
+            >
+              <div class="avatar-list-stacked avatar-group-sm me-3">
+                @for (imgdata of data.share; track imgdata) {
+                <span class="avatar avatar-rounded">
+                  <img
+                    class="border border-white"
+                    src="assets/img/profiles/{{ imgdata }}"
+                    alt="img"
+                  />
+                </span>
+                }
+
+                <span class="avatar avatar-rounded bg-primary fs-12"> 1+ </span>
+              </div>
+              <div class="d-flex align-items-center">
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark me-2"
+                  ><i class="ti ti-message-circle text-gray me-1"></i>14</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark"
+                  ><i class="ti ti-paperclip text-gray me-1"></i>14</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="pt-2">
+      <a
+        href="javascript:void(0);"
+        class="btn btn-white border border-dashed d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_task"
+      >
+        <i class="ti ti-plus me-2"></i> New Task
+      </a>
+    </div>
+  </div>
+  <div class="p-3 rounded bg-transparent-secondary w-100">
+    <div class="bg-white p-2 rounded mb-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="bg-soft-skyblue p-1 d-flex rounded-circle me-2"
+            ><span class="bg-skyblue rounded-circle d-block p-1"></span
+          ></span>
+          <h5 class="me-2">Review</h5>
+          <span class="badge bg-light rounded-pill">10</span>
+        </div>
+        <div class="dropdown">
+          <a
+            href="javascript:void(0);"
+            class="d-inline-flex align-items-center"
+            data-bs-toggle="dropdown"
+          >
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-3">
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_task"
+                ><i class="ti ti-edit me-2"></i>Edit</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0);"
+                class="dropdown-item rounded-1"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_modal"
+                ><i class="ti ti-trash me-2"></i>Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="kanban-drag-wrap"
+      cdkDropList
+      #reviewList="cdkDropList"
+      [cdkDropListData]="lstReview"
+      [cdkDropListConnectedTo]="[completedList, inprogressList, onHoldList]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (data of lstReview; track data) {
+      <div cdkDrag>
+        <div class="card kanban-card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-outline-dark me-2">Web Layout</span>
+                <span
+                  class="badge badge-xs d-flex align-items-center justify-content-center"
+                  [ngClass]="
+                    data.taskpriority === 'High'
+                      ? 'bg-danger'
+                      : data.taskpriority === 'Medium'
+                      ? 'bg-warning'
+                      : 'bg-success'
+                  "
+                  ><i class="fas fa-circle fs-6 me-1"></i
+                  >{{ data.taskpriority }}</span
+                >
+              </div>
+              <div class="dropdown">
+                <a
+                  href="javascript:void(0);"
+                  class="d-inline-flex align-items-center"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="ti ti-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edit_task"
+                      ><i class="ti ti-edit me-2"></i>Edit</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item rounded-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_modal"
+                      ><i class="ti ti-trash me-2"></i>Delete</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-2">
+              <h6 class="d-flex align-items-center">
+                {{ data.taskname }}
+              </h6>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+              <div
+                class="progress progress-sm flex-fill"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  [ngClass]="
+                    data.percentage < 21
+                      ? 'bg-danger'
+                      : data.percentage > 20 && data.percentage < 51
+                      ? 'bg-warning'
+                      : data.percentage > 50 && data.percentage < 100
+                      ? 'bg-purple'
+                      : 'bg-success'
+                  "
+                  [style.width]="data.percentage + '%'"
+                ></div>
+              </div>
+              <span class="d-block ms-2 text-gray-9 fw-medium"
+                >{{ data.percentage }}%</span
+              >
+            </div>
+            <p class="fw-medium mb-0">
+              Due on :
+              <span class="text-gray-9"> {{ data.duedate }}</span>
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between border-top pt-2 mt-2"
+            >
+              <div class="avatar-list-stacked avatar-group-sm me-3">
+                @for (imgdata of data.share; track imgdata) {
+                <span class="avatar avatar-rounded">
+                  <img
+                    class="border border-white"
+                    src="assets/img/profiles/{{ imgdata }}"
+                    alt="img"
+                  />
+                </span>
+                }
+
+                <span class="avatar avatar-rounded bg-primary fs-12"> 1+ </span>
+              </div>
+              <div class="d-flex align-items-center">
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark me-2"
+                  ><i class="ti ti-message-circle text-gray me-1"></i>14</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  class="d-flex align-items-center text-dark"
+                  ><i class="ti ti-paperclip text-gray me-1"></i>14</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="pt-2">
+      <a
+        href="javascript:void(0);"
+        class="btn btn-white border border-dashed d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_task"
+      >
+        <i class="ti ti-plus me-2"></i> New Task
+      </a>
+    </div>
+  </div>
+</div>

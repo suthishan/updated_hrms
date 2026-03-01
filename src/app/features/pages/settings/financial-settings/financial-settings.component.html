@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xl-3 theiaStickySidebar">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-column list-group settings-list">
+          <a
+            [class.active]="last === 'payment-gateways'"
+            [routerLink]="routes.paymentGateways"
+            class="d-inline-flex align-items-center rounded py-2 px-3"
+            >@if (last === 'payment-gateways') {
+            <i
+              class="ti ti-arrow-badge-right me-2"
+              ></i
+              >
+              }Payment Gateways</a
+              >
+              <a
+                [class.active]="last === 'tax-rates'"
+                [routerLink]="routes.taxRates"
+                class="d-inline-flex align-items-center rounded py-2 px-3"
+                >@if (last === 'tax-rates') {
+                <i
+                  class="ti ti-arrow-badge-right me-2"
+                  ></i
+                  >
+                  }Tax Rates</a
+                  >
+                  <a
+                    [class.active]="last === 'currencies'"
+                    [routerLink]="routes.currencies"
+                    class="d-inline-flex align-items-center rounded py-2 px-3"
+                    >@if (last === 'currencies') {
+                    <i
+                      class="ti ti-arrow-badge-right me-2"
+                      ></i
+                      >
+                      }Currencies</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-9">
+                <router-outlet></router-outlet>
+              </div>
+            </div>

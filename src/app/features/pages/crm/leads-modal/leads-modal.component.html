@@ -1,0 +1,465 @@
+
+<!-- Add Leads -->
+<div class="modal fade" id="add_leads">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Lead</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Lead Name  <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <div class="d-flex align-items-center ">
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label [htmlFor]="" class="form-check-label" for="flexRadioDefault1">
+                      Person
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label [htmlFor]="" class="form-check-label" for="flexRadioDefault2">
+                      Organization
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label [htmlFor]="" class="form-label">Company  <span class="text-danger"> *</span></label>
+                  <a href="javascript:void(0)" class="add-new text-primary" data-bs-toggle="modal" data-bs-target="#add_company"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                </div>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">BrightWave Innovations</mat-option >
+                  <mat-option value="1">Stellar Dynamics</mat-option >
+                  <mat-option value="1">Quantum Nexus</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Value <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Currency<span class="text-danger"> *</span></label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">USD</mat-option >
+                  <mat-option value="1">Euro</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12 ">
+              <div class="lead-phno-col">
+                @for (rowadd of rowappend; track rowadd; let i = $index) {
+                  <div class="row">
+                    <div class="col-lg-8" >
+                      <div class="input-block mb-3">
+                        @if (i===0) {
+                          <label [htmlFor]="" class="form-label">Phone Number <span class="text-danger"> *</span></label>
+                        }
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                    <div class="col-lg-4 d-flex align-items-end">
+                      <div class="input-block w-100 mb-3 d-flex align-items-center">
+                        <div class="w-100">
+                          <mat-select placeholder="Select" class="select custom-mat-select">
+                            <mat-option value="1">Work</mat-option >
+                            <mat-option value="1">Home</mat-option >
+                          </mat-select>
+                        </div>
+                        @if (i===0) {
+                          <a href="javascript:void(0)" class="add-modal-row text-primary add-lead-phno ms-2" (click)="addRow()"><i class="ti ti-circle-plus"></i></a>
+                        }
+                        @if (i!== 0) {
+                          <a
+                            class="avatar avatar-md rounded delete-email text-primary"
+                            (click)="removeRow(i)">
+                            <i class="ti ti-trash"></i>
+                          </a>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="lead-email-col">
+                @for (rowadd of rowappend1; track rowadd; let i = $index) {
+                  <div class="row">
+                    <div class="col-lg-8" >
+                      <div class="input-block mb-3">
+                        @if (i===0) {
+                          <label [htmlFor]="" class="form-label">Email  <span class="text-danger"> *</span></label>
+                        }
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                    <div class="col-lg-4 d-flex align-items-end">
+                      <div class="input-block w-100 mb-3 d-flex align-items-center">
+                        <div class="w-100">
+                          <mat-select placeholder="Select" class="select custom-mat-select">
+                            <mat-option value="1">Work</mat-option >
+                            <mat-option value="1">Home</mat-option >
+                          </mat-select>
+                        </div>
+                        @if (i===0) {
+                          <a href="javascript:void(0)" class="add-email-row text-primary add-lead-phno ms-2" (click)="addRow1()"><i class="ti ti-circle-plus"></i></a>
+                        }
+                        @if (i!== 0) {
+                          <a
+                            class="avatar avatar-md rounded delete-email text-primary"
+                            (click)="removeRow1(i)">
+                            <i class="ti ti-trash"></i>
+                          </a>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Source  <span class="text-danger"> *</span></label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Phone Calls</mat-option >
+                  <mat-option value="1">Social Media</mat-option >
+                  <mat-option value="1">Referral Sites</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Industry <span class="text-danger"> *</span></label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Rentail Industry</mat-option >
+                  <mat-option value="1">Banking</mat-option >
+                  <mat-option value="1">Hotels</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Owner <span class="text-danger"> *</span></label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Darlee Robertson</mat-option >
+                  <mat-option value="1">Sharon Roy</mat-option >
+                  <mat-option value="1">Vaughan Lewis</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Tags  <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Description  <span class="text-danger"> *</span></label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Visibility</label>
+                <div class="d-flex align-items-center">
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="public-id">
+                    <label [htmlFor]="" class="form-check-label" for="public-id">
+                      Public
+                    </label>
+                  </div>
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="private-id" checked>
+                    <label [htmlFor]="" class="form-check-label" for="private-id">
+                      Private
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="people-id" checked>
+                    <label [htmlFor]="" class="form-check-label" for="people-id">
+                      Select People
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Status</label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Active</mat-option >
+                  <mat-option value="1">Inactive</mat-option >
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Leads -->
+
+<!-- Edit Leads -->
+<div class="modal fade" id="edit_leads">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Lead</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Lead Name  <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" value="Schumm">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <div class="d-flex align-items-center ">
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                    <label [htmlFor]="" class="form-check-label" for="flexRadioDefault4">
+                      Person
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault30" checked>
+                    <label [htmlFor]="" class="form-check-label" for="flexRadioDefault30">
+                      Organization
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label [htmlFor]="" class="form-label">Company  <span class="text-danger"> *</span></label>
+                  <a href="javascript:void(0)" class="add-new text-primary" data-bs-toggle="modal" data-bs-target="#add_company"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                </div>
+                <mat-select placeholder="BrightWave Innovations" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">BrightWave Innovations</mat-option >
+                  <mat-option value="1">Stellar Dynamics</mat-option >
+                  <mat-option value="1">Quantum Nexus</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Value <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Currency<span class="text-danger"> *</span></label>
+                <mat-select placeholder="Euro" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">USD</mat-option >
+                  <mat-option value="1">Euro</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12 ">
+              <div class="lead-phno-col">
+                @for (rowadd of rowappend2; track rowadd; let i = $index) {
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="input-block mb-3">
+                        @if (i===0) {
+                          <label [htmlFor]="" class="form-label">Phone Number <span class="text-danger"> *</span></label>
+                        }
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                    <div class="col-lg-4 d-flex align-items-end">
+                      <div class="input-block w-100 mb-3 d-flex align-items-center">
+                        <div class="w-100">
+                          <mat-select placeholder="Work" class="select custom-mat-select">
+                            <mat-option value="1">Work</mat-option >
+                            <mat-option value="1">Home</mat-option >
+                          </mat-select>
+                        </div>
+                        @if (i===0) {
+                          <a href="javascript:void(0)" class="add-modal-row text-primary add-lead-phno ms-2" (click)="addRow2()"><i class="ti ti-circle-plus"></i></a>
+                        }
+                        @if (i!== 0) {
+                          <a
+                            class="avatar avatar-md rounded delete-email text-primary"
+                            (click)="removeRow2(i)">
+                            <i class="ti ti-trash"></i>
+                          </a>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="lead-email-col">
+                @for (rowadd of rowappend3; track rowadd; let i = $index) {
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="input-block mb-3">
+                        @if (i===0) {
+                          <label [htmlFor]="" class="form-label">Email  <span class="text-danger"> *</span></label>
+                        }
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                    <div class="col-lg-4 d-flex align-items-end">
+                      <div class="input-block w-100 mb-3 d-flex align-items-center">
+                        <div class="w-100">
+                          <mat-select placeholder="Work" class="select custom-mat-select">
+                            <mat-option value="1">Work</mat-option >
+                            <mat-option value="1">Home</mat-option >
+                          </mat-select>
+                        </div>
+                        @if (i===0) {
+                          <a href="javascript:void(0)" class="add-email-row text-primary add-lead-phno ms-2" (click)="addRow3()"><i class="ti ti-circle-plus"></i></a>
+                        }
+                        @if (i!== 0) {
+                          <a
+                            class="avatar avatar-md rounded delete-email text-primary"
+                            (click)="removeRow3(i)">
+                            <i class="ti ti-trash"></i>
+                          </a>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Source  <span class="text-danger"> *</span></label>
+                <mat-select placeholder="Social Media" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Phone Calls</mat-option >
+                  <mat-option value="1">Social Media</mat-option >
+                  <mat-option value="1">Referral Sites</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Industry <span class="text-danger"> *</span></label>
+                <mat-select placeholder="Banking" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Rentail Industry</mat-option >
+                  <mat-option value="1">Banking</mat-option >
+                  <mat-option value="1">Hotels</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Owner <span class="text-danger"> *</span></label>
+                <mat-select placeholder="Sharon Roy" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Darlee Robertson</mat-option >
+                  <mat-option value="1">Sharon Roy</mat-option >
+                  <mat-option value="1">Vaughan Lewis</mat-option >
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Tags  <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Description  <span class="text-danger"> *</span></label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Visibility</label>
+                <div class="d-flex align-items-center">
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="public-id2">
+                    <label [htmlFor]="" class="form-check-label" for="public-id2">
+                      Public
+                    </label>
+                  </div>
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="private-id2" checked>
+                    <label [htmlFor]="" class="form-check-label" for="private-id2">
+                      Private
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="people-id2" checked>
+                    <label [htmlFor]="" class="form-check-label" for="people-id2">
+                      Select People
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Status</label>
+                <mat-select placeholder="Active" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option >
+                  <mat-option value="1">Active</mat-option >
+                  <mat-option value="1">Inactive</mat-option >
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Leads -->

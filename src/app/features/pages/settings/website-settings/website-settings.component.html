@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-xl-3 theiaStickySidebar">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-column list-group settings-list">
+          <a
+            [class.active]="last === 'bussiness-settings'"
+            [routerLink]="routes.bussinessSettings"
+            class="d-inline-flex align-items-center rounded py-2 px-3"
+            >@if (last === 'bussiness-settings') {
+            <i
+              class="ti ti-arrow-badge-right me-2"
+              ></i
+              >
+              }Business Settings</a
+              >
+              <a
+                [class.active]="last === 'seo-settings'"
+                [routerLink]="routes.seoSettings"
+                class="d-inline-flex align-items-center rounded py-2 px-3"
+                >@if (last === 'seo-settings') {
+                <i
+                  class="ti ti-arrow-badge-right me-2"
+                  ></i
+                  >
+                  }SEO Settings</a
+                  >
+                  <a
+                    [class.active]="last === 'localization-settings'"
+                    [routerLink]="routes.localizationSettings"
+                    class="d-inline-flex align-items-center rounded py-2 px-3"
+                    >@if (last === 'localization-settings') {
+                    <i
+                      class="ti ti-arrow-badge-right me-2"
+                      ></i
+                      >
+                      }Localization</a
+                      >
+                      <a
+                        [class.active]="last === 'prefixes'"
+                        [routerLink]="routes.prefixes"
+                        class="d-inline-flex align-items-center rounded py-2 px-3"
+                        >@if (last === 'prefixes') {
+                        <i
+                          class="ti ti-arrow-badge-right me-2"
+                          ></i
+                          >
+                          }Prefixes</a
+                          >
+                          <a
+                            [class.active]="last === 'preferences'"
+                            [routerLink]="routes.preferences"
+                            class="d-inline-flex align-items-center rounded py-2 px-3"
+                            >@if (last === 'preferences') {
+                            <i
+                              class="ti ti-arrow-badge-right me-2"
+                              ></i
+                              >
+                              }Preferences</a
+                              >
+                              <a
+                                [class.active]="last === 'appearance'"
+                                [routerLink]="routes.appearance"
+                                class="d-inline-flex align-items-center rounded py-2 px-3"
+                                >@if (last === 'appearance') {
+                                <i
+                                  class="ti ti-arrow-badge-right me-2"
+                                  ></i
+                                  >
+                                  }Appearance</a
+                                  >
+                                  <a
+                                    [class.active]="last === 'language' || last === 'add-language'"
+                                    [routerLink]="routes.language"
+                                    class="d-inline-flex align-items-center rounded py-2 px-3"
+                                    >@if (last === 'language' || last === 'add-language' || last === 'language-web') {
+                                    <i
+                                      class="ti ti-arrow-badge-right me-2"
+                                      ></i
+                                      >
+                                      }Language</a
+                                      >
+                                      <a
+                                        [class.active]="last === 'authentication-settings'"
+                                        [routerLink]="routes.authenticationSettings"
+                                        class="d-inline-flex align-items-center rounded py-2 px-3"
+                                        >@if (last === 'authentication-settings') {
+                                        <i
+                                          class="ti ti-arrow-badge-right me-2"
+                                          ></i
+                                          >
+                                          }Authentication Settings</a
+                                          >
+                                          <a
+                                            [class.active]="last === 'ai-settings'"
+                                            [routerLink]="routes.aiSettings"
+                                            class="d-inline-flex align-items-center rounded py-2 px-3"
+                                            >@if (last === 'ai-settings') {
+                                            <i
+                                              class="ti ti-arrow-badge-right me-2"
+                                              ></i
+                                              >
+                                              }AI Settings</a
+                                              >
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-xl-9">
+                                        <router-outlet></router-outlet>
+                                      </div>
+                                    </div>

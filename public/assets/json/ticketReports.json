@@ -1,0 +1,125 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "ticketId": "#TIC016",
+            "description": "Login not working",
+            "priority": "Critical",
+            "companyName": "BrightWave Innovations",
+            "companyImage": "company-01.svg",
+            "date": "15 Dec 2025",
+            "assigneName": "William Parsons",
+            "assigneImage": "user-01.jpg",
+            "status": "Closed"
+        },
+        {
+            "id": 2,
+            "ticketId": "#TIC015",
+            "description": "HR module not loading",
+            "priority": "High",
+            "companyName": "Stellar Dynamics",
+            "companyImage": "company-02.svg",
+            "date": "10 Dec 2025",
+            "assigneName": "Lucille Tomberlin",
+            "assigneImage": "user-02.jpg",
+            "status": "Open"
+        },
+        {
+            "id": 3,
+            "ticketId": "#TIC014",
+            "description": "Billing amount incorrect",
+            "priority": "Medium",
+            "companyName": "Quantum Nexus",
+            "companyImage": "company-03.svg",
+            "date": "08 Dec 2025",
+            "assigneName": "Frederick Johnson",
+            "assigneImage": "user-03.jpg",
+            "status": "Closed"
+        },
+        {
+            "id": 4,
+            "ticketId": "#TIC013",
+            "description": "Session Expiring Quickly",
+            "priority": "High",
+            "companyName": "EcoVision Enterprises",
+            "companyImage": "company-04.svg",
+            "date": "01 Dec 2025",
+            "assigneName": "Sarah Henry",
+            "assigneImage": "user-04.jpg",
+            "status": "Pending"
+        },
+        {
+            "id": 5,
+            "ticketId": "#TIC012",
+            "description": "Unable to access dashboard",
+            "priority": "Critical",
+            "companyName": "Aurora Technologies",
+            "companyImage": "company-05.svg",
+            "date": "26 Nov 2025",
+            "assigneName": "Thomas Miller",
+            "assigneImage": "user-05.jpg",
+            "status": "Open"
+        },
+        {
+            "id": 6,
+            "ticketId": "#TIC011",
+            "description": "Data Sync Issue",
+            "priority": "High",
+            "companyName": "BlueSky Ventures",
+            "companyImage": "company-06.svg",
+            "date": "18 Nov 2025",
+            "assigneName": "Melissa Shelton",
+            "assigneImage": "user-06.jpg",
+            "status": "On Hold"
+        },
+        {
+            "id": 7,
+            "ticketId": "#TIC010",
+            "description": "Widgets Missing",
+            "priority": "Medium",
+            "companyName": "TerraFusion Energy",
+            "companyImage": "company-07.svg",
+            "date": "03 Nov 2025",
+            "assigneName": "James Rodriguez",
+            "assigneImage": "user-07.jpg",
+            "status": "Open"
+        },
+        {
+            "id": 8,
+            "ticketId": "#TIC009",
+            "description": "Payment Failed",
+            "priority": "High",
+            "companyName": "UrbanPulse Design",
+            "companyImage": "company-08.svg",
+            "date": "29 Oct 2025",
+            "assigneName": "Regina Chavez",
+            "assigneImage": "user-08.jpg",
+            "status": "Closed"
+        },
+        {
+            "id": 9,
+            "ticketId": "#TIC008",
+            "description": "Subscription Not Updating",
+            "priority": "Low",
+            "companyName": "Nimbus Networks",
+            "companyImage": "company-09.svg",
+            "date": "25 Oct 2025",
+            "assigneName": "Joshua Dillon",
+            "assigneImage": "user-09.jpg",
+            "status": "Pending"
+        },
+        {
+            "id": 10,
+            "ticketId": "#TIC007",
+            "description": "Data Export Blank",
+            "priority": "High",
+            "companyName": "Epicurean Delights",
+            "companyImage": "company-10.svg",
+            "date": "17 Oct 2025",
+            "assigneName": "Diana Riddle",
+            "assigneImage": "user-10.jpg",
+            "status": "On Hold"
+        }
+    ],
+    "totalData": 10
+}

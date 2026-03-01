@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-xl-3 theiaStickySidebar">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-column list-group settings-list">
+          <a
+            [class.active]="last === 'salary-settings'"
+            [routerLink]="routes.salarySettings"
+            class="d-inline-flex align-items-center rounded py-2 px-3"
+            >@if (last === 'salary-settings') {
+            <i
+              class="ti ti-arrow-badge-right me-2"
+              ></i
+              >
+              }Salary Settings</a
+              >
+              <a
+                [class.active]="last === 'approval-settings'"
+                [routerLink]="routes.approvalSettings"
+                class="d-inline-flex align-items-center rounded py-2 px-3"
+                >@if (last === 'approval-settings') {
+                <i
+                  class="ti ti-arrow-badge-right me-2"
+                  ></i
+                  >
+                  }Approval Settings</a
+                  >
+                  <a
+                    [class.active]="last === 'invoice-settings'"
+                    [routerLink]="routes.invoiceSettings"
+                    class="d-inline-flex align-items-center rounded py-2 px-3"
+                    >@if (last === 'invoice-settings') {
+                    <i
+                      class="ti ti-arrow-badge-right me-2"
+                      ></i
+                      >
+                      }Invoice Settings</a
+                      >
+                      <a
+                        [class.active]="last === 'leave-type'"
+                        [routerLink]="routes.leaveType"
+                        class="d-inline-flex align-items-center rounded py-2 px-3"
+                        >@if (last === 'leave-type') {
+                        <i
+                          class="ti ti-arrow-badge-right me-2"
+                          ></i
+                          >
+                          }Leave Type</a
+                          >
+                          <a
+                            [class.active]="last === 'custom-fields'"
+                            [routerLink]="routes.customFields"
+                            class="d-inline-flex align-items-center rounded py-2 px-3"
+                            >@if (last === 'custom-fields') {
+                            <i
+                              class="ti ti-arrow-badge-right me-2"
+                              ></i
+                              >
+                              }Custom Fields</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-9">
+                        <router-outlet></router-outlet>
+                      </div>
+                    </div>

@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-xl-3 theiaStickySidebar">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-column list-group settings-list">
+          <a
+            [class.active]="last === 'email-settings'"
+            [routerLink]="routes.emailSettings"
+            class="d-inline-flex align-items-center rounded py-2 px-3"
+            >@if (last === 'email-settings') {
+            <i
+              class="ti ti-arrow-badge-right me-2"
+              ></i
+              >
+              }Email Settings</a
+              >
+              <a
+                [class.active]="last === 'email-template'"
+                [routerLink]="routes.emailTemplate"
+                class="d-inline-flex align-items-center rounded py-2 px-3"
+                >@if (last === 'email-template') {
+                <i
+                  class="ti ti-arrow-badge-right me-2"
+                  ></i
+                  >
+                  }Email Templates</a
+                  >
+                  <a
+                    [class.active]="last === 'sms-settings'"
+                    [routerLink]="routes.smsSettings"
+                    class="d-inline-flex align-items-center rounded py-2 px-3"
+                    >@if (last === 'sms-settings') {
+                    <i
+                      class="ti ti-arrow-badge-right me-2"
+                      ></i
+                      >
+                      }SMS Settings</a
+                      >
+                      <a
+                        [class.active]="last === 'sms-template'"
+                        [routerLink]="routes.smsTemplate"
+                        class="d-inline-flex align-items-center rounded py-2 px-3"
+                        >@if (last === 'sms-template') {
+                        <i
+                          class="ti ti-arrow-badge-right me-2"
+                          ></i
+                          >
+                          }SMS Templates</a
+                          >
+                          <a
+                            [class.active]="last === 'otp-settings'"
+                            [routerLink]="routes.otpSettings"
+                            class="d-inline-flex align-items-center rounded py-2 px-3"
+                            >@if (last === 'otp-settings') {
+                            <i
+                              class="ti ti-arrow-badge-right me-2"
+                              ></i
+                              >
+                              }OTP</a
+                              >
+                              <a
+                                [class.active]="last === 'gdpr'"
+                                [routerLink]="routes.gdpr"
+                                class="d-inline-flex align-items-center rounded py-2 px-3"
+                                >@if (last === 'gdpr') {
+                                <i
+                                  class="ti ti-arrow-badge-right me-2"
+                                  ></i
+                                  >
+                                  }GDPR Cookies</a
+                                  >
+                                  <a
+                                    [class.active]="last === 'maintenance-mode'"
+                                    [routerLink]="routes.maintenanceMode"
+                                    class="d-inline-flex align-items-center rounded py-2 px-3"
+                                    >@if (last === 'maintenance-mode') {
+                                    <i
+                                      class="ti ti-arrow-badge-right me-2"
+                                      ></i
+                                      >
+                                      }Maintenance Mode</a
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-9">
+                                <router-outlet></router-outlet>
+                              </div>
+                            </div>

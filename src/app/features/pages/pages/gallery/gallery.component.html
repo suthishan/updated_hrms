@@ -1,0 +1,72 @@
+<div class="page-wrapper">
+	<div class="content">
+
+		<!-- Breadcrumb -->
+		<div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <app-breadcrumbs title="Gallery" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+      <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+		</div>
+		<!-- /Breadcrumb -->
+
+		<!-- Gallery -->
+		<div class="card">
+			<div class="card-body">
+				<div class="ss">
+          <lightgallery class="row row-gap-4 justify-content-center" [settings]="settings" [onBeforeSlide]="onBeforeSlide">
+					<div data-src="assets/img/social/gallery.jpg" data-responsive="assets/img/social/gallery.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-06.jpg" data-responsive="assets/img/social/gallery-06.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-06.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-07.jpg" data-responsive="assets/img/social/gallery-07.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-07.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-08.jpg" data-responsive="assets/img/social/gallery-08.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-08.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-09.jpg" data-responsive="assets/img/social/gallery-09.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-09.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-05.jpg" data-responsive="assets/img/social/gallery-05.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-05.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-10.jpg" data-responsive="assets/img/social/gallery-10.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-10.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-11.jpg" data-responsive="assets/img/social/gallery-11.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-11.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+					<div data-src="assets/img/social/gallery-12.jpg" data-responsive="assets/img/social/gallery-12.jpg" class="col-lg-4 col-md-6 col-sm-12">
+						<a href="javascript:void(0);" data-fancybox="gallery" class="gallery-item">
+							<img src="assets/img/social/gallery-12.jpg" class="img-fluid rounded w-100" alt="img">
+						</a>
+					</div>
+        </lightgallery>
+				</div>
+			</div>
+		</div>
+		<!-- /Gallery -->
+
+	</div>
+
+<app-footer />
+</div>

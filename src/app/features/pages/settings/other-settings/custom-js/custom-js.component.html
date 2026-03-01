@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header px-0 mx-3">
+      <div class="row g-3 align-items-center">
+          <div class="col-md-6 col-sm-4">
+              <h4>Custom JS</h4>
+          </div>
+      </div>
+  </div>
+<div class="card-body">
+      <h5 class="mb-3">Write Custom JS</h5>
+      <div class="bg-dark text-gray-5">
+<pre class="language-markup mb-0">
+<code class="language-markup mb-0">
+document.addEventListener("DOMContentLoaded", function () &#123;
+const scrollers = document.querySelectorAll(".horizontal-slide");
+scrollers.forEach((scroller) => &#123;
+scroller.setAttribute("data-animated", true);
+const scrollerInner = scroller.querySelector(".slide-list");
+const scrollerContent = Array.from(scrollerInner.children);
+scrollerContent.forEach((item) => &#123;
+const duplicatedItem = item.cloneNode(true);
+duplicatedItem.setAttribute("aria-hidden", true);
+scrollerInner.appendChild(duplicatedItem);
+&#125;);
+&#125;); 
+&#125;);
+</code>
+</pre>
+      </div>
+      <div class="d-flex align-items-center justify-content-end border-top mt-3 pt-3">
+          <button type="button" class="btn btn-outline-light border me-3">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,311 @@
+		<!-- Add Assets -->
+		<div class="modal fade" id="add_assets">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Asset</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Asset  Name</label>
+										<input type="text" class="form-control">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date3">
+										<label class="form-label">Purchased Date</label>
+										<div class="input-icon-end position-relative">
+                                            <input
+                                              type="text"
+                                              class="form-control datetimepicker"
+                                              bsDatepicker
+                                              container=".ngx-date3"
+                                              [bsConfig]="{ adaptivePosition: true }"
+                                              placeholder="dd/mm/yyyy"
+                                              value="02-05-2024"
+                                            />
+                                            <span class="input-icon-addon">
+                                              <i class="ti ti-calendar text-gray-7"></i>
+                                            </span>
+                                          </div>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Purchase From</label>
+										<input type="text" class="form-control">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Manufacture</label>
+										<input type="text" class="form-control">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Serial Number</label>
+										<input type="text" class="form-control">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ">
+										<label class="form-label">Model</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date1">
+										<label class="form-label">Warranty</label>
+										<div class="input-icon-end position-relative">
+                                            <input
+                                              type="text"
+                                              class="form-control datetimepicker"
+                                              bsDatepicker
+                                              container=".ngx-date1"
+                                              [bsConfig]="{ adaptivePosition: true }"
+                                              placeholder="dd/mm/yyyy"
+                                              value="02-05-2024"
+                                            />
+                                            <span class="input-icon-addon">
+                                              <i class="ti ti-calendar text-gray-7"></i>
+                                            </span>
+                                          </div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Asset User</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Anthony Lewis</mat-option>
+											<mat-option value="1">Brian Villalobos</mat-option>
+											<mat-option value="1">Sophie Headrick</mat-option>
+										</mat-select>
+									</div>									
+								</div>						
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Asset</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Assets -->
+
+		<!-- Edit Assets -->
+		<div class="modal fade" id="edit_assets">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Asset</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Asset  Name</label>
+										<input type="text" class="form-control" value="Dell Laptop">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date2">
+										<label class="form-label">Purchased Date</label>
+										<div class="input-icon-end position-relative">
+                                            <input
+                                              type="text"
+                                              class="form-control datetimepicker"
+                                              bsDatepicker
+                                              container=".ngx-date2"
+                                              [bsConfig]="{ adaptivePosition: true }"
+                                              placeholder="dd/mm/yyyy"
+                                              value="02-05-2024"
+                                            />
+                                            <span class="input-icon-addon">
+                                              <i class="ti ti-calendar text-gray-7"></i>
+                                            </span>
+                                          </div>
+									</div>									
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Purchase From</label>
+										<input type="text" class="form-control" value="Dell">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Manufacture</label>
+										<input type="text" class="form-control" value="Dell">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Serial Number</label>
+										<input type="text" class="form-control" value="423237">
+									</div>									
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ">
+										<label class="form-label">Model</label>
+										<input type="text" class="form-control" value="534AS34">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date4">
+										<label class="form-label">Warranty</label>
+										<div class="input-icon-end position-relative">
+                                            <input
+                                              type="text"
+                                              class="form-control datetimepicker"
+                                              bsDatepicker
+                                              container=".ngx-date4"
+                                              [bsConfig]="{ adaptivePosition: true }"
+                                              placeholder="dd/mm/yyyy"
+                                              value="02-05-2024"
+                                            />
+                                            <span class="input-icon-addon">
+                                              <i class="ti ti-calendar text-gray-7"></i>
+                                            </span>
+                                          </div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Asset User</label>
+										 <mat-select placeholder="Anthony Lewis" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Anthony Lewis</mat-option>
+											<mat-option value="1">Brian Villalobos</mat-option>
+											<mat-option value="1">Sophie Headrick</mat-option>
+										</mat-select>
+									</div>									
+								</div>						
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Asset</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Assets -->
+
+        <!-- Add Assets -->
+		<div class="modal fade" id="add_category">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Category</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Category Name</label>
+										<input type="text" class="form-control">
+									</div>									
+								</div>				
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Category</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Assets -->
+
+		<!-- Edit Assets -->
+		<div class="modal fade" id="edit_category">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Category</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Category Name</label>
+										<input type="text" class="form-control" value="Office Furnitures">
+									</div>									
+								</div>				
+								<div class="col-md-12">
+									<div class="mb-3 ">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Assets -->
+
+        

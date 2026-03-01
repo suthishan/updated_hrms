@@ -1,0 +1,90 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+      <div class="col">
+        <h3 class="page-title">Data Tables</h3>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Default Datatable</h4>
+          <p class="card-text">
+            This is the most basic example of the datatables with zero
+            configuration. Use the
+            <code>.datatable</code> class to initialize datatables.
+          </p>
+        </div>
+        <div class="card-body">
+          <div class="custom-datatable-filter table-responsive">
+            <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length">
+                    <label> Row Per Page
+                      <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize(pageSize)" class="form-select form-select-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      Entries
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                      <label>
+                          <input [(ngModel)]="searchDataValue" [ngModelOptions]="{ standalone: true }"
+                              (ngModelChange)="searchData(searchDataValue)" type="search" class="form-control form-control-sm"
+                              placeholder="Search..." />
+                      </label>
+                  </div>
+              </div>
+              </div>
+              <div class="row dt-row">
+                <div class="col-sm-12 table-responsive">
+                  <table matSort (matSortChange)="sortData($event)" class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                    <thead class="thead-light">
+                      <tr>
+                        <th mat-sort-header="Name">Name</th>
+                        <th mat-sort-header="Position">Position</th>
+                        <th mat-sort-header="Office">Office</th>
+                        <th mat-sort-header="Age">Age</th>
+                        <th mat-sort-header="Startdate">Start date</th>
+                        <th mat-sort-header="Salary">Salary</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (data of tableData; track data) {
+                      <tr>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.position }}</td>
+                        <td>{{ data.office }}</td>
+                        <td>{{ data.age }}</td>
+                        <td>{{ data.startDate }}</td>
+                        <td>{{ data.salary }}</td>
+                      </tr>
+                      } 
+                      @if (tableData.length === 0) {
+                      <tr>
+                        <td colspan="12">
+                          <h5 class="no-record">No matching records found</h5>
+                        </td>
+                      </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <app-custom-pagination></app-custom-pagination>
+            </div>
+          </div>
+           
+        </div>
+      </div>
+    </div>
+  </div>

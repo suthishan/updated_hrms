@@ -1,0 +1,476 @@
+		<!-- Add Training -->
+		<div class="modal fade" id="add_training">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Training</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Training Type</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Git Training</mat-option>
+											<mat-option value="1">HTML Training</mat-option>
+											<mat-option value="1">React Training</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Trainer</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Anthony Lewis</mat-option>
+											<mat-option value="1">Brian Villalobos</mat-option>
+											<mat-option value="1">Harvey Smith</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Employees</label>
+										 <mat-select placeholder="Select" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Bernardo Galaviz</mat-option>
+											<mat-option value="1">Jeffrey Warden</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Training Cost</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date3">
+										<label class="form-label">Start Date</label>
+										<div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date3"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date1">
+										<label class="form-label">End Date</label>
+										<div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date1"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<textarea class="form-control"></textarea>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Training</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Training -->
+
+		<!-- Edit Training -->
+		<div class="modal fade" id="edit_training">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Training</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Training Type</label>
+										 <mat-select placeholder="Git Training" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Git Training</mat-option>
+											<mat-option value="1">HTML Training</mat-option>
+											<mat-option value="1">React Training</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Trainer</label>
+										 <mat-select placeholder="Anthony Lewis" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Anthony Lewis</mat-option>
+											<mat-option value="1">Brian Villalobos</mat-option>
+											<mat-option value="1">Harvey Smith</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Employees</label>
+										 <mat-select placeholder="Bernardo Galaviz" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Bernardo Galaviz</mat-option>
+											<mat-option value="1">Jeffrey Warden</mat-option>
+										</mat-select>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Training Cost</label>
+										<input type="text" class="form-control" value="$200">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date2">
+										<label class="form-label">Start Date</label>
+										<div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date2"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3 ngx-date4">
+										<label class="form-label">End Date</label>
+										<div class="input-icon-end position-relative">
+											<input
+											  type="text"
+											  class="form-control datetimepicker"
+											  bsDatepicker
+											  container=".ngx-date4"
+											  [bsConfig]="{ adaptivePosition: true }"
+											  placeholder="dd/mm/yyyy"
+											  value="02-05-2024"
+											/>
+											<span class="input-icon-addon">
+											  <i class="ti ti-calendar text-gray-7"></i>
+											</span>
+										  </div>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<textarea class="form-control">Version control and code collaboration.</textarea>
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Training</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Training -->
+
+        		<!-- Add Training Type -->
+		<div class="modal fade" id="add_training_type">
+			<div class="modal-dialog modal-dialog-centered modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Training Type</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Type</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<textarea class="form-control"></textarea>
+									</div>	
+								</div>
+								
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Training Type</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Training Type -->
+
+		<!-- Edit Training Type -->
+		<div class="modal fade" id="edit_training_type">
+			<div class="modal-dialog modal-dialog-centered modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Training Type</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Type</label>
+										<input type="text" class="form-control" value="Git Training">
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<textarea class="form-control">Git training covers managing code changes and collaboration using Git commands and workflows</textarea>
+									</div>	
+								</div>
+								
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Trainer -->
+
+
+    		<!-- Add Trainer -->
+		<div class="modal fade" id="add_trainer">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Trainer</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form>
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">First Name</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Last Name</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Role</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Phone</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Email</label>
+										<input type="text" class="form-control">
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<textarea class="form-control"></textarea>
+									</div>	
+								</div>
+								
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Trainer</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Trainer -->
+
+		<!-- Edit Trainer -->
+		<div class="modal fade" id="edit_trainer">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Trainer</h4>
+						<button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti ti-x"></i>
+						</button>
+					</div>
+					<form >
+						<div class="modal-body pb-0">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">First Name</label>
+										<input type="text" class="form-control" value="Anthony">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Last Name</label>
+										<input type="text" class="form-control" value="Lewis">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Role</label>
+										<input type="text" class="form-control" value="Web Designer">
+									</div>	
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label class="form-label">Phone</label>
+										<input type="text" class="form-control" value="(179) 7382 829">
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Email</label>
+										<input type="text" class="form-control" value="brian@example.com">
+									</div>	
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Description</label>
+										<textarea class="form-control">Brian is a trainer who excels in teaching advanced technical skills.</textarea>
+									</div>	
+								</div>
+								
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label class="form-label">Status</label>
+										 <mat-select placeholder="Active" class="select custom-mat-select">
+											<mat-option value="1">Select</mat-option>
+											<mat-option value="1">Active</mat-option>
+											<mat-option value="1">Inactive</mat-option>
+										</mat-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Trainer -->
+
+       

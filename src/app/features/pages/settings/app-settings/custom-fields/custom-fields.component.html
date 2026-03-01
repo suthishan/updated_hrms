@@ -1,0 +1,274 @@
+<div class="card">
+  <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+          <h4>Custom Fields</h4>
+          <a href="javascript:void(0);" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#new-field"><i class="ti ti-circle-plus me-2"></i>Add Fields</a>
+      </div>
+  </div>
+  <div class="card-body p-0">
+      <div class="table-responsive">
+          <table class="table">
+              <thead class="thead-light">
+                  <tr>
+                      <th class="no-sort">
+                          <div class="form-check form-check-md">
+                              <input class="form-check-input" type="checkbox" id="select-all">
+                          </div>
+                      </th>
+                      <th class="fw-semibold">Module</th>
+                      <th class="fw-semibold">Label</th>
+                      <th class="fw-semibold">Type</th>
+                      <th class="fw-semibold">Default Value</th>
+                      <th class="fw-semibold">Required</th>
+                      <th class="fw-semibold">Status</th>
+                      <th class="fw-semibold">Action</th>
+                  </tr>
+              </thead>  <tbody>
+                <tr>
+                    <th class="no-sort">
+                        <div class="form-check form-check-md">
+                            <input class="form-check-input" type="checkbox">
+                        </div>
+                    </th>
+                    <th>Employee</th>
+                    <th class="text-gray fw-normal">Preferred Language</th>
+                    <th class="text-gray fw-normal">Select</th>
+                    <th class="text-gray fw-normal">English</th>
+                    <th class="text-gray fw-normal">
+                        Required
+                    </th>
+                    <th class="d-flex">
+                        <span class="badge badge-success badge-sm d-flex align-items-center"><i class="ti ti-point-filled"></i>Active</span>
+                    </th>
+                    <th>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="text-gray" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></a>
+                            <div class="dropdown-menu">
+                                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-field"><i class="ti ti-edit me-2"></i>Edit</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i class="ti ti-trash me-2"></i>Delete</a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="no-sort">
+                        <div class="form-check form-check-md">
+                            <input class="form-check-input" type="checkbox">
+                        </div>
+                    </th>
+                    <th>Projects</th>
+                    <th class="text-gray fw-normal">Project Type</th>
+                    <th class="text-gray fw-normal">Select</th>
+                    <th class="text-gray fw-normal">Internal</th>
+                    <th class="text-gray fw-normal">
+                        Required
+                    </th>
+                    <th class="d-flex">
+                        <span class="badge badge-success badge-sm d-flex align-items-center"><i class="ti ti-point-filled"></i>Active</span>
+                    </th>
+                    <th>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="text-gray" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></a>
+                            <div class="dropdown-menu">
+                                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-field"><i class="ti ti-edit me-2"></i>Edit</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i class="ti ti-trash me-2"></i>Delete</a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="no-sort">
+                        <div class="form-check form-check-md">
+                            <input class="form-check-input" type="checkbox">
+                        </div>
+                    </th>
+                    <th>Tasks</th>
+                    <th class="text-gray fw-normal">Task Type</th>
+                    <th class="text-gray fw-normal">Select</th>
+                    <th class="text-gray fw-normal">Design</th>
+                    <th class="text-gray fw-normal">
+                        Required
+                    </th>
+                    <th class="d-flex">
+                        <span class="badge badge-success badge-sm d-flex align-items-center"><i class="ti ti-point-filled"></i>Active</span>
+                    </th>
+                    <th>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="text-gray" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></a>
+                            <div class="dropdown-menu">
+                                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-field"><i class="ti ti-edit me-2"></i>Edit</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i class="ti ti-trash me-2"></i>Delete</a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+        <!-- Add New Fields -->
+        <div class="modal fade" id="new-field">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Add Custom Field
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Module</label>
+                                         <mat-select placeholder="Select"  class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">User</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Label</label>
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Default Value</label>
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Input Type</label>
+                                         <mat-select placeholder="Select"  class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Text</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="d-flex mb-3">
+                                        <label class="form-label me-3">Required</label>
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" type="radio" name="required" id="required1" checked>
+                                            <label class="form-check-label" for="required1">Yes</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="required" type="radio" id="required2">
+                                            <label class="form-check-label" for="required2">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                         <mat-select placeholder="Select"  class="select custom-mat-select">
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="1">Inactive</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" class="btn btn-outline-primary w-100" data-bs-dismiss="modal" aria-label="Close">Cancel</a>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Add New Fields -->
+
+        <!-- Edit New Fields -->
+        <div class="modal fade" id="edit-field">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Edit Custom Field
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Module</label>
+                                         <mat-select placeholder="Select"  class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">User</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Label</label>
+                                        <input class="form-control" type="text" value="Middle Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Default Value</label>
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Input Type</label>
+                                         <mat-select placeholder="Text"  class="select custom-mat-select">
+                                            <mat-option value="1">Select</mat-option>
+                                            <mat-option value="1">Text</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="d-flex mb-3">
+                                        <label class="form-label me-3">Required</label>
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input" type="radio" name="required" id="required3" checked>
+                                            <label class="form-check-label" for="required3">Yes</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="required" type="radio" id="required4">
+                                            <label class="form-check-label" for="required4">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                         <mat-select placeholder="Active"  class="select custom-mat-select">
+                                            <mat-option value="1">Active</mat-option>
+                                            <mat-option value="1">Inactive</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" class="btn btn-outline-primary w-100" data-bs-dismiss="modal" aria-label="Close">Cancel</a>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Edit New Fields -->

@@ -1,0 +1,37 @@
+<div class="page-wrapper">
+    <div class="content pb-4">
+        <!-- Breadcrumb -->
+        <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+            <app-breadcrumbs title="Outgoing Calls" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+            <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+        </div>
+    
+        <div class="row">
+    
+            <!-- Call -->
+            <div class="col-xxl-12">
+                <div class="card incoming-call mb-0">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="voice-call-img rounded-circle mb-3">
+                            <img src="assets/img/users/user-32.jpg" class="img-fluid rounded-circle" alt="img">
+                        </div>
+                        <h4 class="fs-20 fw-bold">Anthony Lewis</h4>
+                        <p>Calling...</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a href="javascript:void(0);" class="btn btn-light call-item p-0 d-flex align-items-center justify-content-center me-3"><i class="ti ti-video fs-20"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-light call-item p-0 d-flex align-items-center justify-content-center me-3"><i class="ti ti-microphone fs-20"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-danger call-item p-0 d-flex align-items-center justify-content-center me-3"><i class="ti ti-phone-off fs-20"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-light call-item p-0 d-flex align-items-center justify-content-center me-3"><i class="ti ti-user-plus fs-20"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-light call-item p-0 d-flex align-items-center justify-content-center"><i class="ti ti-volume fs-20"></i></a>
+                        </div>
+                    </div>	
+                </div>		
+            </div>
+            <!-- /Call -->
+    
+        </div>
+    
+    </div>
+</div>

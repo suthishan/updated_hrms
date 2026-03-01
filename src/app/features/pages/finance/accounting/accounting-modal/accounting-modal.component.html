@@ -1,0 +1,781 @@
+<!-- Add Category -->
+<div class="modal fade" id="add_category">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Category</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Category Name</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Sub Category Name</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Category -->
+
+<!-- Edit Category -->
+<div class="modal fade" id="edit_category">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Category</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Category Name</label>
+                <input type="text" class="form-control" value="Technology">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Sub Category Name</label>
+                <input type="text" class="form-control" value="Hardware Cost">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Category -->
+<!-- Add Budgets -->
+<div class="modal fade" id="add_budgets">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Budget</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Budget Title</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Choose Budget respect type</label>
+                <div class="d-flex align-items-center">
+                  <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="flexRadio" id="budget">
+                    <label class="form-label" for="budget">
+                      Project
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadio" id="budget1">
+                    <label class="form-label" for="budget1">
+                      Category
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date2">
+                <label class="form-label">Start Date </label>
+                <div class="input-icon-end position-relative">
+                  <input
+                    type="text"
+                    class="form-control datetimepicker"
+                    bsDatepicker
+                    container=".ngx-date2"
+                    [bsConfig]="{ adaptivePosition: true }"
+                    placeholder="dd/mm/yyyy"
+                    value="02-05-2024"
+                    />
+                    <span class="input-icon-addon">
+                      <i class="ti ti-calendar text-gray-7"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3 ngx-date3">
+                  <label class="form-label">End Date </label>
+                  <div class="input-icon-end position-relative">
+                    <input
+                      type="text"
+                      class="form-control datetimepicker"
+                      bsDatepicker
+                      container=".ngx-date3"
+                      [bsConfig]="{ adaptivePosition: true }"
+                      placeholder="dd/mm/yyyy"
+                      value="02-05-2024"
+                      />
+                      <span class="input-icon-addon">
+                        <i class="ti ti-calendar text-gray-7"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-0">
+                  <label class="form-label">Expected Revenues</label>
+                </div>
+                <div class="revenues-content">
+                  @for (rowadd1 of rowappend1; track rowadd1; let i = $index) {
+                    <div class="row align-items-end">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Revenue Title</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                          <div>
+                            <label class="form-label">Revenue Amount</label>
+                            <div class="d-flex align-items-center">
+                              <input type="text" class="form-control">
+                              <div class="ms-2">
+                                @if (i===0) {
+                                  <a href="javascript:void(0);" class="btn btn-icon add-revenue btn-sm btn-primary rounded-circle" (click)="addRow1()"><i class="ti ti-plus"></i></a>
+                                }
+                                @if (i!== 0) {
+                                  <a
+                                    class="btn btn-icon trash-expenses btn-sm btn-primary rounded-circle"
+                                    (click)="removeRow1(i)">
+                                    <i class="ti ti-trash"></i>
+                                  </a>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-label">Overall Revenue (A)</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="mb-0">
+                  <label class="form-label">Expected Expenses</label>
+                </div>
+                <div class="expenses-content">
+                  @for (rowadd of rowappend; track rowadd; let i = $index) {
+                    <div class="row align-items-end">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Expenses Title</label>
+                          <input type="text" class="form-control" >
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                          <div>
+                            <label class="form-label">Expenses Amount</label>
+                            <div class="d-flex align-items-center">
+                              <input type="text" class="form-control" >
+                              <div class="ms-2">
+                                @if (i === 0) {
+                                  <a  href="javascript:void(0);" class="btn btn-icon add-expenses btn-sm btn-primary rounded-circle" (click)="addRow()"><i class="ti ti-plus"></i></a>
+                                }
+                                @if (i!== 0) {
+                                  <a
+                                    class="btn btn-icon trash-expenses btn-sm btn-primary rounded-circle"
+                                    (click)="removeRow(i)">
+                                    <i class="ti ti-trash"></i>
+                                  </a>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-label">Overall Expense (B)</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Expected Profit (C=A-B) </label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Tax (D) </label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-label">Budget Amount (E=C-D)</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Budget</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- /Add Budgets -->
+
+    <!-- Edit Budgets -->
+    <div class="modal fade" id="edit_budgets">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Budget</h4>
+            <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <i class="ti ti-x"></i>
+            </button>
+          </div>
+          <form >
+            <div class="modal-body pb-0">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-label">Budget Title</label>
+                    <input type="text" class="form-control" value="Office Supplies">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-label">Choose Budget respect type</label>
+                    <div class="d-flex align-items-center">
+                      <div class="form-check me-2">
+                        <input class="form-check-input" type="radio" name="flexRadio" id="budget3">
+                        <label class="form-label" for="budget3">
+                          Project
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadio" id="budget2" checked="">
+                        <label class="form-label" for="budget2">
+                          Category
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3 ngx-date4">
+                    <label class="form-label">Start Date </label>
+                    <div class="input-icon-end position-relative">
+                      <input
+                        type="text"
+                        class="form-control datetimepicker"
+                        bsDatepicker
+                        container=".ngx-date4"
+                        [bsConfig]="{ adaptivePosition: true }"
+                        placeholder="dd/mm/yyyy"
+                        value="02-05-2024"
+                        />
+                        <span class="input-icon-addon">
+                          <i class="ti ti-calendar text-gray-7"></i>
+                        </span>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3 ngx-date5">
+                      <label class="form-label">End Date </label>
+                      <div class="input-icon-end position-relative">
+                        <input
+                          type="text"
+                          class="form-control datetimepicker"
+                          bsDatepicker
+                          container=".ngx-date5"
+                          [bsConfig]="{ adaptivePosition: true }"
+                          placeholder="dd/mm/yyyy"
+                          value="02-05-2024"
+                          />
+                          <span class="input-icon-addon">
+                            <i class="ti ti-calendar text-gray-7"></i>
+                          </span>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="mb-0">
+                      <label class="form-label">Expected Revenues</label>
+                    </div>
+                    <div class="revenues-content">
+                      @for (rowadd1 of rowappend2; track rowadd1; let i = $index) {
+                        <div class="row align-items-end">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label">Revenue Title</label>
+                              <input type="text" class="form-control" value="Office Supplies">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                              <div>
+                                <label class="form-label">Revenue Amount</label>
+                                <div class="d-flex align-items-center">
+                                  <input type="text" class="form-control" value="250000">
+                                  <div class="ms-2">
+                                    @if (i===0) {
+                                      <a href="javascript:void(0);" class="btn btn-icon add-revenue btn-sm btn-primary rounded-circle" (click)="addRow2()"><i class="ti ti-plus"></i></a>
+                                    }
+                                    @if (i!== 0) {
+                                      <a
+                                        class="btn btn-icon trash-expenses btn-sm btn-primary rounded-circle"
+                                        (click)="removeRow2(i)">
+                                        <i class="ti ti-trash"></i>
+                                      </a>
+                                    }
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                    <div class="col-md-12">
+                      <div class="mb-3">
+                        <label class="form-label">Overall Revenue (A)</label>
+                        <input type="text" class="form-control" value="250000">
+                      </div>
+                    </div>
+                    <div class="mb-0">
+                      <label class="form-label">Expected Expenses</label>
+                    </div>
+                    <div class="expenses-content">
+                      @for (rowadd1 of rowappend3; track rowadd1; let i = $index) {
+                        <div class="row align-items-end">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label">Expenses Title</label>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                              <div>
+                                <label class="form-label">Expenses Amount</label>
+                                <div class="d-flex align-items-center">
+                                  <input type="text" class="form-control">
+                                  <div class="ms-2">
+                                    @if (i===0) {
+                                      <a href="javascript:void(0);" class="btn btn-icon add-expenses btn-sm btn-primary rounded-circle" (click)="addRow3()"><i class="ti ti-plus"></i></a>
+                                    }
+                                    @if (i!== 0) {
+                                      <a
+                                        class="btn btn-icon trash-expenses btn-sm btn-primary rounded-circle"
+                                        (click)="removeRow3(i)">
+                                        <i class="ti ti-trash"></i>
+                                      </a>
+                                    }
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                    <div class="col-md-12">
+                      <div class="mb-3">
+                        <label class="form-label">Overall Expense (B)</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Expected Profit (C=A-B) </label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Tax (D) </label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="mb-3">
+                        <label class="form-label">Budget Amount (E=C-D)</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /Edit Budgets -->
+
+        <!-- Add New Expense -->
+        <div class="modal fade" id="add_new_expense">
+          <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Add Budget Expense</h4>
+                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="ti ti-x"></i>
+                </button>
+              </div>
+              <form>
+                <div class="modal-body pb-0">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="mb-3">
+                        <label class="form-label">Expense Name</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Sub Category Name</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3 ngx-date7">
+                        <label class="form-label">Expense Date </label>
+                        <div class="input-icon-end position-relative">
+                          <input
+                            type="text"
+                            class="form-control datetimepicker"
+                            bsDatepicker
+                            container=".ngx-date7"
+                            [bsConfig]="{ adaptivePosition: true }"
+                            placeholder="dd/mm/yyyy"
+                            value="02-05-2024"
+                            />
+                            <span class="input-icon-addon">
+                              <i class="ti ti-calendar text-gray-7"></i>
+                            </span>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="mb-3">
+                          <div class="d-flex align-items-center justify-content-center border border-dashed rounded p-3 flex-column">
+                            <span class="avatar avatar-lg avatar-rounded bg-primary-transparent mb-2"><i class="ti ti-folder-open fs-24"></i></span>
+                            <p class="fs-14 text-center mb-2">Drag and drop your files</p>
+                            <div class="file-upload position-relative btn btn-sm btn-primary px-3 mb-2">
+                              <i class="ti ti-upload me-1"></i>Upload
+                              <input type="file" accept="video/image">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Budget Expense</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /Add New Expense -->
+
+          <!-- Edit New Expense -->
+          <div class="modal fade" id="edit_new_expense">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit Budget Expense</h4>
+                  <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ti ti-x"></i>
+                  </button>
+                </div>
+                <form>
+                  <div class="modal-body pb-0">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="mb-3">
+                          <label class="form-label">Expense Name</label>
+                          <input type="text" class="form-control" value="Servers">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Category Name</label>
+                          <input type="text" class="form-control" value="Technology">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Sub Category Name</label>
+                          <input type="text" class="form-control" value="Hardware Cost">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Amount</label>
+                          <input type="text" class="form-control" value="20000">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3 ngx-date6">
+                          <label class="form-label">Expense Date </label>
+                          <div class="input-icon-end position-relative">
+                            <input
+                              type="text"
+                              class="form-control datetimepicker"
+                              bsDatepicker
+                              container=".ngx-date6"
+                              [bsConfig]="{ adaptivePosition: true }"
+                              placeholder="dd/mm/yyyy"
+                              value="02-05-2024"
+                              />
+                              <span class="input-icon-addon">
+                                <i class="ti ti-calendar text-gray-7"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="mb-3">
+                            <div class="d-flex align-items-center justify-content-center border border-dashed rounded p-3 flex-column">
+                              <span class="avatar avatar-lg avatar-rounded bg-primary-transparent mb-2"><i class="ti ti-folder-open fs-24"></i></span>
+                              <p class="fs-14 text-center mb-2">Drag and drop your files</p>
+                              <div class="file-upload position-relative btn btn-sm btn-primary px-3 mb-2">
+                                <i class="ti ti-upload me-1"></i>Upload
+                                <input type="file" accept="video/image">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- /Edit New Expense -->
+
+            <!-- Add New Revenue -->
+            <div class="modal fade" id="add_new_revenue">
+              <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Add Budget Revenue</h4>
+                    <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                      <i class="ti ti-x"></i>
+                    </button>
+                  </div>
+                  <form>
+                    <div class="modal-body pb-0">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label">Revenue Name</label>
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Category Name</label>
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Sub Category Name</label>
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3 ngx-date8">
+                            <label class="form-label">Expense Date </label>
+                            <div class="input-icon-end position-relative">
+                              <input
+                                type="text"
+                                class="form-control datetimepicker"
+                                bsDatepicker
+                                container=".ngx-date8"
+                                [bsConfig]="{ adaptivePosition: true }"
+                                placeholder="dd/mm/yyyy"
+                                value="02-05-2024"
+                                />
+                                <span class="input-icon-addon">
+                                  <i class="ti ti-calendar text-gray-7"></i>
+                                </span>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="mb-3">
+                              <div class="d-flex align-items-center justify-content-center border border-dashed rounded p-3 flex-column">
+                                <span class="avatar avatar-lg avatar-rounded bg-primary-transparent mb-2"><i class="ti ti-folder-open fs-24"></i></span>
+                                <p class="fs-14 text-center mb-2">Drag and drop your files</p>
+                                <div class="file-upload position-relative btn btn-sm btn-primary px-3 mb-2">
+                                  <i class="ti ti-upload me-1"></i>Upload
+                                  <input type="file" accept="video/image">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Budget Revenue</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /Add New Revenue -->
+
+              <!-- Edit New Revenue -->
+              <div class="modal fade" id="edit_new_revenue">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Edit Budget Revenue</h4>
+                      <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ti ti-x"></i>
+                      </button>
+                    </div>
+                    <form>
+                      <div class="modal-body pb-0">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="mb-3">
+                              <label class="form-label">Expense Name</label>
+                              <input type="text" class="form-control" value="Training Programs">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label">Category Name</label>
+                              <input type="text" class="form-control" value="Training">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label">Sub Category Name</label>
+                              <input type="text" class="form-control" value="Employee Training">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label">Amount</label>
+                              <input type="text" class="form-control" value="20000">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3 ngx-date9">
+                              <label class="form-label">Expense Date </label>
+                              <div class="input-icon-end position-relative">
+                                <input
+                                  type="text"
+                                  class="form-control datetimepicker"
+                                  bsDatepicker
+                                  container=".ngx-date9"
+                                  [bsConfig]="{ adaptivePosition: true }"
+                                  placeholder="dd/mm/yyyy"
+                                  value="02-05-2024"
+                                  />
+                                  <span class="input-icon-addon">
+                                    <i class="ti ti-calendar text-gray-7"></i>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="mb-3">
+                                <div class="d-flex align-items-center justify-content-center border border-dashed rounded p-3 flex-column">
+                                  <span class="avatar avatar-lg avatar-rounded bg-primary-transparent mb-2"><i class="ti ti-folder-open fs-24"></i></span>
+                                  <p class="fs-14 text-center mb-2">Drag and drop your files</p>
+                                  <div class="file-upload position-relative btn btn-sm btn-primary px-3 mb-2">
+                                    <i class="ti ti-upload me-1"></i>Upload
+                                    <input type="file" accept="video/image">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Edit New Revenue -->
+

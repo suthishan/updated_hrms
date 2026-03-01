@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-xl-3 theiaStickySidebar">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-column list-group settings-list">
+          <a [routerLink]="routes.profileSettings" class="d-inline-flex align-items-center rounded  py-2 px-3">Profile Settings</a>
+          <a [routerLink]="routes.securitySettings" class="d-inline-flex align-items-center rounded py-2 px-3">Security Settings</a>
+          <a [routerLink]="routes.notificationSettings" class="d-inline-flex align-items-center rounded py-2 px-3">Notifications</a>
+          <a [routerLink]="routes.connectedApps" class="d-inline-flex align-items-center rounded active py-2 px-3"><i class="ti ti-arrow-badge-right me-2"></i>Connected Apps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-9">
+    <div class="card">
+      <div class="card-body pb-0">
+        <div class="border-bottom mb-3 pb-3">
+          <h4>Connectd Apps</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-gray-100 me-2 flex-shrink-0">
+                      <img src="assets/img/settings/connected-app-01.svg" class="w-auto h-auto" alt="Img">
+                    </span>
+                    <h5>Slack</h5>
+                  </div>
+                  <div class="form-check form-check-md form-switch">
+                    <input class="form-check-input me-2" type="checkbox" role="switch">
+                  </div>
+                </div>
+                <div>
+                  <p class="text-truncate line-clamb-2">Team communication platform with channels for group discussions and direct messaging.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-gray-100 me-2 flex-shrink-0">
+                      <img src="assets/img/settings/connected-app-02.svg" class="w-auto h-auto" alt="Img">
+                    </span>
+                    <h5>Google Calendar</h5>
+                  </div>
+                  <div class="form-check form-check-md form-switch">
+                    <input class="form-check-input me-2" type="checkbox" role="switch">
+                  </div>
+                </div>
+                <div>
+                  <p class="text-truncate line-clamb-2">Google Calendar is a web-based scheduling tool that allows users to create, manage, and share events.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-gray-100 me-2 flex-shrink-0">
+                      <img src="assets/img/settings/connected-app-03.svg" class="w-auto h-auto" alt="Img">
+                    </span>
+                    <h5>Gmail</h5>
+                  </div>
+                  <div class="form-check form-check-md form-switch">
+                    <input class="form-check-input me-2" type="checkbox" role="switch">
+                  </div>
+                </div>
+                <div>
+                  <p class="text-truncate line-clamb-2">Gmail is a free email service by Google that offers robust spam protection & 15GB of storage.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-gray-100 me-2 flex-shrink-0">
+                      <img src="assets/img/settings/connected-app-04.svg" class="w-auto h-auto" alt="Img">
+                    </span>
+                    <h5>Github</h5>
+                  </div>
+                  <div class="form-check form-check-md form-switch">
+                    <input class="form-check-input me-2" type="checkbox" role="switch">
+                  </div>
+                </div>
+                <div>
+                  <p class="text-truncate line-clamb-2">Github is a web-based platform for version control and collaboration, allowing developers to host & review code</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

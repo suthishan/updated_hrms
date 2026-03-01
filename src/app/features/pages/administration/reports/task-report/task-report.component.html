@@ -1,0 +1,394 @@
+<div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between mb-3">
+        <app-breadcrumbs title="Task Report" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+        <div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+            <div class="me-2 mb-2">
+                <div class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        <i class="ti ti-file-export me-1"></i>Export
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+        </div>
+    </div>
+    <!-- /Breadcrumb -->
+
+    <div class="row">
+
+        <!-- Total Exponses -->
+        <div class="col-lg-6 col-md-6 d-flex">
+            <div class="row flex-fill no-tooltip">
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body ">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <div>
+                                        <span class="fs-14 fw-normal text-truncate mb-1">Total Tasks</span>
+                                        <h5>800</h5>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                     <div class="data-attribute">
+                                        <apx-chart class="task-chart"
+                                        [series]="smalltask1.series"
+                                        [chart]="smalltask1.chart"
+                                        [colors]="smalltask1.colors"
+                                        [dataLabels]="smalltask1.dataLabels"
+                                        [plotOptions]="smalltask1.plotOptions"
+                                        [legend]="smalltask1.legend"
+                                        [responsive]="smalltask1.responsive"
+                                        ></apx-chart>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body ">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <div>
+                                        <span class="fs-14 fw-normal text-truncate mb-1">Total Tasks</span>
+                                        <h5>800</h5>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="data-attribute">
+                                        <apx-chart class="task-chart"
+                                        [series]="smalltask2.series"
+                                        [chart]="smalltask2.chart"
+                                        [colors]="smalltask2.colors"
+                                        [dataLabels]="smalltask2.dataLabels"
+                                        [plotOptions]="smalltask2.plotOptions"
+                                        [legend]="smalltask2.legend"
+                                        [responsive]="smalltask2.responsive"
+                                        ></apx-chart>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <div>
+                                        <span class="fs-14 fw-normal text-truncate mb-1">Total Tasks</span>
+                                        <h5>800</h5>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="data-attribute">
+                                        <apx-chart class="task-chart"
+                                        [series]="smalltask3.series"
+                                        [chart]="smalltask3.chart"
+                                        [colors]="smalltask3.colors"
+                                        [dataLabels]="smalltask3.dataLabels"
+                                        [plotOptions]="smalltask3.plotOptions"
+                                        [legend]="smalltask3.legend"
+                                        [responsive]="smalltask3.responsive"
+                                        ></apx-chart>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body ">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <div>
+                                        <span class="fs-14 fw-normal text-truncate mb-1">Total Tasks</span>
+                                        <h5>800</h5>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="data-attribute">
+                                        <apx-chart class="task-chart"
+                                        [series]="smalltask4.series"
+                                        [chart]="smalltask4.chart"
+                                        [colors]="smalltask4.colors"
+                                        [dataLabels]="smalltask4.dataLabels"
+                                        [plotOptions]="smalltask4.plotOptions"
+                                        [legend]="smalltask4.legend"
+                                        [responsive]="smalltask4.responsive"
+                                        ></apx-chart>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Total Exponses -->
+
+        <!-- Total Exponses -->
+        <div class="col-lg-6 col-md-6 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header border-0">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="d-flex align-items-center ">
+                            <span class="me-2"><i class="ti ti-chart-pie text-danger"></i></span>
+                            <h5>Tasks</h5>
+                        </div>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                                Office Management App
+                            </a>
+                            <ul class="dropdown-menu  dropdown-menu-end p-2">
+                                <li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1">PRO-001</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1">PRO-002</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1">PRO-004</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                            <div class="position-relative payment-total">
+                                <div id="task-reports"></div>
+                                <apx-chart
+                                [series]="task_chart.series"
+                                [labels]="task_chart.labels"
+                                [chart]="task_chart.chart"
+                                [colors]="task_chart.colors"
+                                [dataLabels]="task_chart.dataLabels"
+                                [plotOptions]="task_chart.plotOptions"
+                                [grid]="task_chart.grid"
+                                [legend]="task_chart.legend"
+                                [responsive]="task_chart.responsive"
+                                ></apx-chart>
+                                <div class="task-total-content ">
+                                    <p class="fs-16 fw-normal mb-0">Pending</p>
+                                    <span class="display-3 fs-24 fw-bold text-skyblue">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row gy-4">
+                                <div class="col-md-6">
+                                    <div class="d-flex task-report-icons">
+                                        <span class="me-2"><i class="ti ti-arrow-badge-right-filled text-success"></i></span>
+                                        <h6 class="fs-16">Completed <span class="fs-14 fw-normal">40%</span></h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex task-report-icons">
+                                        <span class="me-2"><i class="ti ti-arrow-badge-right-filled text-skyblue"></i></span>
+                                        <h6 class="fs-16">Pending <span class="fs-14 fw-normal">30 %</span></h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex task-report-icons">
+                                        <span class="me-2"><i class="ti ti-arrow-badge-right-filled text-warning"></i></span>
+                                        <h6 class="fs-16">Inprogress  <span class="fs-14 fw-normal">20 %</span></h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex task-report-icons">
+                                        <span class="me-2"><i class="ti ti-arrow-badge-right-filled text-purple"></i></span>
+                                        <h6 class="fs-16">On Hold <span class="fs-14 fw-normal">10 %</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Total Exponses -->
+    </div>
+    <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+            <h5>Tasks List</h5>
+            <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+                <div class="me-3">
+                    <div class="input-icon position-relative">
+                        <span class="input-icon-addon">
+                          <i class="ti ti-calendar text-gray-9"></i>
+                        </span>
+                        <input type="text" class="form-control date-range bookingrange" bsDaterangepicker [(ngModel)]="bsRangeValue"  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy - dd/mm/yyyy">
+                      </div>
+                </div>
+                <div class="dropdown me-3">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Select Priority
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Low</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Medium</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">High</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown me-3">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Select Status
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Active</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Inactive</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                        Sort By : Last 7 Days
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="custom-datatable-filter table-responsive">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length">
+                            <label> Row Per Page
+                                @if(tableData.length > 0) {
+                                    <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize(pageSize)" class="form-select form-select-sm">
+                                      <option value="10">10</option>
+                                      <option value="25">25</option>
+                                      <option value="50">50</option>
+                                      <option value="100">100</option>
+                                    </select>
+                                  }
+                            Entries
+                            </label>
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                            <label>
+                                <input [(ngModel)]="searchDataValue" [ngModelOptions]="{ standalone: true }"
+                                    (ngModelChange)="searchData(searchDataValue)" type="search" class="form-control form-control-sm"
+                                    placeholder="Search..." />
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class=" table-responsive">
+                        <table matSort (matSortChange)="sortData($event)" class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="no-sort">
+                                        <div class="form-check form-check-md" (click)="selectAll(initChecked)" (keydown.enter)="selectAll(initChecked)" tabindex="0">
+                                            <input class="form-check-input" type="checkbox" id="select-all" [(ngModel)]="initChecked">
+                                        </div>
+                                    </th>
+                                    <th mat-sort-header="TaskName">Task Name</th>
+                                    <th mat-sort-header="ProjectName">Project Name</th>
+                                    <th mat-sort-header="CreatedDate">Created Date</th>
+                                    <th mat-sort-header="DueDate">Due Date</th>
+                                    <th mat-sort-header="Priority">Priority</th>
+                                    <th mat-sort-header="Status">Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (data of tableData; track data) {
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-md">
+                                            <input class="form-check-input" type="checkbox"  [(ngModel)]="data.isSelected">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center file-name-icon">
+                                            <h6 class="fw-medium"><a href="javascript:void(0);">{{data.TaskName}}</a></h6>
+                                        </div>
+                                    </td>
+                                        <td>{{data.ProjectName}}</td>
+                                        <td>{{data.CreatedDate}}</td>
+                                        <td>{{data.DueDate}}</td>
+                                        <td>
+                                            <span class="badge d-inline-flex align-items-center badge-xs"
+                                                [ngClass]="{'badge-soft-success':data.Priority === 'Low',
+                                                            'badge-soft-warning':data.Priority === 'Medium',
+                                                            'badge-soft-danger':data.Priority === 'High'
+                                                            }">
+                                                <i class="ti ti-point-filled me-1"></i>{{data.Priority}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge d-inline-flex align-items-center badge-xs"
+                                            [ngClass]="{'badge-success':data.Status === 'Completed',
+                                                        'badge-warning':data.Status === 'On Hold',
+                                                        'badge-purple':data.Status === 'Inprogress',
+                                                        'badge-skyblue':data.Status === 'Pending'
+                                                        }">
+                                                <i class="ti ti-point-filled me-1"></i>{{data.Status}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    }
+                                    @if (tableData.length === 0) {
+                                    <tr>
+                                    <td colspan="8">
+                                        <h5 class="no-record">No matching records found</h5>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <app-custom-pagination></app-custom-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

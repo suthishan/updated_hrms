@@ -1,0 +1,115 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "agentId": "Agt-016",
+            "name": "William Parsons",
+            "image": "agent-01.jpg",
+            "email": "william@example.com",
+            "role": "Senior Support Agent",
+            "ticketsAssigned": 30,
+            "ticketsResolved": 20,
+            "availability": "Available"
+        },
+        {
+            "id": 2,
+            "agentId": "Agt-015",
+            "name": "Lucille Tomberlin",
+            "image": "agent-02.jpg",
+            "email": "lucille@example.com",
+            "role": "Junior Support Agent",
+            "ticketsAssigned": 20,
+            "ticketsResolved": 10,
+            "availability": "Available"
+        },
+        {
+            "id": 3,
+            "agentId": "Agt-014",
+            "name": "Frederick Johnson",
+            "image": "agent-03.jpg",
+            "email": "frederick@example.com",
+            "role": "Senior Support Agent",
+            "ticketsAssigned": 10,
+            "ticketsResolved": 8,
+            "availability": "Available"
+        },
+        {
+            "id": 4,
+            "agentId": "Agt-013",
+            "name": "Sarah Henry",
+            "image": "agent-04.jpg",
+            "email": "sarah@example.com",
+            "role": "Junior Support Agent",
+            "ticketsAssigned": 15,
+            "ticketsResolved": 12,
+            "availability": "Available"
+        },
+        {
+            "id": 5,
+            "agentId": "Agt-012",
+            "name": "Thomas Miller",
+            "image": "agent-05.jpg",
+            "email": "thomas@example.com",
+            "role": "Senior Support Agent",
+            "ticketsAssigned": 25,
+            "ticketsResolved": 20,
+            "availability": "Available"
+        },
+        {
+            "id": 6,
+            "agentId": "Agt-011",
+            "name": "Melissa Shelton",
+            "image": "agent-06.jpg",
+            "email": "melissa@example.com",
+            "role": "Junior Support Agent",
+            "ticketsAssigned": 32,
+            "ticketsResolved": 30,
+            "availability": "Available"
+        },
+        {
+            "id": 7,
+            "agentId": "Agt-010",
+            "name": "James Rodriguez",
+            "image": "agent-07.jpg",
+            "email": "james@example.com",
+            "role": "Senior Support Agent",
+            "ticketsAssigned": 12,
+            "ticketsResolved": 10,
+            "availability": "Available"
+        },
+        {
+            "id": 8,
+            "agentId": "Agt-009",
+            "name": "Regina Chavez",
+            "image": "agent-08.jpg",
+            "email": "regina@example.com",
+            "role": "Junior Support Agent",
+            "ticketsAssigned": 8,
+            "ticketsResolved": 5,
+            "availability": "Not Available"
+        },
+        {
+            "id": 9,
+            "agentId": "Agt-008",
+            "name": "Joshua Dillon",
+            "image": "agent-09.jpg",
+            "email": "joshua@example.com",
+            "role": "Senior Support Agent",
+            "ticketsAssigned": 16,
+            "ticketsResolved": 14,
+            "availability": "Available"
+        },
+        {
+            "id": 10,
+            "agentId": "Agt-007",
+            "name": "Diana Riddle",
+            "image": "agent-10.jpg",
+            "email": "diana@example.com",
+            "role": "Junior Support Agent",
+            "ticketsAssigned": 22,
+            "ticketsResolved": 18,
+            "availability": "Available"
+        }
+    ],
+    "totalData": 10
+}

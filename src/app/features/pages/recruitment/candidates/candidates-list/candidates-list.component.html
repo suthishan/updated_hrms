@@ -1,0 +1,219 @@
+<div class="content">
+
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Candidates" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+      <div class="me-2 mb-2">
+        <div class="d-flex align-items-center border bg-white rounded p-1 me-2 icon-list">
+          <a [routerLink]="routes.candidatesKanban" class="btn btn-icon btn-sm me-1"><i class="ti ti-layout-kanban"></i></a>
+          <a [routerLink]="routes.candidateslist" class="btn btn-icon btn-sm active bg-primary text-white me-1"><i class="ti ti-list-tree"></i></a>
+          <a [routerLink]="routes.candidatesGrid" class="btn btn-icon btn-sm"><i class="ti ti-layout-grid"></i></a>
+        </div>
+      </div>
+      <div class="me-2 mb-2">
+        <div class="dropdown">
+          <a href="javascript:void(0);"
+            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+            data-bs-toggle="dropdown">
+            <i class="ti ti-file-export me-1"></i>Export
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1"><i
+                  class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1"><i
+                  class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+    </div>
+  </div>
+  <!-- /Breadcrumb -->
+
+  <div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+      <h5>Candidates List</h5>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+        <div class="me-3">
+          <div class="input-icon-end position-relative">
+							<app-date-range-picker />
+							<span class="input-icon-addon">
+								<i class="ti ti-chevron-down"></i>
+							</span>
+						</div>
+        </div>
+        <div class="dropdown me-3">
+          <a href="javascript:void(0);"
+            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+            data-bs-toggle="dropdown">
+            Role
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Accountant</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Accountant</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Technician</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown me-3">
+          <a href="javascript:void(0);"
+            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+            data-bs-toggle="dropdown">
+            Select Status
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Accepted</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">sent</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Expired</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Declined</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <a href="javascript:void(0);"
+            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+            data-bs-toggle="dropdown">
+            Sort By : Last 7 Days
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="custom-datatable-filter table-responsive">
+        <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length">
+                <label> Row Per Page
+                  @if(tableData.length > 0) {
+                    <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize(pageSize)" class="form-select form-select-sm">
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  }
+                  Entries
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                  <label>
+                      <input [(ngModel)]="searchDataValue" [ngModelOptions]="{ standalone: true }"
+                          (ngModelChange)="searchData(searchDataValue)" type="search" class="form-control form-control-sm"
+                          placeholder="Search..." />
+                  </label>
+              </div>
+          </div>
+          </div>
+            <div class=" table-responsive">
+              <table matSort (matSortChange)="sortData($event)" class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th class="no-sort">
+                      <div class="form-check form-check-md" (click)="selectAll(initChecked)" (keydown.enter)="selectAll(initChecked)" tabindex="0">
+                        <input class="form-check-input" type="checkbox" id="select-all" [(ngModel)]="initChecked">
+                      </div>
+                    </th>
+                    <th mat-sort-header="Cand_ID">Cand ID</th>
+                    <th mat-sort-header="Candidate">Candidate</th>
+                    <th mat-sort-header="Applied_Role">Applied Role</th>
+                    <th mat-sort-header="Phone">Phone</th>
+                    <th mat-sort-header="Applied_Date">Applied Date</th>
+                    <th>Resume</th>
+                    <th mat-sort-header="Status">Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (data of tableData; track data) {
+                  <tr>
+                    <td>
+                      <div class="form-check form-check-md">
+                        <input class="form-check-input" type="checkbox"  [(ngModel)]="data.isSelected">
+                      </div>
+                    </td>
+                    <td >{{data.Cand_ID}}</td>
+										<td>
+											<div class="d-flex align-items-center file-name-icon">
+												<a href="javascript:void(0);" class="avatar avatar-md bg-light rounded">
+													<img src="assets/img/users/{{data.Image}}" class="img-fluid rounded-circle" alt="img">
+												</a>
+												<div class="ms-2">
+													<h6 class="fw-medium"><a href="javascript:void(0);">{{data.Candidate}}</a></h6>
+                          <span class="d-block mt-1">{{data.Email}}</span>
+												</div>
+											</div>
+										</td>
+										<td>{{data.Applied_Role}}</td>
+										<td>{{data.Phone}}</td>
+										<td>{{data.Applied_Date}}</td>
+                    <td>
+											<div class="d-inline-flex">
+												<a href="javascript:void(0);" class="text-gray me-2 fs-16"><i
+														class="ti ti-file-text"></i></a>
+												<a href="javascript:void(0);" class="text-gray fs-16"><i class="ti ti-download"></i></a>
+											</div>
+										</td>
+                    <td><span class="badge border " [ngClass]="data.Status === 'Hired'? 'border-success text-success': data.Status === 'New'? 'border-purple text-purple':data.Status === 'Interviewed'?'border-info text-info': data.Status === 'Scheduled'? 'border-pink text-pink': data.Status === 'Offered'? 'border-warning text-warning':'border-danger text-danger'"><i class="ti ti-point-filled"></i>{{data.Status}}</span></td>
+                    <td>
+											<div class="action-icon d-inline-flex">
+												<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash"></i></a>
+											</div>
+										</td>
+                  </tr>
+                  }
+                  @if (tableData.length === 0) {
+                  <tr>
+                    <td colspan="9">
+                      <h5 class="no-record">No matching records found</h5>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          <app-custom-pagination></app-custom-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

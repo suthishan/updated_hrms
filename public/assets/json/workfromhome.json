@@ -1,0 +1,116 @@
+{
+    "data":[
+  {
+    "id": 1,
+    "empId": "Emp-001",
+    "name": "Anthony Lewis",
+    "image": "user-11.jpg",
+    "designation": "Accountant",
+    "shift": "Regular",
+    "reason": "Mild health issue",
+    "date": "14 Jun 2025",
+    "status": "Approved"
+  },
+  {
+    "id": 2,
+    "empId": "Emp-002",
+    "name": "Brian Villalobos",
+    "image": "user-12.jpg",
+    "designation": "App Developer",
+    "shift": "Regular",
+    "reason": "Internet issue",
+    "date": "25 May 2025",
+    "status": "Pending"
+  },
+  {
+    "id": 3,
+    "empId": "Emp-003",
+    "name": "Harvey Smith",
+    "image": "user-13.jpg",
+    "designation": "Technician",
+    "shift": "Night",
+    "reason": "Bad weather",
+    "date": "10 May 2025",
+    "status": "Rejected"
+  },
+  {
+    "id": 4,
+    "empId": "Emp-004",
+    "name": "Stephan Peralt",
+    "image": "user-14.jpg",
+    "designation": "Web Developer",
+    "shift": "Night",
+    "reason": "Power outage",
+    "date": "28 Apr 2025",
+    "status": "Pending"
+  },
+  {
+    "id": 5,
+    "empId": "Emp-005",
+    "name": "Doglas Martini",
+    "image": "user-15.jpg",
+    "designation": "Sales Executive Officer",
+    "shift": "Night",
+    "reason": "Traffic disruption",
+    "date": "15 Apr 2025",
+    "status": "Approved"
+  },
+  {
+    "id": 6,
+    "empId": "Emp-006",
+    "name": "Linda Ray",
+    "image": "user-16.jpg",
+    "designation": "Designer",
+    "shift": "Regular",
+    "reason": "Home maintenance",
+    "date": "20 Mar 2025",
+    "status": "Rejected"
+  },
+  {
+    "id": 7,
+    "empId": "Emp-007",
+    "name": "Elliot Murray",
+    "image": "user-17.jpg",
+    "designation": "Account Manager",
+    "shift": "Regular",
+    "reason": "Extended travel",
+    "date": "10 Mar 2025",
+    "status": "Approved"
+  },
+  {
+    "id": 8,
+    "empId": "Emp-008",
+    "name": "Rebecca Smtih",
+    "image": "user-18.jpg",
+    "designation": "SEO Analyst",
+    "shift": "Night",
+    "reason": "Mild health issue",
+    "date": "17 Feb 2025",
+    "status": "Completed"
+  },
+  {
+    "id": 9,
+    "empId": "Emp-009",
+    "name": "Connie Waters",
+    "image": "user-19.jpg",
+    "designation": "Admin",
+    "shift": "Regular",
+    "reason": "Internet issue",
+    "date": "02 Feb 2025",
+    "status": "Pending"
+  },
+  {
+    "id": 10,
+    "empId": "Emp-010",
+    "name": "Lori Broaddus",
+    "image": "user-20.jpg",
+    "designation": "Business Analyst",
+    "shift": "Night",
+    "reason": "Power outage",
+    "date": "24 Jan 2025",
+    "status": "Approved"
+  }
+],
+    "totalData":10
+       
+}

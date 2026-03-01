@@ -1,0 +1,31 @@
+import { Component, Input } from '@angular/core';
+import { routes } from '../../core/routes/routes';
+import { CommonModule } from '@angular/common';
+
+@Component({
+    selector: 'app-breadcrumbs',
+    templateUrl: './breadcrumbs.component.html',
+    styleUrls: ['./breadcrumbs.component.scss'],
+    imports: [CommonModule]
+})
+
+/**
+ * Bread Crumbs Component
+ */
+export class BreadcrumbsComponent {
+routes = routes
+  @Input() title: string | undefined;
+  @Input()
+  breadcrumbItems!: {
+    active?: boolean;
+    label?: string;
+  }[];
+
+  Item!: {
+    label?: string;
+  }[];
+
+
+
+
+}

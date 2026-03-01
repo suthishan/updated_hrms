@@ -1,0 +1,36 @@
+<div class="page-wrapper">
+  <div class="content">
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <app-breadcrumbs title="Settings" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+      <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+    </div>
+    <!-- /Breadcrumb -->
+
+    <ul class="nav nav-tabs nav-tabs-solid bg-transparent border-bottom mb-3">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="page === 'general-settings'" [routerLink]="routes.profileSettings"><i class="ti ti-settings me-2"></i>General Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="page === 'website-settings'" [routerLink]="routes.bussinessSettings"><i class="ti ti-world-cog me-2"></i>Website Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="page === 'app-settings'" [routerLink]="routes.salarySettings"><i class="ti ti-device-ipad-horizontal-cog me-2"></i>App Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="page === 'system-settings'" [routerLink]="routes.emailSettings"><i class="ti ti-server-cog me-2"></i>System Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="page === 'financial-settings'" [routerLink]="routes.paymentGateways"><i class="ti ti-settings-dollar me-2"></i>Financial Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="page === 'other-settings'" [routerLink]="routes.customCss"><i class="ti ti-settings-2 me-2"></i>Other Settings</a>
+      </li>
+    </ul>
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
+</div>
+        

@@ -1,0 +1,420 @@
+<!-- Add Task -->
+<div class="modal fade" id="add_task">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Add New Task  </h4>
+              <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="ti ti-x"></i>
+              </button>
+          </div>
+          <form >
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Title</label>
+                              <input type="text" class="form-control">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3 ngx-date">
+                              <label [htmlFor]="" class="form-label">Due Date</label>
+                              <div class="input-icon-end position-relative">
+                                  <input type="text" class="form-control datetimepicker" bsDatepicker container=".ngx-date"  placeholder="dd/mm/yyyy">
+                                  <span class="input-icon-addon">
+              <i class="ti ti-calendar text-gray-7"></i>
+            </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Project</label>
+                              <mat-select placeholder="Select"  class="select custom-mat-select">
+                                  <mat-option value="1">Select</mat-option>
+                                  <mat-option value="1">Office Management</mat-option>
+                                  <mat-option value="1">Clinic Management </mat-option>
+                                  <mat-option value="1">Educational Platform</mat-option>
+                              </mat-select>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label me-2">Team Members</label>
+                              <tag-input class="form-control"  [(ngModel)]="values" name="values" placeholder="Add new" [ngModelOptions]="{standalone: true}"/>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Tag</label>
+                              <tag-input class="form-control" [(ngModel)]="values3" name="values3" placeholder="Add new" [ngModelOptions]="{standalone: true}"/>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Status</label>
+                              <mat-select placeholder="Select"  class="select custom-mat-select">
+                                  <mat-option value="1">Select</mat-option>
+                                  <mat-option value="1">Inprogress</mat-option>
+                                  <mat-option value="1">Completed</mat-option>
+                                  <mat-option value="1">Pending</mat-option>
+                                  <mat-option value="1">Onhold</mat-option>
+                              </mat-select>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Priority</label>
+                              <mat-select placeholder="Select"  class="select custom-mat-select">
+                                  <mat-option value="1">Select</mat-option>
+                                  <mat-option value="1">Medium</mat-option>
+                                  <mat-option value="1">High</mat-option>
+                                  <mat-option value="1">Low</mat-option>
+                              </mat-select>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <label [htmlFor]="" class="form-label">Who Can See this Task?</label>
+                          <div class="d-flex align-items-center">
+                              <div class="form-check me-3">
+                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault1">
+                                      Public
+                                  </label>
+                              </div>
+                              <div class="form-check me-3">
+                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked="">
+                                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault2">
+                                      Private
+                                  </label>
+                              </div>
+                              <div class="form-check ">
+                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked="">
+                                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault3">
+                                      Admin Only
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Descriptions</label>
+                              <ngx-editor [editor]="editor">
+                                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                                </ngx-editor-menu>
+                              </ngx-editor>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <label [htmlFor]="" class="form-label">Upload Attachment</label>
+                          <div class="bg-light rounded p-2">
+                              <div class="profile-uploader border-bottom mb-2 pb-2">
+                                  <div class="drag-upload-btn btn btn-sm btn-white border px-3">
+                                      Select File
+                                      <input type="file" class="form-control image-sign" multiple="">
+                                  </div>
+                              </div>
+                              <div class="d-flex align-items-center justify-content-between border-bottom mb-2 pb-2">
+                                  <div class="d-flex align-items-center">
+                                      <h6 class="fs-12 fw-medium me-1">Logo.zip</h6>
+                                      <span class="badge badge-soft-info">21MB </span>
+                                  </div>
+                                  <a href="javascript:void(0);" class="btn btn-sm btn-icon"><i class="ti ti-trash"></i></a>
+                              </div>
+                              <div class="d-flex align-items-center justify-content-between">
+                                  <div class="d-flex align-items-center">
+                                      <h6 class="fs-12 fw-medium me-1">Files.zip</h6>
+                                      <span class="badge badge-soft-info">25MB </span>
+                                  </div>
+                                  <a href="javascript:void(0);" class="btn btn-sm btn-icon"><i class="ti ti-trash"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" data-bs-dismiss="modal"class="btn btn-primary">Add New Task</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- /Add Task -->
+
+<!-- Edit Task -->
+<div class="modal fade" id="edit_task">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Edit Task  </h4>
+              <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="ti ti-x"></i>
+              </button>
+          </div>
+          <form >
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Todo Title</label>
+                              <input type="text" class="form-control" value="Patient appointment booking">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3 ngx-date2">
+                              <label [htmlFor]="" class="form-label">Due Date</label>
+                              <div class="input-icon-end position-relative">
+                                  <input type="text" class="form-control datetimepicker" bsDatepicker container=".ngx-date2" placeholder="dd/mm/yyyy">
+                                  <span class="input-icon-addon">
+              <i class="ti ti-calendar text-gray-7"></i>
+            </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Project</label>
+                              <mat-select placeholder="Office Management"  class="select custom-mat-select">
+                                  <mat-option value="1">Select</mat-option>
+                                  <mat-option value="1" selected>Office Management</mat-option>
+                                  <mat-option value="1">Clinic Management </mat-option>
+                                  <mat-option value="1">Educational Platform</mat-option>
+                              </mat-select>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label me-2">Team Members</label>
+                              <tag-input class="form-control" [(ngModel)]="values2" name="values2" placeholder="Add new" [ngModelOptions]="{standalone: true}"/>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Tag</label>
+                              <tag-input class="form-control" [(ngModel)]="values3" name="values3" placeholder="Add new" [ngModelOptions]="{standalone: true}"/>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Status</label>
+                              <mat-select placeholder="Inprogress"  class="select custom-mat-select">
+                                  <mat-option value="1">Select</mat-option>
+                                  <mat-option value="1" selected>Inprogress</mat-option>
+                                  <mat-option value="1">Completed</mat-option>
+                                  <mat-option value="1">Pending</mat-option>
+                                  <mat-option value="1">Onhold</mat-option>
+                              </mat-select>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Priority</label>
+                              <mat-select placeholder="Medium"  class="select custom-mat-select">
+                                  <mat-option value="1">Select</mat-option>
+                                  <mat-option value="1" selected>Medium</mat-option>
+                                  <mat-option value="1">High</mat-option>
+                                  <mat-option value="1">Low</mat-option>
+                              </mat-select>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <label [htmlFor]="" class="form-label">Who Can See this Task?</label>
+                          <div class="d-flex align-items-center">
+                              <div class="form-check me-3">
+                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault4">
+                                      Public
+                                  </label>
+                              </div>
+                              <div class="form-check me-3">
+                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" checked="">
+                                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault5">
+                                      Private
+                                  </label>
+                              </div>
+                              <div class="form-check ">
+                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6">
+                                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault6">
+                                      Admin Only
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="mb-3">
+                              <label [htmlFor]="" class="form-label">Descriptions</label>
+                              <ngx-editor [editor]="editor1">
+                                <ngx-editor-menu [editor]="editor1" [toolbar]="toolbar">
+                                </ngx-editor-menu>
+                              </ngx-editor>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <label [htmlFor]="" class="form-label">Upload Attachment</label>
+                          <div class="bg-light rounded p-2">
+                              <div class="profile-uploader border-bottom mb-2 pb-2">
+                                  <div class="drag-upload-btn btn btn-sm btn-white border px-3">
+                                      Select File
+                                      <input type="file" class="form-control image-sign" multiple="">
+                                  </div>
+                              </div>
+                              <div class="d-flex align-items-center justify-content-between border-bottom mb-2 pb-2">
+                                  <div class="d-flex align-items-center">
+                                      <h6 class="fs-12 fw-medium me-1">Logo.zip</h6>
+                                      <span class="badge badge-soft-info">21MB </span>
+                                  </div>
+                                  <a href="javascript:void(0);" class="btn btn-sm btn-icon"><i class="ti ti-trash"></i></a>
+                              </div>
+                              <div class="d-flex align-items-center justify-content-between">
+                                  <div class="d-flex align-items-center">
+                                      <h6 class="fs-12 fw-medium me-1">Files.zip</h6>
+                                      <span class="badge badge-soft-info">25MB </span>
+                                  </div>
+                                  <a href="javascript:void(0);" class="btn btn-sm btn-icon"><i class="ti ti-trash"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" data-bs-dismiss="modal"class="btn btn-primary">Save</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- /Edit Task -->
+
+<!-- Add Board -->
+<div class="modal fade" id="add_board">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Add New Board</h4>
+              <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="ti ti-x"></i>
+              </button>
+          </div>
+          <form >
+              <div class="modal-body">
+                  <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Board Name</label>
+                      <input type="text" class="form-control">
+                  </div>
+                  <label [htmlFor]="" class="form-label">Board Color</label>
+                  <div class="d-flex align-items-center flex-wrap row-gap-3">
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="primaryColor" value="primary" checked>
+                          <label [htmlFor]="" for="primaryColor" class="primary-clr"></label>
+                      </div>
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="brightblueColor" value="brightblue">
+                          <label [htmlFor]="" for="brightblueColor" class="brightblue-clr"></label>
+                      </div>
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="lunargreenColor" value="lunargreen">
+                          <label [htmlFor]="" for="lunargreenColor" class="lunargreen-clr"></label>
+                      </div>
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="lavendarColor" value="lavendar">
+                          <label [htmlFor]="" for="lavendarColor" class="lavendar-clr"></label>
+                      </div>
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="magentaColor" value="magenta">
+                          <label [htmlFor]="" for="magentaColor" class="magenta-clr"></label>
+                      </div>
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="chromeyellowColor" value="chromeyellow">
+                          <label [htmlFor]="" for="chromeyellowColor" class="chromeyellow-clr"></label>
+                      </div>
+                      <div class="theme-colorsset me-3">
+                          <input type="radio" name="color" id="lavaredColor" value="lavared">
+                          <label [htmlFor]="" for="lavaredColor" class="lavared-clr"></label>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" data-bs-dismiss="modal"class="btn btn-primary">Add New Board</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- /Add Board -->
+
+<!-- Todo Details -->
+<div class="modal fade" id="view_todo">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header bg-dark">
+              <h4 class="modal-title text-white">Respond to any pending messages</h4>
+              <span class="badge badge-danger d-inline-flex align-items-center"><i class="ti ti-square me-1"></i>Urgent</span>
+              <span><i class="ti ti-star-filled text-warning"></i></span>
+              <a href="javascript:void(0);"><i class="ti ti-trash text-white"></i></a>
+              <button type="button" class="btn-close custom-btn-close bg-transparent fs-16 text-white position-static" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="ti ti-x"></i>
+              </button>
+          </div>
+          <div class="modal-body">
+              <h5 class="mb-2">Task Details</h5>
+              <div class="border rounded mb-3 p-2">
+                  <div class="row row-gap-3">
+                      <div class="col-md-4">
+                          <div class="text-center">
+                              <span class="d-block mb-1">Created On</span>
+                              <p class="text-dark">22 July 2025</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="text-center">
+                              <span class="d-block mb-1">Due Date</span>
+                              <p class="text-dark">22 July 2025</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="text-center">
+                              <span class="d-block mb-1">Status</span>
+                              <span class="badge badge-soft-success d-inline-flex align-items-center">
+                                <i class="fas fa-circle fs-6 me-1"></i>Completed
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="mb-3">
+                  <h5 class="mb-2">Description</h5>
+                  <p>Hiking is a long, vigorous walk, usually on trails or footpaths in the countryside. Walking for pleasure developed in Europe during the eighteenth century. Religious pilgrimages have existed much longer but they involve walking
+                      long distances for a spiritual purpose associated with specific religions and also we achieve inner peace while we hike at a local park.
+                  </p>
+              </div>
+              <div class="mb-3">
+                  <h5 class="mb-2">Tags</h5>
+                  <div class="d-flex align-items-center">
+                      <span class="badge badge-danger me-2">Internal</span>
+                      <span class="badge badge-success me-2">Projects</span>
+                      <span class="badge badge-secondary">Reminder</span>
+                  </div>
+              </div>
+              <div>
+                  <h5 class="mb-2">Assignee</h5>
+                  <div class="avatar-list-stacked avatar-group-sm">
+                      <span class="avatar avatar-rounded">
+                    <img class="border border-white" src="assets/img/profiles/avatar-23.jpg" alt="img">
+                  </span>
+                                  <span class="avatar avatar-rounded">
+                    <img class="border border-white" src="assets/img/profiles/avatar-24.jpg" alt="img">
+                  </span>
+                                  <span class="avatar avatar-rounded">
+                    <img class="border border-white" src="assets/img/profiles/avatar-25.jpg" alt="img">
+                  </span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- /Todo Details -->

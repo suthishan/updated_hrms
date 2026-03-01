@@ -1,0 +1,141 @@
+<div class="content">
+
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Companies" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+      <div class="me-2 mb-2">
+        <div class="d-flex align-items-center border bg-white rounded p-1 me-2 icon-list">
+          <a [routerLink]="routes.companiesList" class="btn btn-icon btn-sm me-1"><i class="ti ti-list-tree"></i></a>
+          <a [routerLink]="routes.companiesGrid" class="btn btn-icon btn-sm active bg-primary text-white"><i class="ti ti-layout-grid"></i></a>
+        </div>
+      </div>
+      <div class="me-2 mb-2">
+        <div class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+            <i class="ti ti-file-export me-1"></i>Export
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="mb-2">
+        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add_company" class="btn btn-primary d-flex align-items-center"><i class="ti ti-circle-plus me-2"></i>Add Company</a>
+      </div>
+      <div class="ms-2 head-icons" tabindex="0">
+                <app-collapse-header/>
+            </div>
+    </div>
+  </div>
+  <!-- /Breadcrumb -->
+
+  <div class="card">
+    <div class="card-body p-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <h5>Companies Grid</h5>
+        <div class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+            Sort By : Last 7 Days
+          </a>
+          <ul class="dropdown-menu  dropdown-menu-end p-3">
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Recently Added</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Ascending</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Descending</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Last Month</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="dropdown-item rounded-1">Last 7 Days</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    @for (data of actualData; track data) {
+      <div class="col-xl-3 col-lg-4 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div class="form-check form-check-md">
+                <input class="form-check-input" type="checkbox">
+              </div>
+              <div>
+                <a [routerLink]="routes.companyDetails" class="avatar avatar-xl avatar-rounded online border rounded-circle">
+                  <img src="assets/img/company/{{data.Image2}}" class="img-fluid h-auto w-auto" alt="img">
+                </a>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-icon btn-sm rounded-circle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="ti ti-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end p-3">
+                  <li>
+                    <a class="dropdown-item rounded-1" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit_company"><i class="ti ti-edit me-1"></i>Edit</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item rounded-1" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="ti ti-trash me-1"></i>Delete</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <h6 class="mb-1"><a [routerLink]="routes.companyDetails">{{data.Company_Name}}</a></h6>
+              <div class="avatar-list-stacked avatar-group-sm">
+                @for (imgdata of data.share; track imgdata) {
+                  <span class="avatar avatar-rounded">
+                    <img class="border border-white" src="assets/img/profiles/{{ imgdata }}" alt="img"/>
+                  </span>
+                }
+                <a class="avatar bg-primary avatar-rounded text-fixed-white fs-12" href="javascript:void(0);">
+                  +1
+                </a>
+              </div>
+            </div>
+            <div class="d-flex flex-column">
+              <p class="text-dark d-inline-flex align-items-center mb-2">
+                <i class="ti ti-mail-forward text-gray-5 me-2"></i>
+                {{data.Email}}
+              </p>
+              <p class="text-dark d-inline-flex align-items-center mb-2">
+                <i class="ti ti-phone text-gray-5 me-2"></i>
+                {{data.Phone}}
+              </p>
+              <p class="text-dark d-inline-flex align-items-center">
+                <i class="ti ti-map-pin text-gray-5 me-2"></i>
+                {{data.Location}}
+              </p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between border-top pt-3 mt-3">
+              <div class="icons-social d-flex align-items-center">
+                <a href="javascript:void(0);" class="avatar avatar-rounded avatar-sm me-1"><i class="ti ti-mail"></i></a>
+                <a href="javascript:void(0);" class="avatar avatar-rounded avatar-sm me-1"><i class="ti ti-phone-call"></i></a>
+                <a href="javascript:void(0);" class="avatar avatar-rounded avatar-sm me-1"><i class="ti ti-message-2"></i></a>
+                <a href="javascript:void(0);" class="avatar avatar-rounded avatar-sm me-1"><i class="ti ti-brand-skype"></i></a>
+                <a href="javascript:void(0);" class="avatar avatar-rounded avatar-sm"><i class="ti ti-brand-facebook"></i></a>
+              </div>
+              <span class="d-inline-flex align-items-center"><i class="ti ti-star-filled text-warning me-1"></i>{{data.Rating}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+  <div class="text-center mb-4">
+    <a href="javascript:void(0);" class="btn btn-white border"><i class="ti ti-loader-3 text-primary me-2"></i>Load More</a>
+  </div>
+</div>

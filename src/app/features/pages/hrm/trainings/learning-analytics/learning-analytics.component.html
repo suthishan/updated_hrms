@@ -1,0 +1,363 @@
+<div class="content">
+
+    <!-- Breadcrumb -->
+    <div
+        class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+        <div class="my-auto mb-2">
+            <h2 class="mb-1">Learning Analytics</h2>
+            <nav>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="routes.index"><i
+                                class="ti ti-smart-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        Training
+                    </li>
+                    <li class="breadcrumb-item active"
+                        aria-current="page">Learning Analytics</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="head-icons ms-2">
+          <app-collapse-header/>
+        </div>
+    </div>
+    <!-- /Breadcrumb -->
+
+    <div class="row">
+
+        <!-- Total Exponses -->
+        <div class="col-xxl-5 col-lg-12 col-md-12 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header border-0">
+                    <div
+                        class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="d-flex align-items-center ">
+                            <h5>Learning Employees</h5>
+                        </div>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);"
+                                class="btn btn-white border d-inline-flex align-items-center"
+                                data-bs-toggle="dropdown">
+                                <i class="ti ti-calendar me-1"></i>2025
+                            </a>
+                            <ul class="dropdown-menu  dropdown-menu-end p-3">
+                                <li>
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item rounded-1">2024</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item rounded-1">2023</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"
+                                        class="dropdown-item rounded-1">2022</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body py-0">
+                    <div id="learn-employee">
+                        <apx-chart
+                                [series]="learning_chart.series"
+                                [chart]="learning_chart.chart"
+                                [colors]="learning_chart.colors"
+                                [stroke]="learning_chart.stroke"
+                                [xaxis]="learning_chart.xaxis"
+                                [yaxis]="learning_chart.yaxis"
+                                [grid]="learning_chart.grid"
+                                [tooltip]="learning_chart.tooltip"
+                                [markers]="learning_chart.markers"
+                                [responsive]="learning_chart.responsive"
+                                [legend]="learning_chart.legend"
+                                [dataLabels]="learning_chart.dataLabels"
+                                [plotOptions]="learning_chart.plotOptions"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Total Exponses -->
+
+        <!-- Total Exponses -->
+        <div class="col-xxl-7 col-lg-12 col-md-12 d-flex">
+            <div class="row flex-fill">
+                <div class="col-lg-5 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body pb-0">
+                            <div class="d-flex flex-column align-items-center">
+                                <div
+                                    class="p-2 rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"><i
+                                        class="ti ti-certificate fs-22"></i></div>
+                                <p
+                                    class="fw-semibold text-dark mb-1">Certification
+                                    Completed</p>
+                                <div
+                                    class="fw-bold text-dark fs-24 mb-1">225</div>
+                                <span
+                                    class="badge badge-soft-success rounded-pill border border-success mb-1"><i
+                                        class="ti ti-arrow-up"></i>12%</span>
+                                <p
+                                    class="fs-12 fw-normal d-flex align-items-center text-truncate">from
+                                    last month</p>
+                            </div>
+                            <div id="certification-chart">
+                                <apx-chart
+                                [series]="certification_chart.series"
+                                [chart]="certification_chart.chart"
+                                [colors]="certification_chart.colors"
+                                [stroke]="certification_chart.stroke"
+                                [xaxis]="certification_chart.xaxis"
+                                [yaxis]="certification_chart.yaxis"
+                                [grid]="certification_chart.grid"
+                                [tooltip]="certification_chart.tooltip"
+                                [markers]="certification_chart.markers"
+                                [fill]="certification_chart.fill"
+                                [dataLabels]="certification_chart.dataLabels"
+                                [plotOptions]="certification_chart.plotOptions"></apx-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="card-header border-0 p-0">
+                                <div
+                                    class="d-flex flex-wrap justify-content-between align-items-center row-gap-3">
+                                    <div class="d-flex align-items-center ">
+                                        <h5>Highly Enrolled Courses</h5>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a href="javascript:void(0);"
+                                            class="btn btn-white border d-inline-flex align-items-center"
+                                            data-bs-toggle="dropdown">
+                                            <i
+                                                class="ti ti-calendar me-1"></i>2025
+                                        </a>
+                                        <ul
+                                            class="dropdown-menu  dropdown-menu-end p-3">
+                                            <li>
+                                                <a href="javascript:void(0);"
+                                                    class="dropdown-item rounded-1">2024</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);"
+                                                    class="dropdown-item rounded-1">2023</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);"
+                                                    class="dropdown-item rounded-1">2022</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body py-0">
+                                <div id="enroll-course">
+                                    <apx-chart
+                                [series]="course_chart.series"
+                                [chart]="course_chart.chart"
+                                [colors]="course_chart.colors"
+                                [stroke]="course_chart.stroke"
+                                [xaxis]="course_chart.xaxis"
+                                [yaxis]="course_chart.yaxis"
+                                [grid]="course_chart.grid"
+                                [tooltip]="course_chart.tooltip"
+                                [dataLabels]="course_chart.dataLabels"
+                                [plotOptions]="course_chart.plotOptions"></apx-chart>
+                                </div>
+                                <div>
+                                    <p><i
+                                            class="ti ti-point-filled me-1 text-info"></i>No
+                                        of Employees increased by <span
+                                            class="text-success">+20%</span>
+                                        from last Week</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /Total Exponses -->
+
+    </div>
+
+    <div class="card">
+        <div
+            class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+            <h5>Learning Employee List</h5>
+            <div
+                class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+                <div class="dropdown">
+                    <a href="javascript:void(0);"
+                        class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                        data-bs-toggle="dropdown">
+                        Sort By : Last 7 Days
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        <li>
+                            <a href="javascript:void(0);"
+                                class="dropdown-item rounded-1">Recently
+                                Added</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                                class="dropdown-item rounded-1">Ascending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                                class="dropdown-item rounded-1">Desending</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                                class="dropdown-item rounded-1">Last Month</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                                class="dropdown-item rounded-1">Last 7 Days</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="custom-datatable-filter table-responsive">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length">
+                                <label>Row Per Page
+                                    @if(tableData.length > 0) {
+                                    <select [(ngModel)]="pageSize"
+                                        (ngModelChange)="changePageSize(pageSize)"
+                                        class="form-select form-select-sm">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    }
+                                    Entries
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div id="DataTables_Table_0_filter"
+                                class="dataTables_filter">
+                                <label>
+                                    <input [(ngModel)]="searchDataValue"
+                                        [ngModelOptions]="{ standalone: true }"
+                                        (ngModelChange)="searchData(searchDataValue)"
+                                        type="search"
+                                        class="form-control form-control-sm"
+                                        placeholder="Search" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" table-responsive">
+                        <table matSort (matSortChange)="sortData($event)"
+                            class="mat-sort table datanew table-center datatable dataTable  mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="no-sort">
+                                        <div class="form-check form-check-md"
+                                            (click)="selectAll(initChecked)"
+                                            (keydown.enter)="selectAll(initChecked)"
+                                            tabindex="0">
+                                            <input class="form-check-input"
+                                                type="checkbox" id="select-all"
+                                                [(ngModel)]="initChecked">
+                                        </div>
+                                    </th>
+                                    <th mat-sort-header="name">Employee
+                                        Name</th>
+                                    <th
+                                        mat-sort-header="designation">Designation</th>
+                                    <th mat-sort-header="traingin">Training
+                                        Course</th>
+                                    <th mat-sort-header="Status">Status</th>
+                                    <th mat-sort-header="score">Score(%)</th>
+                                    <th mat-sort-header="resolve">Completion
+                                        Date</th>
+                                    <th mat-sort-header="feedback">Feedback</th>
+                                    <th mat-sort-header="attempts">Attempts</th>
+                                    <th
+                                        mat-sort-header="certificate">Certificate</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (data of tableData; track data.id) {
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-md">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                [(ngModel)]="data.isSelected">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div
+                                            class="d-flex align-items-center file-name-icon">
+                                            <a href="javascript:void(0);"
+                                                class="avatar avatar-md border avatar-rounded">
+                                                <img
+                                                    src="assets/img/users/{{data.image}}"
+                                                    class="img-fluid" alt="img">
+                                            </a>
+                                            <div class="ms-2">
+                                                <a
+                                                    class="fw-medium fs-14">{{data.name}}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{data.designation}}</td>
+                                    <td><p
+                                            class="fw-medium text-dark mb-0">{{data.trainingCourse}}</p></td>
+                                    <td><span
+                                            class="badge d-inline-flex align-items-center badge-xs"
+                                            [class]="data.status == 'In Progress'?' badge-soft-info':data.status == 'Not Started'?' badge-soft-purple':' badge-soft-success'">{{data.status}}</span></td>
+                                    <td>{{data.score}}</td>
+                                    <td>{{data.completionDate}}</td>
+                                    <td>{{data.feedback}}</td>
+                                    <td>{{data.attempts}}</td>
+                                    <td>
+                                        @if(data.certificate == '-'){
+                                        <span>-</span>
+                                        }
+                                        @else{
+                                        <span
+                                            class="badge badge-success d-inline-flex align-items-center badge-xs">
+                                            <i
+                                                class="ti ti-point-filled me-1"></i>{{data.certificate}}
+
+                                        </span>
+
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                                @if (tableData.length === 0) {
+                                <tr>
+                                    <td colspan="9">
+                                        <h5 class="no-record">No matching
+                                            records found</h5>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <app-custom-pagination></app-custom-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

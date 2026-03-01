@@ -1,0 +1,751 @@
+<!-- Add Employee Salary -->
+<div class="modal fade" id="new-employee-salary">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Employee Salary</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Employee Name </label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Anthony Lewis</mat-option>
+                  <mat-option value="1">Brian Villalobos</mat-option>
+                  <mat-option value="1">Doglas Martini</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Net Salary </label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          @for (rowadd1 of rowappend; track rowadd1; let i = $index) {
+            <div class="row earning-row">
+              @if (i===0) {
+                <div class="d-flex justify-content-between mb-3">
+                  <label class="form-label">Earnings</label>
+                  @if (i===0) {
+                    <a href="javascript:void(0);" class="add-earnings text-primary mb-2" (click)="addRow()"><i class="ti ti-plus me-2"></i>Add New</a>
+                  }
+                </div>
+              }
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Basic</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">DA(40%)</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">HRA(15%)</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Conveyance</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Allowance </label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Medical Allowance</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Others</label>
+                  <div class="d-flex align-items-center">
+                    <input type="text" class="form-control">
+                    @if (i!== 0) {
+                      <a
+                        class="link-danger delete-deduction ms-2"
+                        (click)="removeRow(i)">
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          @for (rowadd1 of rowappend1; track rowadd1; let i = $index) {
+            <div class="row deduction-row">
+              @if (i===0) {
+                <div class="d-flex justify-content-between mb-3">
+                  <label class="form-label">Deductions</label>
+                  @if (i===0) {
+                    <a href="javascript:void(0);" class="add-deduction text-primary mb-2" (click)="addRow1()"><i class="ti ti-plus me-2"></i>Add New</a>
+                  }
+                </div>
+              }
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">TDS</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">ESI</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">PF</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Leave</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Prof.Tax</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Labour Welfare</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Others</label>
+                  <div class="d-flex align-items-center">
+                    <input type="text" class="form-control">
+                    @if (i!== 0) {
+                      <a
+                        class="link-danger delete-deduction ms-2"
+                        (click)="removeRow1(i)">
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Employee Salary</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Employee Salary -->
+
+<!-- Edit Employee Salary -->
+<div class="modal fade" id="edit-employee-salary">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Employee Salary</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Employee Name </label>
+                <mat-select placeholder="Anthony Lewis" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Anthony Lewis</mat-option>
+                  <mat-option value="1">Brian Villalobos</mat-option>
+                  <mat-option value="1">Doglas Martini</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Net Salary </label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          @for (rowadd1 of rowappend2; track rowadd1; let i = $index) {
+            <div class="row earning-row">
+              @if (i===0) {
+                <div class="d-flex justify-content-between mb-3">
+                  <label class="form-label">Earnings</label>
+                  @if (i===0) {
+                    <a href="javascript:void(0);" class="add-earnings text-primary mb-2" (click)="addRow2()"><i class="ti ti-plus me-2"></i>Add New</a>
+                  }
+                </div>
+              }
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Basic</label>
+                  <input type="text" class="form-control" value="$40000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">DA(40%)</label>
+                  <input type="text" class="form-control" value="$16000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">HRA(15%)</label>
+                  <input type="text" class="form-control" value="$2666">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Conveyance</label>
+                  <input type="text" class="form-control" value="$2000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Allowance </label>
+                  <input type="text" class="form-control" value="$1000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Medical Allowance</label>
+                  <input type="text" class="form-control" value="$2000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Others</label>
+                  <div class="d-flex align-items-center">
+                    <input type="text" class="form-control">
+                    @if (i!== 0) {
+                      <a
+                        class="link-danger delete-deduction ms-2"
+                        (click)="removeRow2(i)">
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          @for (rowadd1 of rowappend3; track rowadd1; let i = $index) {
+            <div class="row deduction-row">
+              @if (i===0) {
+                <div class="d-flex justify-content-between mb-3">
+                  <label class="form-label">Deductions</label>
+                  @if (i===0) {
+                    <a href="javascript:void(0);" class="add-deduction text-primary mb-2" (click)="addRow3()"><i class="ti ti-plus me-2"></i>Add New</a>
+                  }
+                </div>
+              }
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">TDS</label>
+                  <input type="text" class="form-control" value="$4000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">ESI</label>
+                  <input type="text" class="form-control" value="$2000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">PF</label>
+                  <input type="text" class="form-control" value="$3000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Leave</label>
+                  <input type="text" class="form-control" value="$1000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Prof.Tax</label>
+                  <input type="text" class="form-control" value="$800">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Labour Welfare</label>
+                  <input type="text" class="form-control" value="$500">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-label">Others</label>
+                  <div class="d-flex align-items-center">
+                    <input type="text" class="form-control">
+                    @if (i!== 0) {
+                      <a
+                        class="link-danger delete-deduction ms-2"
+                        (click)="removeRow3(i)">
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Employee Salary</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Employee Salary -->
+
+<!-- Add Payroll -->
+<div class="modal fade" id="add_payroll">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Addition</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Category Name</label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Monthly Remuneration</mat-option>
+                  <mat-option value="1"> Additional  Remuneration</mat-option>
+                  <mat-option value="1"> Monthly Remuneration</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <label class="form-label">Amount</label>
+
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label mb-0 fs-12 fw-normal">Unit Calculation</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <div class="d-flex">
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault2">
+                        No Assignee
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault3">
+                        All Employees
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" >
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault4">
+                        Select Employee
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Addition</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Payroll -->
+
+<!-- Edit  Payroll -->
+<div class="modal fade" id="edit_payroll">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Addition</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" value="Leave Balance Amount">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Category Name</label>
+                <mat-select placeholder="Additional  Remuneration" class="select custom-mat-select">
+                  <mat-option value="1">Monthly Remuneration</mat-option>
+                  <mat-option value="1"> Additional  Remuneration</mat-option>
+                  <mat-option value="1"> Monthly Remuneration</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <label class="form-label">Amount</label>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <input type="text" class="form-control"  value="$5">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label mb-0 fs-12 fw-normal">Unit Calculation</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault9" checked>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <div class="d-flex">
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6" checked>
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault6">
+                        No Assignee
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault7" >
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault7">
+                        All Employees
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault8" >
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault8">
+                        Select Employee
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit  Payroll -->
+
+<!-- Add Payroll Overtime -->
+<div class="modal fade" id="add_overtime">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Overtime</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Rate Type</label>
+                <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Hourly 1.5</mat-option>
+                  <mat-option value="1"> Hourly 3</mat-option>
+                  <mat-option value="1"> Hourly 2</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Rate</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Overtime</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Payroll -->
+
+<!-- Edit  Payroll Overtime -->
+<div class="modal fade" id="edit_overtime">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Overtime</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" value="Normal day OT 1.5x">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Rate Type</label>
+                <mat-select placeholder="Hourly 1.5" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Hourly 1.5</mat-option>
+                  <mat-option value="1"> Hourly 3</mat-option>
+                  <mat-option value="1"> Hourly 2</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Rate</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit  Payroll Overtime -->
+
+<!-- Add Payroll Deduction -->
+<div class="modal fade" id="add_deduction">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Deduction</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="row align-items-end">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label class="form-label">Amount</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label mb-0 fs-12 fw-normal">Unit Calculation</label>
+                  <div class="form-check form-switch d-flex">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault5">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <div class="d-flex">
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6" checked>
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault2">
+                        No Assignee
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault7">
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault3">
+                        All Employees
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault8">
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault4">
+                        Select Employee
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Deduction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Payroll Deduction -->
+
+<!-- Edit  Payroll Deduction -->
+<div class="modal fade" id="edit_deduction">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Deduction</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" value="Absent amount">
+              </div>
+            </div>
+            <div class="row align-items-end">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label class="form-label">Amount</label>
+                  <input type="text" class="form-control" value="$12">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label mb-0 fs-12 fw-normal">Unit Calculation</label>
+                  <div class="form-check form-switch d-flex">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <div class="d-flex">
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault2">
+                        No Assignee
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault3">
+                        All Employees
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" >
+                      <label class="form-check-label fs-14 fw-medium text-dark " for="flexRadioDefault4">
+                        Select Employee
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Payroll Deduction -->
+

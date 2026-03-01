@@ -1,0 +1,1663 @@
+<!-- Add Contact -->
+<div class="modal fade" id="add_contact">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Contact</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="contact-grids-tab">
+          <ul class="nav nav-underline" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#basic-info" type="button" role="tab" aria-selected="true">Basic Information</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-selected="false">Address</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="social-profile-tab" data-bs-toggle="tab" data-bs-target="#social-profile" type="button" role="tab" aria-selected="false">Social Profiles</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="access-tab" data-bs-toggle="tab" data-bs-target="#access" type="button" role="tab" aria-selected="false">Access</button>
+            </li>
+
+          </ul>
+        </div>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="info-tab" tabindex="0">
+              <div class="modal-body pb-0 ">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="d-flex align-items-center flex-wrap row-gap-3 bg-light w-100 rounded p-3 mb-4">
+                      <div class="d-flex align-items-center justify-content-center avatar avatar-xxl rounded-circle border border-dashed me-2 flex-shrink-0 text-dark frames">
+                        <i class="ti ti-photo text-gray-2 fs-16"></i>
+                      </div>
+                      <div class="profile-upload">
+                        <div class="mb-2">
+                          <h6 class="mb-1">Upload Profile Image</h6>
+                          <p class="fs-12">Image should be below 4 mb</p>
+                        </div>
+                        <div class="profile-uploader d-flex align-items-center">
+                          <div class="drag-upload-btn btn btn-sm btn-primary me-2">
+                            Upload
+                            <input type="file" class="form-control image-sign" multiple="">
+                          </div>
+                          <a href="javascript:void(0);" class="btn btn-light btn-sm">Cancel</a>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Name <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Last Name</label>
+                      <input type="email" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Job Title <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Company Name <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="Select" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">BrightWave Innovations</mat-option>
+                        <mat-option value="1">Stellar Dynamics</mat-option>
+                        <mat-option value="1">Quantum Nexus</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Email</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Phone Number <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Phone Number 2<span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Fax</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-block mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label [htmlFor]="" class="form-label">Deals <span class="text-danger"> *</span></label>
+                        <a href="javascript:void(0);" class="add-new text-primary" data-bs-target="#add_deals" data-bs-toggle="modal"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                      </div>
+                     <mat-select placeholder="Select" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">Collins</mat-option>
+                        <mat-option value="1">Konopelski</mat-option>
+                        <mat-option value="1">Adams</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ngx-date4">
+                      <label [htmlFor]="" class="form-label">Date of Birth <span class="text-danger"> *</span> </label>
+                      <div class="input-icon-end position-relative">
+                        <input type="text" class="form-control datetimepicker" bsDatepicker
+                        container=".ngx-date4"
+                        [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                        <span class="input-icon-addon">
+                          <i class="ti ti-calendar text-gray-7"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label class="form-label">Ratings <span class="text-danger"> *</span></label>
+                      <div class="input-icon-end position-relative">
+                        <input type="text" class="form-control">
+                        <span class="input-icon-addon">
+                          <i class="ti ti-star text-gray-6"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Owner  <span class="text-danger"> *</span></label>
+                     <mat-select placeholder="Select" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">Hendry Milner</mat-option>
+                        <mat-option value="1">Guillory Berggren</mat-option>
+                        <mat-option value="1">jami Carlile</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                        <label [htmlFor]="" class="form-label">Industry <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="Select" class="select custom-mat-select">
+                          <mat-option value="1">Select</mat-option>
+                          <mat-option value="1">Retail Industry</mat-option>
+                          <mat-option value="1">Banking</mat-option>
+                          <mat-option value="1">Hotels</mat-option>
+                          <mat-option value="1">Financial Services</mat-option>
+                          <mat-option value="1">Insurance</mat-option>
+                        </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Currency <span class="text-danger"> *</span></label>
+                     <mat-select placeholder="Select" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">USD</mat-option>
+                        <mat-option value="1">Euro</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Language <span class="text-danger"> *</span></label>
+                     <mat-select placeholder="Select" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">English</mat-option>
+                        <mat-option value="1">Arabic</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Tags <span class="text-danger"> *</span> </label>
+                      <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values" class="form-control" [placeholder]="'Add new'"></tag-input>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Source <span class="text-danger"> *</span> </label>
+                     <mat-select placeholder="Select" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">Phone Calls</mat-option>
+                        <mat-option value="1">Social Media</mat-option>
+                        <mat-option value="1">Refferal Sites</mat-option>
+                        <mat-option value="1">Web Analytics</mat-option>
+                        <mat-option value="1">Previous Purchase</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save </button>
+              </div>
+          </div>
+          <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab" tabindex="0">
+            <div class="modal-body pb-0 ">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Address <span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Country  <span class="text-danger"> *</span></label>
+                   <mat-select placeholder="Select" class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1">USA</mat-option>
+                      <mat-option value="1">Canada</mat-option>
+                      <mat-option value="1">Germany</mat-option>
+                      <mat-option value="1">France</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">State <span class="text-danger"> *</span></label>
+                   <mat-select placeholder="Select" class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1">California</mat-option>
+                      <mat-option value="1">New York</mat-option>
+                      <mat-option value="1">Texas</mat-option>
+                      <mat-option value="1">Florida</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">City <span class="text-danger"> *</span></label>
+                    <mat-select placeholder="Select" class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1">Los Angeles</mat-option>
+                      <mat-option value="1">San Diego</mat-option>
+                      <mat-option value="1">Fresno</mat-option>
+                      <mat-option value="1">San Francisco</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Zipcode  <span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save </button>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="social-profile" role="tabpanel" aria-labelledby="social-profile-tab" tabindex="0">
+            <div class="modal-body pb-0 ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Facebook</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Twitter</label>
+                    <input type="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">LinkedIn</label>
+                    <input type="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Skype</label>
+                    <input type="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Whatsapp</label>
+                    <input type="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Instagram</label>
+                    <input type="email" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save </button>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="access" role="tabpanel" aria-labelledby="access-tab" tabindex="0">
+            <div class="modal-body pb-0 ">
+              <div class="mb-4">
+                <h6 class="fs-14 fw-medium mb-1">Visibility</h6>
+                <div class="d-flex align-items-center">
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault1">
+                    Public
+                  </label>
+                </div>
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault2">
+                    Private
+                  </label>
+                </div>
+                <div class="form-check ">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
+                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault3">
+                    Select People
+                  </label>
+                </div>
+                </div>
+              </div>
+              <div class="p-3 bg-light br-5 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-6">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-01.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Michael Walker</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-7">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-02.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Sophie Headrick</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-8">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-03.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Cameron Drake</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-9">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-04.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Doris Crowley</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-10">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/profiles/avatar-12.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Thomas Bordelon</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                  <a href="javascript:void(0);" class="btn btn-primary">Confirm</a>
+                </div>
+              </div>
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Status</label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Active</mat-option>
+                  <mat-option value="1">Inactive</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#success_compay">Save </button>
+            </div>
+          </div>
+
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Contact -->
+
+<!-- Edit Contact -->
+<div class="modal fade" id="edit_contact">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Contact</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="contact-grids-tab">
+          <ul class="nav nav-underline" id="myTab2" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="info-tab2" data-bs-toggle="tab" data-bs-target="#basic-info2" type="button" role="tab" aria-selected="true">Basic Information</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="address-tab2" data-bs-toggle="tab" data-bs-target="#address2" type="button" role="tab" aria-selected="false">Address</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="social-profile-tab2" data-bs-toggle="tab" data-bs-target="#social-profile2" type="button" role="tab" aria-selected="false">Social Profiles</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="access-tab2" data-bs-toggle="tab" data-bs-target="#access2" type="button" role="tab" aria-selected="false">Access</button>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-content" id="myTabContent2">
+          <div class="tab-pane fade show active" id="basic-info2" role="tabpanel" aria-labelledby="info-tab2" tabindex="0">
+              <div class="modal-body pb-0 ">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="d-flex align-items-center flex-wrap row-gap-3 bg-light w-100 rounded p-3 mb-4">
+                      <div class="d-flex align-items-center justify-content-center avatar avatar-xxl rounded-circle border border-dashed me-2 flex-shrink-0 text-dark frames">
+                        <img src="assets/img/profiles/avatar-30.jpg" alt="img" class="rounded-circle">
+                      </div>
+                      <div class="profile-upload">
+                        <div class="mb-2">
+                          <h6 class="mb-1">Upload Profile Image</h6>
+                          <p class="fs-12">Image should be below 4 mb</p>
+                        </div>
+                        <div class="profile-uploader d-flex align-items-center">
+                          <div class="drag-upload-btn btn btn-sm btn-primary me-2">
+                            Upload
+                            <input type="file" class="form-control image-sign" multiple="">
+                          </div>
+                          <a href="javascript:void(0);" class="btn btn-light btn-sm">Cancel</a>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Name <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control" value="Darlee">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Last Name</label>
+                      <input type="email" class="form-control" value="Robertson">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Job Title <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control" value="Facility Manager">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Company Name <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="BrightWave Innovations" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>BrightWave Innovations</mat-option>
+                        <mat-option value="1">Stellar Dynamics</mat-option>
+                        <mat-option value="1">Quantum Nexus</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Email</label>
+                      <input type="text" class="form-control" value="darlee@example.com">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Phone Number <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control" value="(163) 2459 315">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Phone Number 2<span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control" value="(146) 1249 296">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label [htmlFor]="" class="form-label">Fax</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-block mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label [htmlFor]="" class="form-label">Deals <span class="text-danger"> *</span></label>
+                        <a href="javascript:void(0);" class="add-new text-primary mb-3" data-bs-toggle="modal" data-bs-target="#add_deals"><i class="ti ti-circle-plus text-primary me-1"></i>Add New</a>
+                      </div>
+                      <mat-select placeholder="Collins" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>Collins</mat-option>
+                        <mat-option value="1">Konopelski</mat-option>
+                        <mat-option value="1">Adams</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ngx-date5">
+                      <label [htmlFor]="" class="form-label">Date of Birth <span class="text-danger"> *</span> </label>
+                      <div class="input-icon-end position-relative">
+                        <input type="text" class="form-control datetimepicker" bsDatepicker
+                        container=".ngx-date5"
+                        [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy" value="02-05-2024">
+                        <span class="input-icon-addon">
+                          <i class="ti ti-calendar text-gray-7"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Reviews <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="Lowest" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>Lowest</mat-option>
+                        <mat-option value="1">Highest</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Owner  <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="Hendry" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>Hendry</mat-option>
+                        <mat-option value="1">Guillory</mat-option>
+                        <mat-option value="1">jami</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Industry <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="Barry Cuda" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>Barry Cuda</mat-option>
+                        <mat-option value="1">Tressa Wexler</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Currency <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="Dollar" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>Dollar</mat-option>
+                        <mat-option value="1">Euro</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Language <span class="text-danger"> *</span></label>
+                      <mat-select placeholder="English" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1" selected>English</mat-option>
+                        <mat-option value="1">Chinese</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Tags <span class="text-danger"> *</span> </label>
+                      <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values" class="form-control" [placeholder]="'Add new'"></tag-input>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3 ">
+                      <label [htmlFor]="" class="form-label">Source <span class="text-danger"> *</span> </label>
+                      <mat-select placeholder="Social Media" class="select custom-mat-select">
+                        <mat-option value="1">Select</mat-option>
+                        <mat-option value="1">Phone Calls</mat-option>
+                        <mat-option value="1" selected>Social Media</mat-option>
+                        <mat-option value="1">Refferal Sites</mat-option>
+                        <mat-option value="1">Web Analytics</mat-option>
+                        <mat-option value="1">Previous Purchase</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save </button>
+              </div>
+          </div>
+          <div class="tab-pane fade" id="address2" role="tabpanel" aria-labelledby="address-tab2" tabindex="0">
+            <div class="modal-body pb-0 ">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Address <span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" value="Germany">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Last Name <span class="text-danger"> *</span></label>
+                    <input type="email" class="form-control" value="Robertson">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">State <span class="text-danger"> *</span></label>
+                    <mat-select placeholder="USA" class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1" selected>USA</mat-option>
+                      <mat-option value="1">Canada</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Country  <span class="text-danger"> *</span></label>
+                    <mat-select placeholder="Indonesia" class="select custom-mat-select">
+                      <mat-option value="1">Select</mat-option>
+                      <mat-option value="1" selected>Indonesia</mat-option>
+                      <mat-option value="1">Cuba</mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Zipcode  <span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" value="65">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save </button>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="social-profile2" role="tabpanel" aria-labelledby="social-profile-tab2" tabindex="0">
+            <div class="modal-body pb-0 ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" value="Darlee Robertson">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Twitter</label>
+                    <input type="email" class="form-control" value="Darlee Robertson">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">LinkedIn</label>
+                    <input type="email" class="form-control" value="Darlee Robertson">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Skype</label>
+                    <input type="email" class="form-control" value="Darlee Robertson">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Whatsapp</label>
+                    <input type="email" class="form-control" value="Darlee Robertson">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label [htmlFor]="" class="form-label">Instagram</label>
+                    <input type="email" class="form-control" value="Darlee Robertson">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save </button>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="access2" role="tabpanel" aria-labelledby="access-tab2" tabindex="0">
+            <div class="modal-body pb-0 ">
+              <div class="mb-4">
+                <h6 class="fs-14 fw-medium mb-1">Visibility</h6>
+                <div class="d-flex align-items-center">
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault4">
+                    Public
+                  </label>
+                </div>
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" checked>
+                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault5">
+                    Private
+                  </label>
+                </div>
+                <div class="form-check ">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6">
+                  <label [htmlFor]="" class="form-check-label text-dark" for="flexRadioDefault6">
+                    Select People
+                  </label>
+                </div>
+                </div>
+              </div>
+              <div class="p-3 bg-light br-5 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-1">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-01.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Michael Walker</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-2">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-02.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Sophie Headrick</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-3">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-03.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Cameron Drake</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-4">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/reports/user-04.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Doris Crowley</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <input class="form-check-input me-1" type="checkbox" value="" id="user-5">
+                  <div class="d-flex align-items-center file-name-icon">
+                    <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                      <img src="assets/img/profiles/avatar-12.jpg" class="img-fluid" alt="img">
+                    </a>
+                    <div class="ms-2">
+                      <h6 class="fw-normal"><a href="javascript:void(0);">Thomas Bordelon</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                  <a href="javascript:void(0);" class="btn btn-primary">Confirm</a>
+                </div>
+              </div>
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Status</label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Active</mat-option>
+                  <mat-option value="1">Inactive</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#success_compay">Save </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Contact -->
+
+
+
+<!-- Success Contact -->
+<div class="modal fade" id="success_contact">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-body pb-0">
+        <div class="p-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex flex-column align-items-center justify-content-center mb-3">
+                <img src="assets/img/reports-img/check-icon.svg" alt="icon" class="mb-3">
+                <h5>Contact Added Successfully</h5>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <a [routerLink]="routes.contacts" class="btn btn-dark d-flex justify-content-center ">Back to List</a>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <a [routerLink]="routes.contactDetails" class="btn btn-primary bg-primary-gradient d-flex justify-content-center ">Detail Page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Success Contact -->
+<!-- Add Deals -->
+<div class="modal fade" id="edit_deals">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Deals</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Deal Name <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label [htmlFor]="" class="form-label">Pipeline <span class="text-danger"> *</span></label>
+                  <a href="javascript:void(0);" class="add-new text-primary" data-bs-toggle="modal" data-bs-target="#add_pipeline"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                </div>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Sales</mat-option>
+                  <mat-option value="1">Marketing</mat-option>
+                  <mat-option value="1">Calls</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Status <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Open</mat-option>
+                  <mat-option value="1">Won</mat-option>
+                  <mat-option value="1">Lost</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Deal Value  <span class="text-danger"> *</span></label>
+               <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Currency<span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">USD</mat-option>
+                  <mat-option value="1">EURO</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Period <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Period Value  <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Contact <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values1" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Project <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Office Management App</mat-option>
+                  <mat-option value="1">Clinic Management </mat-option>
+                  <mat-option value="1">Educational Platform</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date11">
+                <label [htmlFor]="" class="form-label">Due Date <span class="text-danger"> *</span> </label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control datetimepicker" bsDatepicker
+                  container=".ngx-date11"
+                  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-calendar text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date12">
+                <label [htmlFor]="" class="form-label">Expected Closing  Date <span class="text-danger"> *</span> </label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control datetimepicker" bsDatepicker
+                  container=".ngx-date12"
+                  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-calendar text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Assignee <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values1" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Tags  <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date3">
+                <label [htmlFor]="" class="form-label">Followup Date   <span class="text-danger"> *</span></label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control datetimepicker" bsDatepicker
+                  container=".ngx-date3"
+                  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-calendar text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Source  <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Phone Calls" class="select custom-mat-select">
+                <mat-option value="1">Select</mat-option>
+                <mat-option value="1">Phone Calls</mat-option>
+                <mat-option value="1">Social Media</mat-option>
+                <mat-option value="1">Refferal Sites</mat-option>
+                <mat-option value="1">Web Analytics</mat-option>
+                <mat-option value="1">Previous Purchase</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Priority   <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">High</mat-option>
+                  <mat-option value="1">Low</mat-option>
+                  <mat-option value="1">Medium</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Description    <span class="text-danger"> *</span></label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save Deal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Deals -->
+<!-- Add Deals -->
+<div class="modal fade" id="add_deals">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Deals</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Deal Name <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label [htmlFor]="" class="form-label">Pipeline <span class="text-danger"> *</span></label>
+                  <a href="javascript:void(0);" class="add-new text-primary" data-bs-toggle="modal" data-bs-target="#add_pipeline"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                </div>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Sales</mat-option>
+                  <mat-option value="1">Marketing</mat-option>
+                  <mat-option value="1">Calls</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Status <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Open</mat-option>
+                  <mat-option value="1">Won</mat-option>
+                  <mat-option value="1">Lost</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Deal Value  <span class="text-danger"> *</span></label>
+               <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Currency<span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">USD</mat-option>
+                  <mat-option value="1">EURO</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Period <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Period Value  <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Contact <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values1" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Project * <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">Office Management App</mat-option>
+                  <mat-option value="1">Clinic Management </mat-option>
+                  <mat-option value="1">Educational Platform</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date">
+                <label [htmlFor]="" class="form-label">Due Date <span class="text-danger"> *</span> </label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control datetimepicker" bsDatepicker
+                  container=".ngx-date"
+                  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-calendar text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date2">
+                <label [htmlFor]="" class="form-label">Expected Closing  Date <span class="text-danger"> *</span> </label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control datetimepicker" bsDatepicker
+                  container=".ngx-date2"
+                  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-calendar text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Assignee <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values1" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Tags  <span class="text-danger"> *</span></label>
+                <tag-input [ngModelOptions]="{standalone: true}" [(ngModel)]="values" class="form-control" [placeholder]="'Add new'"></tag-input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ngx-date13">
+                <label [htmlFor]="" class="form-label">Followup Date   <span class="text-danger"> *</span></label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control datetimepicker" bsDatepicker
+                  container=".ngx-date13"
+                  [bsConfig]="{ adaptivePosition: true }" placeholder="dd/mm/yyyy">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-calendar text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Source  <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                <mat-option value="1">Select</mat-option>
+                <mat-option value="1">Phone Calls</mat-option>
+                <mat-option value="1">Social Media</mat-option>
+                <mat-option value="1">Refferal Sites</mat-option>
+                <mat-option value="1">Web Analytics</mat-option>
+                <mat-option value="1">Previous Purchase</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Priority   <span class="text-danger"> *</span></label>
+               <mat-select placeholder="Select" class="select custom-mat-select">
+                  <mat-option value="1">Select</mat-option>
+                  <mat-option value="1">High</mat-option>
+                  <mat-option value="1">Low</mat-option>
+                  <mat-option value="1">Medium</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3 ">
+                <label [htmlFor]="" class="form-label">Description    <span class="text-danger"> *</span></label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Add Deal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Deals -->
+<!-- Add Pipeline -->
+<div class="modal fade" id="add_pipeline">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Pipeline</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Pipeline Name <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label [htmlFor]="" class="form-label">Pipeline Stages   <span class="text-danger"> *</span></label>
+                  <a href="javascript:void(0);" class="add-new text-primary" data-bs-toggle="modal" data-bs-target="#add_stage"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                </div>
+                <div class="p-3 border border-gray br-5 mb-2">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2"><i class="ti ti-grip-vertical"></i></span>
+                      <h6 class="fs-14 fw-normal">Inpipline</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a href="javascript:void(0);" class="text-default" data-bs-toggle="modal" data-bs-target="#edit_stage"><span class="me-2"><i class="ti ti-edit"></i></span></a>
+                      <a href="javascript:void(0);"  class="text-default" data-bs-toggle="modal" data-bs-target="#delete_modal"><span><i class="ti ti-trash"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-3 border border-gray br-5 mb-2">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2"><i class="ti ti-grip-vertical"></i></span>
+                      <h6 class="fs-14 fw-normal">Follow Up</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a href="javascript:void(0);" class="text-default" data-bs-toggle="modal" data-bs-target="#edit_stage"><span class="me-2"><i class="ti ti-edit"></i></span></a>
+                      <a href="javascript:void(0);"  class="text-default" data-bs-toggle="modal" data-bs-target="#delete_modal"><span><i class="ti ti-trash"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-3 border border-gray br-5">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2"><i class="ti ti-grip-vertical"></i></span>
+                      <h6 class="fs-14 fw-normal">Schedule Service</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a href="javascript:void(0);" class="text-default" data-bs-toggle="modal" data-bs-target="#edit_stage"><span class="me-2"><i class="ti ti-edit"></i></span></a>
+                      <a href="javascript:void(0);"  class="text-default"><span><i class="ti ti-trash" data-bs-toggle="modal" data-bs-target="#delete_modal"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Access</label>
+                <div class="d-flex  access-item nav">
+                  <div class="d-flex align-items-center">
+                    <div class="radio-btn d-flex align-items-center " data-bs-toggle="tab" data-bs-target="#all">
+                      <input type="radio" class="status-radio me-2" id="all" name="status" checked >
+                      <label [htmlFor]="" for="all">All</label>
+                    </div>
+                    <div class="radio-btn d-flex align-items-center " data-bs-toggle="tab" data-bs-target="#select-person">
+                      <input type="radio" class="status-radio me-2" id="select" name="status">
+                      <label [htmlFor]="" for="select">Select Person</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-content">
+                  <div class="tab-pane fade" id="select-person">
+                    <div class="access-wrapper">
+                      <div class="p-3 border border-gray br-5 mb-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center file-name-icon">
+                            <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                              <img src="assets/img/profiles/avatar-20.jpg" class="img-fluid" alt="img">
+                            </a>
+                            <div class="ms-2">
+                              <h6 class="fw-medium"><a href="javascript:void(0);">Sharon Roy</a></h6>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <a href="javascript:void(0);" class="text-danger">Remove</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="p-3 border border-gray br-5 mb-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center file-name-icon">
+                            <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                              <img src="assets/img/profiles/avatar-21.jpg" class="img-fluid" alt="img">
+                            </a>
+                            <div class="ms-2">
+                              <h6 class="fw-medium"><a href="javascript:void(0);">Sharon Roy</a></h6>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <a href="javascript:void(0);" class="text-danger">Remove</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Pipeline</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add Pipeline -->
+
+<!-- Edit Pipeline -->
+<div class="modal fade" id="edit_pipeline">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Pipeline</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Pipeline Name <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" value="Marketing">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label [htmlFor]="" class="form-label">Pipeline Stages   <span class="text-danger"> *</span></label>
+                  <a href="javascript:void(0);" class="add-new text-primary" data-bs-toggle="modal" data-bs-target="#add_stage"><i class="ti ti-plus text-primary me-1"></i>Add New</a>
+                </div>
+                <div class="p-3 border border-gray br-5 mb-2">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2"><i class="ti ti-grip-vertical"></i></span>
+                      <h6 class="fs-14 fw-normal">Inpipline</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a href="javascript:void(0);" class="text-default"><span class="me-2"><i class="ti ti-edit"></i></span></a>
+                      <a href="javascript:void(0);"  class="text-default"><span><i class="ti ti-trash"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-3 border border-gray br-5 mb-2">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2"><i class="ti ti-grip-vertical"></i></span>
+                      <h6 class="fs-14 fw-normal">Follow Up</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a href="javascript:void(0);" class="text-default"><span class="me-2"><i class="ti ti-edit"></i></span></a>
+                      <a href="javascript:void(0);"  class="text-default"><span><i class="ti ti-trash"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-3 border border-gray br-5">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2"><i class="ti ti-grip-vertical"></i></span>
+                      <h6 class="fs-14 fw-normal">Schedule Service</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a href="javascript:void(0);" class="text-default"><span class="me-2"><i class="ti ti-edit"></i></span></a>
+                      <a href="javascript:void(0);"  class="text-default"><span><i class="ti ti-trash"></i></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Access</label>
+                <div class="d-flex  access-item nav">
+                  <div class="d-flex align-items-center">
+                    <div class="radio-btn d-flex align-items-center " data-bs-toggle="tab" data-bs-target="#all2">
+                      <input type="radio" class="status-radio me-2" id="all2" name="status" checked >
+                      <label [htmlFor]="" for="all2">All</label>
+                    </div>
+                    <div class="radio-btn d-flex align-items-center " data-bs-toggle="tab" data-bs-target="#select-person2">
+                      <input type="radio" class="status-radio me-2" id="select2" name="status">
+                      <label [htmlFor]="" for="select2">Select Person</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-content">
+                  <div class="tab-pane fade" id="select-person2">
+                    <div class="access-wrapper">
+                      <div class="p-3 border border-gray br-5 mb-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center file-name-icon">
+                            <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                              <img src="assets/img/profiles/avatar-20.jpg" class="img-fluid" alt="img">
+                            </a>
+                            <div class="ms-2">
+                              <h6 class="fw-medium"><a href="javascript:void(0);">Sharon Roy</a></h6>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <a href="javascript:void(0);" class="text-danger">Remove</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="p-3 border border-gray br-5 mb-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center file-name-icon">
+                            <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                              <img src="assets/img/profiles/avatar-21.jpg" class="img-fluid" alt="img">
+                            </a>
+                            <div class="ms-2">
+                              <h6 class="fw-medium"><a href="javascript:void(0);">Sharon Roy</a></h6>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <a href="javascript:void(0);" class="text-danger">Remove</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal">Add Pipeline</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Pipeline -->
+
+<!-- Pipeline Access -->
+<div class="modal fade" id="pipeline-access">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Pipeline Access</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <div class="input-icon-end position-relative">
+                  <input type="text" class="form-control" placeholder="Search">
+                  <span class="input-icon-addon">
+                    <i class="ti ti-search text-gray-7"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <div class="p-2 border br-5">
+                  <div class="pipeline-access-items">
+                    <div class="d-flex  align-items-center p-2">
+                      <div class="form-check  form-check-md me-2">
+                        <input class="form-check-input" type="checkbox">
+                      </div>
+                      <div class="d-flex align-items-center file-name-icon">
+                        <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                          <img src="assets/img/profiles/avatar-19.jpg" class="img-fluid" alt="img">
+                        </a>
+                        <div class="ms-2">
+                          <h6 class="fw-medium fs-12"><a href="javascript:void(0);">Darlee Robertson</a></h6>
+                          <span class="fs-10 fw-normal">Darlee Robertson</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center p-2">
+                      <div class="form-check form-check-md me-2">
+                        <input class="form-check-input" type="checkbox">
+                      </div>
+                      <div class="d-flex align-items-center file-name-icon">
+                        <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                          <img src="assets/img/profiles/avatar-20.jpg" class="img-fluid" alt="img">
+                        </a>
+                        <div class="ms-2">
+                          <h6 class="fw-medium fs-12"><a href="javascript:void(0);">Sharon Roy</a></h6>
+                          <span class="fs-10 fw-normal">Installer</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center p-2">
+                      <div class="form-check form-check-md me-2">
+                        <input class="form-check-input" type="checkbox">
+                      </div>
+                      <div class="d-flex align-items-center file-name-icon">
+                        <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                          <img src="assets/img/profiles/avatar-21.jpg" class="img-fluid" alt="img">
+                        </a>
+                        <div class="ms-2">
+                          <h6 class="fw-medium fs-12"><a href="javascript:void(0);">Vaughan Lewis</a></h6>
+                          <span class="fs-10 fw-normal">Senior  Manager</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center p-2">
+                      <div class="form-check form-check-md me-2">
+                        <input class="form-check-input" type="checkbox">
+                      </div>
+                      <div class="d-flex align-items-center file-name-icon">
+                        <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                          <img src="assets/img/users/user-33.jpg" class="img-fluid" alt="img">
+                        </a>
+                        <div class="ms-2">
+                          <h6 class="fw-medium fs-12"><a href="javascript:void(0);">Jessica Louise</a></h6>
+                          <span class="fs-10 fw-normal">Test Engineer</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center p-2">
+                      <div class="form-check form-check-md me-2">
+                        <input class="form-check-input" type="checkbox">
+                      </div>
+                      <div class="d-flex align-items-center file-name-icon">
+                        <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                          <img src="assets/img/users/user-34.jpg" class="img-fluid" alt="img">
+                        </a>
+                        <div class="ms-2">
+                          <h6 class="fw-medium fs-12"><a href="javascript:void(0);">Test Engineer</a></h6>
+                          <span class="fs-10 fw-normal">UI /UX Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Pipeline Access -->
+
+<!-- Add New Stage -->
+<div class="modal fade" id="add_stage">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Stage</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Stage Name <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Add Stage</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add New Stage -->
+
+<!-- Edit Stage -->
+<div class="modal fade" id="edit_stage">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Stage</h4>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form >
+        <div class="modal-body pb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label [htmlFor]="" class="form-label">Edit Name <span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" value="Inpipeline">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" data-bs-dismiss="modal" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Stage -->
