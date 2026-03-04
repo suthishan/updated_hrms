@@ -1,0 +1,20 @@
+.badge-soft-danger  { background: rgba(244,67,54,.12);  color: #f44336; }
+.badge-soft-warning { background: rgba(255,152,0,.12);   color: #ff9800; }
+.badge-soft-info    { background: rgba(33,150,243,.12);  color: #2196f3; }
+.badge-soft-success { background: rgba(76,175,80,.12);   color: #4caf50; }
+.badge-soft-primary { background: rgba(94,114,228,.12);  color: #5e72e4; }
+.badge-soft-secondary { background: rgba(108,117,125,.12); color: #6c757d; }
+
+.bg-primary-transparent  { background: rgba(94,114,228,.12)  !important; }
+.bg-danger-transparent   { background: rgba(244,67,54,.12)   !important; }
+.bg-warning-transparent  { background: rgba(255,152,0,.12)   !important; }
+.bg-success-transparent  { background: rgba(76,175,80,.12)   !important; }
+
+.text-primary-light { color: #7986cb; }
+
+.table-danger-light { background: rgba(244,67,54,.04); }
+
+.card { transition: box-shadow .2s ease; }
+.card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08) !important; }
+
+.progress { border-radius: 4px; }

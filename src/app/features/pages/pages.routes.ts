@@ -476,6 +476,13 @@ export const Page_routes: Routes = [
         ]
       },
 
+      // ─── Audit CAR Portal ────────────────────────────────────────────────
+      {
+        path: 'audit-car',
+        loadChildren: () =>
+          import('./audit-car/audit-car.routes').then((m) => m.AUDIT_CAR_ROUTES),
+      },
+
     ]
   }
 ]

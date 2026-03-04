@@ -1,0 +1,187 @@
+<!-- Observation List -->
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Audit Observations</h2>
+        <nav><ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/index"><i class="ti ti-smart-home"></i></a></li>
+          <li class="breadcrumb-item"><a routerLink="/audit-car/dashboard">Audit CAR</a></li>
+          <li class="breadcrumb-item active">Observations</li>
+        </ol></nav>
+      </div>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap gap-2">
+        <button class="btn btn-outline-secondary d-flex align-items-center" (click)="exportData()">
+          <i class="ti ti-download me-2"></i>Export CSV
+        </button>
+        <a *ngIf="isAuditTeam" routerLink="/audit-car/observations/create" class="btn btn-primary d-flex align-items-center">
+          <i class="ti ti-plus me-2"></i>New Observation
+        </a>
+        <a *ngIf="isAuditTeam" routerLink="/audit-car/excel-upload" class="btn btn-outline-primary d-flex align-items-center">
+          <i class="ti ti-upload me-2"></i>Upload Excel
+        </a>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card border-0 shadow-sm mb-3">
+      <div class="card-body py-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Search</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="ti ti-search"></i></span>
+              <input type="text" class="form-control" placeholder="Obs ID, area, division..."
+                [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small mb-1">Audit Year</label>
+            <select class="form-select" [(ngModel)]="filterYear" (change)="applyFilters()">
+              <option value="">All Years</option>
+              <option *ngFor="let yr of availableYears" [value]="yr">{{ yr }}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small mb-1">Division</label>
+            <select class="form-select" [(ngModel)]="filterDivision" (change)="applyFilters()">
+              <option value="">All Divisions</option>
+              <option *ngFor="let div of availableDivisions" [value]="div">{{ div }}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small mb-1">Risk Rating</label>
+            <select class="form-select" [(ngModel)]="filterRisk" (change)="applyFilters()">
+              <option value="">All Risks</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="Improvement">Improvement</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small mb-1">Status</label>
+            <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
+              <option value="">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="Partially Closed">Partially Closed</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+              <i class="ti ti-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="cursor-pointer" (click)="sortBy('observationId')">
+                  Obs ID <i [class]="sortIcon('observationId')"></i>
+                </th>
+                <th class="cursor-pointer" (click)="sortBy('auditYear')">
+                  Year <i [class]="sortIcon('auditYear')"></i>
+                </th>
+                <th class="cursor-pointer" (click)="sortBy('auditArea')">
+                  Audit Area <i [class]="sortIcon('auditArea')"></i>
+                </th>
+                <th class="cursor-pointer" (click)="sortBy('division')">
+                  Division <i [class]="sortIcon('division')"></i>
+                </th>
+                <th class="cursor-pointer" (click)="sortBy('riskRating')">
+                  Risk <i [class]="sortIcon('riskRating')"></i>
+                </th>
+                <th>Responsible Persons</th>
+                <th class="cursor-pointer" (click)="sortBy('overallStatus')">
+                  Overall Status <i [class]="sortIcon('overallStatus')"></i>
+                </th>
+                <th>Overdue</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let obs of filteredObservations">
+                <td>
+                  <a [routerLink]="['/audit-car/observations/detail', obs.id]" class="text-primary fw-medium">
+                    {{ obs.observationId }}
+                  </a>
+                </td>
+                <td>{{ obs.auditYear }}</td>
+                <td>
+                  <span class="d-block fw-medium">{{ obs.auditArea }}</span>
+                  <small class="text-muted text-truncate d-block" style="max-width:180px;" [title]="obs.observation">
+                    {{ obs.observation | slice:0:60 }}{{ obs.observation.length > 60 ? '...' : '' }}
+                  </small>
+                </td>
+                <td>{{ obs.division }}</td>
+                <td><span class="badge" [ngClass]="getRiskClass(obs.riskRating)">{{ obs.riskRating }}</span></td>
+                <td>
+                  <div *ngFor="let ai of obs.actionItems" class="d-flex align-items-center gap-1 mb-1">
+                    <small class="fw-medium">{{ ai.responsiblePersonName }}</small>
+                    <span class="badge" [ngClass]="getStatusClass(ai.status)" style="font-size:0.65em;">{{ ai.status }}</span>
+                  </div>
+                </td>
+                <td><span class="badge" [ngClass]="getStatusClass(obs.overallStatus)">{{ obs.overallStatus }}</span></td>
+                <td>
+                  <span *ngIf="getOverdueCount(obs) > 0" class="badge bg-danger text-white">
+                    {{ getOverdueCount(obs) }}
+                  </span>
+                  <span *ngIf="getOverdueCount(obs) === 0" class="text-muted">—</span>
+                </td>
+                <td class="text-end">
+                  <div class="d-flex justify-content-end gap-1">
+                    <a [routerLink]="['/audit-car/observations/detail', obs.id]"
+                       class="btn btn-sm btn-outline-primary" title="View">
+                      <i class="ti ti-eye"></i>
+                    </a>
+                    <a *ngIf="isAuditTeam" [routerLink]="['/audit-car/observations/edit', obs.id]"
+                       class="btn btn-sm btn-outline-secondary" title="Edit">
+                      <i class="ti ti-edit"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="filteredObservations.length === 0">
+                <td colspan="9" class="text-center text-muted py-5">
+                  <i class="ti ti-database-off fs-2 d-block mb-2"></i>
+                  No observations found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex align-items-center justify-content-between p-3 border-top">
+          <small class="text-muted">
+            Showing {{ filteredObservations.length }} of {{ observations.length }} records
+          </small>
+          <nav *ngIf="totalPages > 1">
+            <ul class="pagination pagination-sm mb-0">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <button class="page-link" (click)="changePage(currentPage - 1)"><i class="ti ti-chevron-left"></i></button>
+              </li>
+              <li *ngFor="let p of pages" class="page-item" [class.active]="p === currentPage">
+                <button class="page-link" (click)="changePage(p)">{{ p }}</button>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <button class="page-link" (click)="changePage(currentPage + 1)"><i class="ti ti-chevron-right"></i></button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

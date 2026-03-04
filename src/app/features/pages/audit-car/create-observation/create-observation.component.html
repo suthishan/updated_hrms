@@ -1,0 +1,166 @@
+<!-- Create / Edit Observation -->
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">{{ isEditMode ? 'Edit Observation' : 'Create Observation' }}</h2>
+        <nav><ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/index"><i class="ti ti-smart-home"></i></a></li>
+          <li class="breadcrumb-item"><a routerLink="/audit-car/dashboard">Audit CAR</a></li>
+          <li class="breadcrumb-item"><a routerLink="/audit-car/observations/list">Observations</a></li>
+          <li class="breadcrumb-item active">{{ isEditMode ? 'Edit' : 'Create' }}</li>
+        </ol></nav>
+      </div>
+    </div>
+
+    <!-- Success alert -->
+    <div *ngIf="saveSuccess" class="alert alert-success d-flex align-items-center">
+      <i class="ti ti-circle-check me-2 fs-5"></i>
+      Observation {{ isEditMode ? 'updated' : 'created' }} successfully! Redirecting...
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(false)" novalidate>
+
+      <!-- ─── Observation Header ───────────────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header border-0">
+          <h5 class="card-title mb-0"><i class="ti ti-clipboard me-2 text-primary"></i>Observation Information</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Audit Year <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" formControlName="auditYear" placeholder="2024"
+                [class.is-invalid]="isFieldInvalid('auditYear')">
+              <div class="invalid-feedback">Valid year required.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Audit Area <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="auditArea" [class.is-invalid]="isFieldInvalid('auditArea')">
+                <option value="">Select Audit Area</option>
+                <option *ngFor="let area of auditAreas" [value]="area">{{ area }}</option>
+              </select>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Division <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="division" [class.is-invalid]="isFieldInvalid('division')">
+                <option value="">Select Division</option>
+                <option *ngFor="let div of divisions" [value]="div">{{ div }}</option>
+              </select>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Risk Rating <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="riskRating" [class.is-invalid]="isFieldInvalid('riskRating')">
+                <option value="">Select</option>
+                <option *ngFor="let r of riskRatings" [value]="r">{{ r }}</option>
+              </select>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Observation <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="observation"
+                placeholder="Brief observation title..."
+                [class.is-invalid]="isFieldInvalid('observation')">
+              <div class="invalid-feedback">Minimum 10 characters required.</div>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Details of Findings <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="4" formControlName="detailsOfFindings"
+                placeholder="Describe the audit finding in detail..."
+                [class.is-invalid]="isFieldInvalid('detailsOfFindings')"></textarea>
+              <div class="invalid-feedback">Minimum 20 characters required.</div>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Follow-up Commitment from Management <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="3" formControlName="managementCommitment"
+                placeholder="Management's commitment to address this observation..."
+                [class.is-invalid]="isFieldInvalid('managementCommitment')"></textarea>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Action Items ─────────────────────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0"><i class="ti ti-users me-2 text-primary"></i>Responsible Persons & Target Dates</h5>
+          <button type="button" class="btn btn-outline-primary btn-sm" (click)="addActionItem()">
+            <i class="ti ti-plus me-1"></i>Add Responsible Person
+          </button>
+        </div>
+        <div class="card-body" formArrayName="actionItems">
+
+          <div *ngFor="let item of actionItems.controls; let i = index" [formGroupName]="i"
+            class="p-3 border rounded mb-3 position-relative">
+            <div class="position-absolute top-0 end-0 p-2">
+              <button *ngIf="actionItems.length > 1" type="button" class="btn btn-sm btn-outline-danger"
+                (click)="removeActionItem(i)" title="Remove">
+                <i class="ti ti-trash"></i>
+              </button>
+            </div>
+            <div class="row g-3 pe-4">
+              <div class="col-md-1 d-flex align-items-center">
+                <div class="avatar avatar-md rounded-circle bg-primary-transparent d-flex align-items-center justify-content-center">
+                  <span class="text-primary fw-bold">{{ i + 1 }}</span>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <label class="form-label small">Responsible Person <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="responsiblePersonId"
+                  [class.is-invalid]="isAiFieldInvalid(i, 'responsiblePersonId')">
+                  <option value="">Select person...</option>
+                  <option *ngFor="let user of responsiblePersonOptions" [value]="user.id">
+                    {{ user.name }} — {{ user.department }} ({{ user.division }})
+                  </option>
+                </select>
+                <div class="invalid-feedback">Required.</div>
+                <div *ngIf="getActionItemGroup(i).get('responsiblePersonId')?.value as uid"
+                  class="mt-1 small text-muted">
+                  <ng-container *ngIf="getSelectedUser(uid) as u">
+                    <i class="ti ti-mail me-1"></i>{{ u.email }}
+                  </ng-container>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small">Target Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" formControlName="initialTargetDate"
+                  [class.is-invalid]="isAiFieldInvalid(i, 'initialTargetDate')">
+                <div class="invalid-feedback">Required.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─── Audit Trail Note ─────────────────────────────────────────── -->
+      <div class="alert alert-info d-flex align-items-start mb-3">
+        <i class="ti ti-info-circle me-2 mt-1 flex-shrink-0"></i>
+        <div>
+          <strong>Note:</strong> Upon publishing, an automatic email notification will be sent to all responsible persons.
+          Follow-up reminders will be sent 15 days before due date, on the due date, and monthly on the 25th for overdue items.
+        </div>
+      </div>
+
+      <!-- ─── Actions ─────────────────────────────────────────────────── -->
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="submit" class="btn btn-outline-secondary" [disabled]="saveSuccess">
+          <i class="ti ti-device-floppy me-2"></i>Save Draft
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit(true)" [disabled]="saveSuccess">
+          <i class="ti ti-send me-2"></i>{{ isEditMode ? 'Update & Publish' : 'Publish Observation' }}
+        </button>
+        <button type="button" class="btn btn-outline-danger ms-auto" (click)="cancel()">
+          <i class="ti ti-x me-2"></i>Cancel
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
