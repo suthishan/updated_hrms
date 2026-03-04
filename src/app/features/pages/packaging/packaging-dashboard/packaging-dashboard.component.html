@@ -1,0 +1,274 @@
+<div class="content">
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Packaging Approval Portal" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+      <div class="mb-2">
+        <a routerLink="/pages/packaging/upload" class="btn btn-primary d-flex align-items-center">
+          <i class="ti ti-circle-plus me-2"></i>New Creative Request
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- /Breadcrumb -->
+
+  <!-- Stats Cards -->
+  <div class="row">
+    <div class="col-xl-3 col-md-6 d-flex">
+      <div class="card flex-fill">
+        <div class="card-body d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center overflow-hidden">
+            <div>
+              <span class="avatar avatar-lg bg-primary rounded-circle">
+                <i class="ti ti-files fs-20"></i>
+              </span>
+            </div>
+            <div class="ms-2 overflow-hidden">
+              <p class="fs-12 fw-medium mb-1 text-truncate">Total Submissions</p>
+              <h4>{{ totalDocs }}</h4>
+            </div>
+          </div>
+          <span class="badge badge-soft-primary badge-sm fw-normal">All Time</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 d-flex">
+      <div class="card flex-fill">
+        <div class="card-body d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center overflow-hidden">
+            <div>
+              <span class="avatar avatar-lg bg-warning rounded-circle">
+                <i class="ti ti-clock fs-20"></i>
+              </span>
+            </div>
+            <div class="ms-2 overflow-hidden">
+              <p class="fs-12 fw-medium mb-1 text-truncate">In Review / Pending</p>
+              <h4>{{ inReviewDocs + pendingDocs }}</h4>
+            </div>
+          </div>
+          <span class="badge badge-soft-warning badge-sm fw-normal">Active</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 d-flex">
+      <div class="card flex-fill">
+        <div class="card-body d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center overflow-hidden">
+            <div>
+              <span class="avatar avatar-lg bg-success rounded-circle">
+                <i class="ti ti-circle-check fs-20"></i>
+              </span>
+            </div>
+            <div class="ms-2 overflow-hidden">
+              <p class="fs-12 fw-medium mb-1 text-truncate">Approved</p>
+              <h4>{{ approvedDocs }}</h4>
+            </div>
+          </div>
+          <span class="badge badge-soft-success badge-sm fw-normal">Completed</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 d-flex">
+      <div class="card flex-fill">
+        <div class="card-body d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center overflow-hidden">
+            <div>
+              <span class="avatar avatar-lg bg-danger rounded-circle">
+                <i class="ti ti-circle-x fs-20"></i>
+              </span>
+            </div>
+            <div class="ms-2 overflow-hidden">
+              <p class="fs-12 fw-medium mb-1 text-truncate">Rejected</p>
+              <h4>{{ rejectedDocs }}</h4>
+            </div>
+          </div>
+          <span class="badge badge-soft-danger badge-sm fw-normal">Needs Revision</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Stats Cards -->
+
+  <!-- Quick Actions + Recent Submissions -->
+  <div class="row">
+    <!-- Quick Actions -->
+    <div class="col-xl-4 d-flex">
+      <div class="card flex-fill">
+        <div class="card-header">
+          <h5 class="card-title mb-0"><i class="ti ti-bolt me-2 text-primary"></i>Quick Actions</h5>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center justify-content-between p-3">
+              <div class="d-flex align-items-center">
+                <span class="avatar avatar-sm bg-primary-transparent me-3 rounded-circle">
+                  <i class="ti ti-upload text-primary"></i>
+                </span>
+                <div>
+                  <p class="mb-0 fw-medium">Upload Creative</p>
+                  <small class="text-muted">PDF or JPEG only</small>
+                </div>
+              </div>
+              <a routerLink="/pages/packaging/upload" class="btn btn-sm btn-outline-primary">
+                <i class="ti ti-arrow-right"></i>
+              </a>
+            </li>
+            <li class="list-group-item d-flex align-items-center justify-content-between p-3">
+              <div class="d-flex align-items-center">
+                <span class="avatar avatar-sm bg-warning-transparent me-3 rounded-circle">
+                  <i class="ti ti-inbox text-warning"></i>
+                </span>
+                <div>
+                  <p class="mb-0 fw-medium">Approval Inbox</p>
+                  <small class="text-muted">Pending your action</small>
+                </div>
+              </div>
+              <a routerLink="/pages/packaging/inbox" class="btn btn-sm btn-outline-warning">
+                <i class="ti ti-arrow-right"></i>
+              </a>
+            </li>
+            <li class="list-group-item d-flex align-items-center justify-content-between p-3">
+              <div class="d-flex align-items-center">
+                <span class="avatar avatar-sm bg-info-transparent me-3 rounded-circle">
+                  <i class="ti ti-list-details text-info"></i>
+                </span>
+                <div>
+                  <p class="mb-0 fw-medium">All Requests</p>
+                  <small class="text-muted">View all submissions</small>
+                </div>
+              </div>
+              <a routerLink="/pages/packaging/inbox" class="btn btn-sm btn-outline-info">
+                <i class="ti ti-arrow-right"></i>
+              </a>
+            </li>
+            <li class="list-group-item d-flex align-items-center justify-content-between p-3">
+              <div class="d-flex align-items-center">
+                <span class="avatar avatar-sm bg-secondary-transparent me-3 rounded-circle">
+                  <i class="ti ti-history text-secondary"></i>
+                </span>
+                <div>
+                  <p class="mb-0 fw-medium">Audit Trail</p>
+                  <small class="text-muted">Full activity history</small>
+                </div>
+              </div>
+              <a routerLink="/pages/packaging/audit-trail" class="btn btn-sm btn-outline-secondary">
+                <i class="ti ti-arrow-right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Submissions -->
+    <div class="col-xl-8 d-flex">
+      <div class="card flex-fill">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0"><i class="ti ti-file-description me-2 text-primary"></i>Recent Submissions</h5>
+          <a routerLink="/pages/packaging/inbox" class="btn btn-sm btn-outline-primary">View All</a>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="thead-light">
+                <tr>
+                  <th>Product</th>
+                  <th>Workflow</th>
+                  <th>Initiator</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let doc of recentDocuments">
+                  <td>
+                    <div>
+                      <p class="mb-0 fw-medium">{{ doc.title }}</p>
+                      <small class="text-muted">{{ doc.productCategory }}</small>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-soft-primary">
+                      <i [class]="getWorkflowIcon(doc.workflowType) + ' me-1'"></i>
+                      {{ doc.workflowType | titlecase }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span class="avatar avatar-sm me-2 rounded-circle">
+                        <img [src]="doc.initiatorAvatar || 'assets/img/profiles/avatar-02.jpg'" [alt]="doc.initiator" class="rounded-circle">
+                      </span>
+                      <span class="fs-13">{{ doc.initiator }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <small class="text-muted">{{ doc.createdAt | date:'dd MMM, yyyy' }}</small>
+                  </td>
+                  <td>
+                    <span class="badge" [class]="getStatusClass(doc.status)">
+                      {{ getStatusLabel(doc.status) }}
+                    </span>
+                  </td>
+                  <td>
+                    <a [routerLink]="['/pages/packaging/detail', doc.id]" class="btn btn-icon btn-sm btn-outline-primary">
+                      <i class="ti ti-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="recentDocuments.length === 0">
+                  <td colspan="6" class="text-center py-4 text-muted">
+                    <i class="ti ti-file-off fs-24 d-block mb-2"></i>
+                    No submissions yet
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workflow Info Cards -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0"><i class="ti ti-info-circle me-2 text-primary"></i>Approval Workflow Types</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="border rounded p-3 h-100 text-center">
+                <span class="avatar avatar-lg bg-primary-transparent rounded-circle mb-3">
+                  <i class="ti ti-arrow-right fs-24 text-primary"></i>
+                </span>
+                <h6 class="fw-semibold">Sequential</h6>
+                <p class="text-muted fs-13 mb-0">Approvals happen one after another. Each approver acts only after the previous one completes.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="border rounded p-3 h-100 text-center">
+                <span class="avatar avatar-lg bg-success-transparent rounded-circle mb-3">
+                  <i class="ti ti-arrows-split fs-24 text-success"></i>
+                </span>
+                <h6 class="fw-semibold">Parallel</h6>
+                <p class="text-muted fs-13 mb-0">All selected approvers review simultaneously. Faster turnaround for independent stakeholders.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="border rounded p-3 h-100 text-center">
+                <span class="avatar avatar-lg bg-warning-transparent rounded-circle mb-3">
+                  <i class="ti ti-chart-arrows fs-24 text-warning"></i>
+                </span>
+                <h6 class="fw-semibold">Hybrid</h6>
+                <p class="text-muted fs-13 mb-0">Combines sequential and parallel steps. Some approvers act simultaneously within a sequential pipeline.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

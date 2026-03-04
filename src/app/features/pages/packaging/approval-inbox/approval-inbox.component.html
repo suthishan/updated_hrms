@@ -1,0 +1,173 @@
+<div class="content">
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Approval Inbox" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap gap-2">
+      <a routerLink="/pages/packaging/upload" class="btn btn-primary d-flex align-items-center">
+        <i class="ti ti-plus me-1"></i>New Request
+      </a>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card mb-3">
+    <div class="card-body py-2">
+      <div class="row g-2 align-items-center">
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent"><i class="ti ti-search text-muted"></i></span>
+            <input type="text" class="form-control border-start-0 ps-0"
+              placeholder="Search by product, initiator, batch ref..."
+              [(ngModel)]="searchQuery" (ngModelChange)="applyFilter()">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filterStatus" (ngModelChange)="applyFilter()">
+            <option *ngFor="let opt of statusOptions" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filterWorkflow" (ngModelChange)="applyFilter()">
+            <option *ngFor="let opt of workflowOptions" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+            <i class="ti ti-refresh me-1"></i>Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Count -->
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    <small class="text-muted">
+      Showing {{ paginatedDocuments.length }} of {{ filteredDocuments.length }} requests
+    </small>
+    <div class="dropdown">
+      <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <i class="ti ti-download me-1"></i>Export
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="javascript:void(0)"><i class="ti ti-file-type-pdf me-2"></i>Export as PDF</a></li>
+        <li><a class="dropdown-item" href="javascript:void(0)"><i class="ti ti-file-type-xls me-2"></i>Export as Excel</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 40px;"><input type="checkbox" class="form-check-input"></th>
+              <th>#</th>
+              <th>Creative / Product</th>
+              <th>Workflow</th>
+              <th>Files</th>
+              <th>Current Approver</th>
+              <th>Progress</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let doc of paginatedDocuments; let i = index">
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td class="text-muted fs-13">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+              <td>
+                <div>
+                  <p class="mb-0 fw-medium text-truncate" style="max-width: 220px;" [title]="doc.title">{{ doc.title }}</p>
+                  <small class="text-muted">{{ doc.productCategory }}</small>
+                  <div><small class="text-muted fw-medium">Ref: {{ doc.batchRef }}</small></div>
+                </div>
+              </td>
+              <td>
+                <span class="badge" [class]="getWorkflowBadgeClass(doc.workflowType)">
+                  {{ doc.workflowType | titlecase }}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <i class="ti ti-paperclip me-1 text-muted"></i>
+                  <span class="fs-13">{{ doc.files.length }}</span>
+                </div>
+              </td>
+              <td>
+                <small class="text-muted" style="max-width: 160px; display: block;" [title]="getCurrentApprover(doc)">
+                  {{ getCurrentApprover(doc) }}
+                </small>
+              </td>
+              <td style="min-width: 120px;">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="progress flex-fill" style="height: 6px;">
+                    <div class="progress-bar" [class.bg-success]="doc.status === 'approved'"
+                      [class.bg-danger]="doc.status === 'rejected'"
+                      [style.width.%]="getProgressPercent(doc)"></div>
+                  </div>
+                  <small class="text-muted fw-medium">{{ getProgressPercent(doc) }}%</small>
+                </div>
+              </td>
+              <td>
+                <small class="text-muted">{{ doc.createdAt | date:'dd MMM yy' }}</small>
+              </td>
+              <td>
+                <span class="badge" [class]="getStatusClass(doc.status)">
+                  {{ getStatusLabel(doc.status) }}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex gap-1">
+                  <a [routerLink]="['/pages/packaging/detail', doc.id]"
+                    class="btn btn-icon btn-sm btn-outline-primary" title="View Details">
+                    <i class="ti ti-eye"></i>
+                  </a>
+                  <a [routerLink]="['/pages/packaging/detail', doc.id]"
+                    class="btn btn-icon btn-sm btn-outline-success" title="Take Action"
+                    *ngIf="doc.status === 'in-review' || doc.status === 'pending'">
+                    <i class="ti ti-check"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="paginatedDocuments.length === 0">
+              <td colspan="10" class="text-center py-5 text-muted">
+                <i class="ti ti-inbox-off d-block fs-36 mb-2"></i>
+                <p class="mb-1 fw-medium">No requests found</p>
+                <small>Try adjusting your filters or <a routerLink="/pages/packaging/upload">create a new request</a></small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="card-footer d-flex align-items-center justify-content-between" *ngIf="totalPages > 1">
+      <small class="text-muted">
+        Page {{ currentPage }} of {{ totalPages }}
+      </small>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="currentPage = currentPage - 1">
+              <i class="ti ti-chevron-left"></i>
+            </button>
+          </li>
+          <li class="page-item" *ngFor="let p of pageNumbers" [class.active]="p === currentPage">
+            <button class="page-link" (click)="currentPage = p">{{ p }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="currentPage = currentPage + 1">
+              <i class="ti ti-chevron-right"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

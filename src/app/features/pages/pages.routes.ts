@@ -483,6 +483,13 @@ export const Page_routes: Routes = [
           import('./audit-car/audit-car.routes').then((m) => m.AUDIT_CAR_ROUTES),
       },
 
+      // ─── Packaging Creative Approval Portal ──────────────────────────────
+      {
+        path: 'packaging',
+        loadChildren: () =>
+          import('./packaging/packaging.routes').then((m) => m.PACKAGING_ROUTES),
+      },
+
     ]
   }
 ]

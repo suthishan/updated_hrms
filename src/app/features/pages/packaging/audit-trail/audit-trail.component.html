@@ -1,0 +1,206 @@
+<div class="content">
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Audit Trail" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap gap-2">
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          <i class="ti ti-download me-1"></i>Export
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="javascript:void(0)"><i class="ti ti-file-type-pdf me-2"></i>Export as PDF</a></li>
+          <li><a class="dropdown-item" href="javascript:void(0)"><i class="ti ti-file-type-xls me-2"></i>Export as Excel</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-3 col-6">
+      <div class="card text-center mb-0">
+        <div class="card-body py-3">
+          <i class="ti ti-history text-primary fs-24 mb-1 d-block"></i>
+          <h4 class="mb-0">{{ allLogs.length }}</h4>
+          <small class="text-muted">Total Events</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="card text-center mb-0">
+        <div class="card-body py-3">
+          <i class="ti ti-circle-check text-success fs-24 mb-1 d-block"></i>
+          <h4 class="mb-0 text-success">{{ countByAction('approved') }}</h4>
+          <small class="text-muted">Approvals</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="card text-center mb-0">
+        <div class="card-body py-3">
+          <i class="ti ti-circle-x text-danger fs-24 mb-1 d-block"></i>
+          <h4 class="mb-0 text-danger">{{ countByAction('rejected') }}</h4>
+          <small class="text-muted">Rejections</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="card text-center mb-0">
+        <div class="card-body py-3">
+          <i class="ti ti-files text-info fs-24 mb-1 d-block"></i>
+          <h4 class="mb-0 text-info">{{ uniqueDocuments.length }}</h4>
+          <small class="text-muted">Documents Tracked</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card mb-3">
+    <div class="card-body py-2">
+      <div class="row g-2 align-items-center">
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent"><i class="ti ti-search text-muted"></i></span>
+            <input type="text" class="form-control border-start-0 ps-0"
+              placeholder="Search by document, user, action..."
+              [(ngModel)]="searchQuery" (ngModelChange)="applyFilter()">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filterAction" (ngModelChange)="applyFilter()">
+            <option *ngFor="let opt of actionOptions" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filterDoc" (ngModelChange)="applyFilter()">
+            <option value="">All Documents</option>
+            <option *ngFor="let doc of uniqueDocuments" [value]="doc.id">{{ doc.title }}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+            <i class="ti ti-refresh me-1"></i>Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audit Log Timeline -->
+  <div class="row g-4">
+    <!-- Timeline View -->
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-timeline me-2 text-primary"></i>Activity Timeline
+          </h5>
+          <small class="text-muted">{{ filteredLogs.length }} events</small>
+        </div>
+        <div class="card-body">
+          <div *ngIf="paginatedLogs.length === 0" class="text-center py-5 text-muted">
+            <i class="ti ti-search-off d-block fs-36 mb-2"></i>
+            <p class="mb-0">No audit logs found matching your filters.</p>
+          </div>
+          <div class="audit-timeline">
+            <div *ngFor="let log of paginatedLogs; let i = index" class="audit-item d-flex mb-3">
+              <!-- Icon -->
+              <div class="audit-icon me-3">
+                <div class="icon-dot rounded-circle d-flex align-items-center justify-content-center"
+                  [class.dot-approved]="log.actionType === 'approved'"
+                  [class.dot-rejected]="log.actionType === 'rejected'"
+                  [class.dot-uploaded]="log.actionType === 'uploaded'"
+                  [class.dot-submitted]="log.actionType === 'submitted'"
+                  [class.dot-pending]="log.actionType === 'pending'">
+                  <i [class]="getActionIcon(log.actionType)"></i>
+                </div>
+                <div *ngIf="i < paginatedLogs.length - 1" class="connector-line"></div>
+              </div>
+              <!-- Content -->
+              <div class="audit-content flex-grow-1 pb-3">
+                <div class="d-flex align-items-start justify-content-between flex-wrap gap-2">
+                  <div>
+                    <p class="mb-1 fw-semibold">{{ log.action }}</p>
+                    <p class="mb-1 text-muted fs-13">
+                      <i class="ti ti-file-description me-1"></i>{{ log.documentTitle }}
+                    </p>
+                    <div class="d-flex align-items-center gap-2">
+                      <img [src]="log.performedByAvatar || 'assets/img/profiles/avatar-02.jpg'"
+                        [alt]="log.performedBy" class="rounded-circle" width="20" height="20">
+                      <small class="fw-medium">{{ log.performedBy }}</small>
+                      <small class="text-muted">{{ log.performedByEmail }}</small>
+                    </div>
+                    <p *ngIf="log.remarks" class="mt-1 mb-0 fst-italic text-muted fs-13">
+                      "{{ log.remarks }}"
+                    </p>
+                  </div>
+                  <div class="text-end flex-shrink-0">
+                    <span class="badge" [class]="getActionBadgeClass(log.actionType)">
+                      {{ log.actionType | titlecase }}
+                    </span>
+                    <p class="text-muted fs-12 mb-0 mt-1">{{ log.timestamp | date:'dd MMM yyyy' }}</p>
+                    <p class="text-muted fs-12 mb-0">{{ log.timestamp | date:'HH:mm:ss' }}</p>
+                    <small *ngIf="log.ipAddress" class="text-muted">IP: {{ log.ipAddress }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="card-footer d-flex align-items-center justify-content-between" *ngIf="totalPages > 1">
+          <small class="text-muted">Page {{ currentPage }} of {{ totalPages }}</small>
+          <nav>
+            <ul class="pagination pagination-sm mb-0">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <button class="page-link" (click)="currentPage = currentPage - 1"><i class="ti ti-chevron-left"></i></button>
+              </li>
+              <li class="page-item" *ngFor="let p of pageNumbers" [class.active]="p === currentPage">
+                <button class="page-link" (click)="currentPage = p">{{ p }}</button>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <button class="page-link" (click)="currentPage = currentPage + 1"><i class="ti ti-chevron-right"></i></button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Per-document summary -->
+    <div class="col-xl-4">
+      <div class="card" style="position: sticky; top: 80px;">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-files me-2 text-primary"></i>Documents Tracked
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div *ngFor="let doc of uniqueDocuments"
+            class="doc-item d-flex align-items-center justify-content-between p-3 border-bottom">
+            <div class="overflow-hidden me-2">
+              <p class="mb-0 fw-medium fs-13 text-truncate" [title]="doc.title">{{ doc.title }}</p>
+              <small class="text-muted">{{ doc.id }}</small>
+            </div>
+            <div class="d-flex gap-1 flex-shrink-0">
+              <a [routerLink]="['/pages/packaging/detail', doc.id]"
+                class="btn btn-icon btn-xs btn-outline-primary" title="View Document">
+                <i class="ti ti-eye fs-12"></i>
+              </a>
+              <button type="button" class="btn btn-icon btn-xs btn-outline-secondary"
+                title="Filter by this document"
+                (click)="filterDoc = doc.id; applyFilter()">
+                <i class="ti ti-filter fs-12"></i>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="uniqueDocuments.length === 0" class="text-center py-4 text-muted">
+            <small>No documents tracked yet</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

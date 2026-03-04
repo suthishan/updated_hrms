@@ -1480,3 +1480,102 @@ export interface learninganalysis {
   attempts: string;
   certificate: string;
 }
+
+// ─── Packaging Creative Approval Portal Models ────────────────────────────────
+
+export type PackagingWorkflowType = 'sequential' | 'parallel' | 'hybrid';
+export type PackagingDocStatus = 'draft' | 'pending' | 'in-review' | 'approved' | 'rejected';
+export type PackagingStepStatus = 'pending' | 'in-progress' | 'completed' | 'rejected';
+export type PackagingApproverStatus = 'pending' | 'approved' | 'rejected';
+export type PackagingFileType = 'pdf' | 'jpeg' | 'jpg';
+export type PackagingAuditActionType = 'uploaded' | 'submitted' | 'approved' | 'rejected' | 'pending';
+
+export interface PackagingFile {
+  id: string;
+  name: string;
+  type: PackagingFileType;
+  size: number;
+  url: string;
+  uploadedAt: string;
+}
+
+export interface PackagingStepApprover {
+  approverId: string;
+  approverName: string;
+  approverEmail: string;
+  role: string;
+  avatar?: string;
+  status: PackagingApproverStatus;
+  remarks?: string | null;
+  actionAt?: string | null;
+}
+
+export interface PackagingApprovalStep {
+  id: string;
+  stepNumber: number;
+  stepType: 'sequential' | 'parallel';
+  status: PackagingStepStatus;
+  completedAt?: string;
+  approvers: PackagingStepApprover[];
+}
+
+export interface PackagingDocument {
+  id: string;
+  title: string;
+  description: string;
+  productName: string;
+  productCategory: string;
+  batchRef: string;
+  files: PackagingFile[];
+  workflowType: PackagingWorkflowType;
+  status: PackagingDocStatus;
+  initiator: string;
+  initiatorEmail: string;
+  initiatorAvatar?: string;
+  createdAt: string;
+  updatedAt: string;
+  currentStepIndex: number;
+  approvalSteps: PackagingApprovalStep[];
+  sNo?: number;
+  isSelected?: boolean;
+}
+
+export interface PackagingApprover {
+  id: string;
+  name: string;
+  role: string;
+  roleKey: string;
+  email: string;
+  department: string;
+  location: string;
+  phone: string;
+  avatar?: string;
+  isActive: boolean;
+  sNo?: number;
+  isSelected?: boolean;
+}
+
+export interface PackagingAuditTrail {
+  id: string;
+  documentId: string;
+  documentTitle: string;
+  action: string;
+  actionType: PackagingAuditActionType;
+  performedBy: string;
+  performedByEmail: string;
+  performedByAvatar?: string;
+  timestamp: string;
+  remarks?: string;
+  status: PackagingAuditActionType;
+  ipAddress?: string;
+  sNo?: number;
+  isSelected?: boolean;
+}
+
+export interface PackagingWorkflowStep {
+  stepNumber: number;
+  stepType: 'sequential' | 'parallel';
+  selectedApprovers: PackagingApprover[];
+}
+
+// ─── End Packaging Creative Approval Portal Models ────────────────────────────
