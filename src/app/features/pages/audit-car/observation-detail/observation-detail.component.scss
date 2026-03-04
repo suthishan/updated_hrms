@@ -1,0 +1,15 @@
+.badge-soft-danger  { background: rgba(244,67,54,.12);  color: #f44336; }
+.badge-soft-warning { background: rgba(255,152,0,.12);   color: #ff9800; }
+.badge-soft-info    { background: rgba(33,150,243,.12);  color: #2196f3; }
+.badge-soft-success { background: rgba(76,175,80,.12);   color: #4caf50; }
+.badge-soft-primary { background: rgba(94,114,228,.12);  color: #5e72e4; }
+.badge-soft-secondary { background: rgba(108,117,125,.12); color: #6c757d; }
+.bg-primary-transparent { background: rgba(94,114,228,.12)!important; }
+.bg-info-transparent    { background: rgba(33,150,243,.12)!important; }
+.bg-danger-light  { background: rgba(244,67,54,.06); }
+.bg-success-light { background: rgba(76,175,80,.06); }
+.bg-warning-light { background: rgba(255,152,0,.07); }
+.list-group-item.active { background-color: #5e72e4; border-color: #5e72e4; color: #fff; }
+.list-group-item.active .badge { filter: brightness(1.2); }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

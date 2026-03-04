@@ -1,0 +1,14 @@
+.drop-zone {
+  border: 2px dashed #dee2e6;
+  border-radius: 12px;
+  transition: all .2s ease;
+  background: #fafbfc;
+  cursor: pointer;
+  &.drag-active, &:hover { border-color: #5e72e4; background: rgba(94,114,228,.04); }
+}
+.badge-soft-danger  { background: rgba(244,67,54,.12);  color: #f44336; }
+.badge-soft-warning { background: rgba(255,152,0,.12);   color: #ff9800; }
+.badge-soft-success { background: rgba(76,175,80,.12);   color: #4caf50; }
+.bg-success-transparent { background: rgba(76,175,80,.12) !important; }
+.bg-danger-transparent  { background: rgba(244,67,54,.12) !important; }
+.sticky-top { position: sticky; top: 0; z-index: 1; }

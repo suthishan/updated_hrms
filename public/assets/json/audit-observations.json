@@ -1,0 +1,299 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "observationId": "OBS-2024-001",
+      "auditYear": 2024,
+      "auditArea": "Procurement",
+      "division": "Supply Chain",
+      "riskRating": "High",
+      "observation": "Vendor due diligence not performed for 3 new suppliers",
+      "detailsOfFindings": "During audit of procurement processes for Q1 2024, it was identified that vendor due diligence checks were not conducted for 3 new suppliers onboarded in January 2024. This poses a risk of engaging non-compliant vendors.",
+      "managementCommitment": "Procurement team will implement a mandatory vendor due diligence checklist and ensure all new vendors go through the process before onboarding.",
+      "auditorClosureComment": "",
+      "overallStatus": "Open",
+      "createdBy": "AUD001",
+      "createdByName": "Ravi Kumar",
+      "createdDate": "2024-02-15",
+      "publishedDate": "2024-02-16",
+      "isPublished": true,
+      "actionItems": [
+        {
+          "id": "AI-001-01",
+          "observationId": "OBS-2024-001",
+          "responsiblePersonId": "EMP101",
+          "responsiblePersonName": "Anjali Sharma",
+          "responsiblePersonEmail": "anjali.sharma@japfa.com",
+          "department": "Procurement",
+          "division": "Supply Chain",
+          "initialTargetDate": "2024-03-31",
+          "currentTargetDate": "2024-04-30",
+          "status": "Overdue",
+          "actionTaken": "Drafted vendor due diligence checklist, pending approval from legal team.",
+          "managementComment": "Legal team review is in progress. Expected approval by end of month.",
+          "auditorConfirmationStatus": "Pending",
+          "closureDate": null,
+          "followUps": [
+            {
+              "id": "FU-001-01-1",
+              "actionItemId": "AI-001-01",
+              "date": "2024-03-15",
+              "remarks": "Checklist drafted and shared with legal for review.",
+              "addedBy": "EMP101",
+              "addedByName": "Anjali Sharma"
+            },
+            {
+              "id": "FU-001-01-2",
+              "actionItemId": "AI-001-01",
+              "date": "2024-04-05",
+              "remarks": "Legal review complete. Minor changes incorporated. Pending management sign-off.",
+              "addedBy": "EMP101",
+              "addedByName": "Anjali Sharma"
+            }
+          ],
+          "targetDateRevisions": [
+            {
+              "id": "TDR-001-01-1",
+              "actionItemId": "AI-001-01",
+              "previousDate": "2024-03-31",
+              "newDate": "2024-04-30",
+              "reason": "Legal review took additional time due to complexity of requirements.",
+              "revisedDate": "2024-03-28",
+              "revisedBy": "EMP101",
+              "revisedByName": "Anjali Sharma"
+            }
+          ]
+        },
+        {
+          "id": "AI-001-02",
+          "observationId": "OBS-2024-001",
+          "responsiblePersonId": "EMP102",
+          "responsiblePersonName": "Karthik Menon",
+          "responsiblePersonEmail": "karthik.menon@japfa.com",
+          "department": "Legal",
+          "division": "Supply Chain",
+          "initialTargetDate": "2024-03-31",
+          "currentTargetDate": "2024-03-31",
+          "status": "Closed",
+          "actionTaken": "Legal framework for vendor compliance assessment established. Template finalized.",
+          "managementComment": "Completed as required.",
+          "auditorConfirmationStatus": "Confirmed",
+          "auditorConfirmationComment": "Legal framework verified. Satisfactory.",
+          "closureDate": "2024-03-29",
+          "followUps": [],
+          "targetDateRevisions": []
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "observationId": "OBS-2024-002",
+      "auditYear": 2024,
+      "auditArea": "Finance",
+      "division": "Finance & Accounts",
+      "riskRating": "Medium",
+      "observation": "Reconciliation of bank accounts not performed monthly",
+      "detailsOfFindings": "Bank account reconciliation for 2 accounts was not performed for November and December 2023. This increases risk of undetected discrepancies and fraud.",
+      "managementCommitment": "Finance team will implement a monthly bank reconciliation schedule with mandatory sign-off by CFO.",
+      "auditorClosureComment": "Reconciliation policy updated. Controls verified.",
+      "overallStatus": "Closed",
+      "createdBy": "AUD001",
+      "createdByName": "Ravi Kumar",
+      "createdDate": "2024-01-10",
+      "publishedDate": "2024-01-11",
+      "isPublished": true,
+      "actionItems": [
+        {
+          "id": "AI-002-01",
+          "observationId": "OBS-2024-002",
+          "responsiblePersonId": "EMP103",
+          "responsiblePersonName": "Meena Pillai",
+          "responsiblePersonEmail": "meena.pillai@japfa.com",
+          "department": "Finance",
+          "division": "Finance & Accounts",
+          "initialTargetDate": "2024-02-28",
+          "currentTargetDate": "2024-02-28",
+          "status": "Closed",
+          "actionTaken": "Bank reconciliation completed for Nov and Dec 2023. Monthly schedule implemented with automated reminders.",
+          "managementComment": "Process formalized. CFO sign-off incorporated.",
+          "auditorConfirmationStatus": "Confirmed",
+          "auditorConfirmationComment": "Reconciliation records reviewed. Control is effective.",
+          "closureDate": "2024-02-25",
+          "followUps": [],
+          "targetDateRevisions": []
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "observationId": "OBS-2024-003",
+      "auditYear": 2024,
+      "auditArea": "IT Security",
+      "division": "Information Technology",
+      "riskRating": "High",
+      "observation": "User access reviews not conducted for critical systems",
+      "detailsOfFindings": "User access review for ERP and financial systems was last conducted 18 months ago. Several ex-employees still have active access credentials.",
+      "managementCommitment": "IT team will conduct immediate access review and implement quarterly access review process.",
+      "auditorClosureComment": "",
+      "overallStatus": "Partially Closed",
+      "createdBy": "AUD002",
+      "createdByName": "Priya Nair",
+      "createdDate": "2024-03-01",
+      "publishedDate": "2024-03-02",
+      "isPublished": true,
+      "actionItems": [
+        {
+          "id": "AI-003-01",
+          "observationId": "OBS-2024-003",
+          "responsiblePersonId": "EMP104",
+          "responsiblePersonName": "Suresh Babu",
+          "responsiblePersonEmail": "suresh.babu@japfa.com",
+          "department": "IT Security",
+          "division": "Information Technology",
+          "initialTargetDate": "2024-04-15",
+          "currentTargetDate": "2024-04-15",
+          "status": "Closed",
+          "actionTaken": "Immediate access review conducted. 12 ex-employee accounts deactivated.",
+          "managementComment": "Access revoked promptly.",
+          "auditorConfirmationStatus": "Confirmed",
+          "auditorConfirmationComment": "Access list verified. All ex-employees removed.",
+          "closureDate": "2024-04-10",
+          "followUps": [],
+          "targetDateRevisions": []
+        },
+        {
+          "id": "AI-003-02",
+          "observationId": "OBS-2024-003",
+          "responsiblePersonId": "EMP105",
+          "responsiblePersonName": "Deepa Krishnan",
+          "responsiblePersonEmail": "deepa.krishnan@japfa.com",
+          "department": "IT Operations",
+          "division": "Information Technology",
+          "initialTargetDate": "2024-05-31",
+          "currentTargetDate": "2024-06-30",
+          "status": "Not Due",
+          "actionTaken": "Working on implementing automated quarterly access review workflow.",
+          "managementComment": "",
+          "auditorConfirmationStatus": "Pending",
+          "closureDate": null,
+          "followUps": [
+            {
+              "id": "FU-003-02-1",
+              "actionItemId": "AI-003-02",
+              "date": "2024-05-10",
+              "remarks": "Vendor shortlisted for access review tool. Demo scheduled.",
+              "addedBy": "EMP105",
+              "addedByName": "Deepa Krishnan"
+            }
+          ],
+          "targetDateRevisions": [
+            {
+              "id": "TDR-003-02-1",
+              "actionItemId": "AI-003-02",
+              "previousDate": "2024-05-31",
+              "newDate": "2024-06-30",
+              "reason": "Vendor evaluation took longer than expected.",
+              "revisedDate": "2024-05-25",
+              "revisedBy": "EMP105",
+              "revisedByName": "Deepa Krishnan"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "observationId": "OBS-2024-004",
+      "auditYear": 2024,
+      "auditArea": "HR",
+      "division": "Human Resources",
+      "riskRating": "Low",
+      "observation": "Training records not maintained systematically",
+      "detailsOfFindings": "Employee training completion records are maintained in multiple Excel sheets without a central repository. There is no mechanism to track mandatory training compliance.",
+      "managementCommitment": "HR will implement LMS system and migrate all training records.",
+      "auditorClosureComment": "",
+      "overallStatus": "Open",
+      "createdBy": "AUD002",
+      "createdByName": "Priya Nair",
+      "createdDate": "2024-03-15",
+      "publishedDate": "2024-03-16",
+      "isPublished": true,
+      "actionItems": [
+        {
+          "id": "AI-004-01",
+          "observationId": "OBS-2024-004",
+          "responsiblePersonId": "EMP106",
+          "responsiblePersonName": "Ramesh Iyer",
+          "responsiblePersonEmail": "ramesh.iyer@japfa.com",
+          "department": "HR Operations",
+          "division": "Human Resources",
+          "initialTargetDate": "2024-06-30",
+          "currentTargetDate": "2024-06-30",
+          "status": "Not Due",
+          "actionTaken": "LMS vendor evaluation in progress.",
+          "managementComment": "",
+          "auditorConfirmationStatus": "Pending",
+          "closureDate": null,
+          "followUps": [],
+          "targetDateRevisions": []
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "observationId": "OBS-2024-005",
+      "auditYear": 2024,
+      "auditArea": "Operations",
+      "division": "Poultry Operations",
+      "riskRating": "Improvement",
+      "observation": "Process documentation for feed mill operations incomplete",
+      "detailsOfFindings": "Standard Operating Procedures for 5 critical feed mill processes are either outdated (last updated 2021) or missing entirely.",
+      "managementCommitment": "Operations team will review, update and document all SOPs within the next quarter.",
+      "auditorClosureComment": "",
+      "overallStatus": "Open",
+      "createdBy": "AUD001",
+      "createdByName": "Ravi Kumar",
+      "createdDate": "2024-04-01",
+      "publishedDate": "2024-04-02",
+      "isPublished": true,
+      "actionItems": [
+        {
+          "id": "AI-005-01",
+          "observationId": "OBS-2024-005",
+          "responsiblePersonId": "EMP107",
+          "responsiblePersonName": "Venkat Rao",
+          "responsiblePersonEmail": "venkat.rao@japfa.com",
+          "department": "Feed Mill Operations",
+          "division": "Poultry Operations",
+          "initialTargetDate": "2024-06-30",
+          "currentTargetDate": "2024-06-30",
+          "status": "Partially Open",
+          "actionTaken": "3 out of 5 SOPs updated and approved. Remaining 2 are in draft stage.",
+          "managementComment": "Work in progress, expected to complete by June end.",
+          "auditorConfirmationStatus": "Pending",
+          "closureDate": null,
+          "followUps": [
+            {
+              "id": "FU-005-01-1",
+              "actionItemId": "AI-005-01",
+              "date": "2024-05-15",
+              "remarks": "2 SOPs completed and circulated for feedback.",
+              "addedBy": "EMP107",
+              "addedByName": "Venkat Rao"
+            },
+            {
+              "id": "FU-005-01-2",
+              "actionItemId": "AI-005-01",
+              "date": "2024-06-01",
+              "remarks": "3rd SOP approved. Working on SOP 4 and 5.",
+              "addedBy": "EMP107",
+              "addedByName": "Venkat Rao"
+            }
+          ],
+          "targetDateRevisions": []
+        }
+      ]
+    }
+  ],
+  "totalData": 5
+}

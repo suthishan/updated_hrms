@@ -1348,6 +1348,122 @@ export interface resumeParse {
   status: string;
 }
 
+// ─── Audit CAR Portal Models ────────────────────────────────────────────────
+
+export type AuditRiskRating = 'High' | 'Medium' | 'Low' | 'Improvement';
+export type AuditObservationStatus = 'Open' | 'Partially Closed' | 'Closed';
+export type AuditActionItemStatus = 'Not Due' | 'Overdue' | 'Partially Open' | 'Request Closure' | 'Closed';
+export type AuditUserRole = 'Audit Team' | 'Responsible Person' | 'HoD';
+export type AuditorConfirmationStatus = 'Pending' | 'Confirmed' | 'Rejected';
+
+export interface AuditFollowUp {
+  id: string;
+  actionItemId: string;
+  date: string;
+  remarks: string;
+  addedBy: string;
+  addedByName: string;
+}
+
+export interface AuditTargetDateRevision {
+  id: string;
+  actionItemId: string;
+  previousDate: string;
+  newDate: string;
+  reason: string;
+  revisedDate: string;
+  revisedBy: string;
+  revisedByName: string;
+}
+
+export interface AuditActionItem {
+  id: string;
+  observationId: string;
+  responsiblePersonId: string;
+  responsiblePersonName: string;
+  responsiblePersonEmail: string;
+  department: string;
+  division: string;
+  initialTargetDate: string;
+  currentTargetDate: string;
+  status: AuditActionItemStatus;
+  actionTaken?: string;
+  managementComment?: string;
+  auditorConfirmationStatus?: AuditorConfirmationStatus;
+  auditorConfirmationComment?: string;
+  closureDate?: string;
+  followUps: AuditFollowUp[];
+  targetDateRevisions: AuditTargetDateRevision[];
+}
+
+export interface AuditObservation {
+  id: string;
+  observationId: string;
+  auditYear: number;
+  auditArea: string;
+  division: string;
+  riskRating: AuditRiskRating;
+  observation: string;
+  detailsOfFindings: string;
+  managementCommitment: string;
+  auditorClosureComment?: string;
+  overallStatus: AuditObservationStatus;
+  createdBy: string;
+  createdByName: string;
+  createdDate: string;
+  publishedDate?: string;
+  isPublished: boolean;
+  actionItems: AuditActionItem[];
+}
+
+export interface AuditUser {
+  id: string;
+  name: string;
+  email: string;
+  employeeId: string;
+  role: AuditUserRole;
+  division: string;
+  department: string;
+  hodId?: string;
+  image?: string;
+}
+
+export interface AuditDashboardStats {
+  totalObservations: number;
+  openObservations: number;
+  closedObservations: number;
+  overdueObservations: number;
+  partiallyClosedObservations: number;
+  byRiskRating: { high: number; medium: number; low: number; improvement: number };
+  byDivision: { division: string; count: number; open: number; closed: number }[];
+  byYear: { year: number; total: number; open: number; closed: number }[];
+  responsiblePersonStats: { name: string; total: number; open: number; closed: number; overdue: number }[];
+}
+
+export interface AuditUploadHistory {
+  id: string;
+  fileName: string;
+  uploadDate: string;
+  uploadedBy: string;
+  uploadedByName: string;
+  recordsUploaded: number;
+  status: 'Success' | 'Failed' | 'Partial';
+  errors?: string[];
+}
+
+export interface AuditNotificationLog {
+  id: string;
+  type: 'T-15' | 'T-0' | 'Monthly-25';
+  sentDate: string;
+  observationId: string;
+  actionItemId: string;
+  recipientEmail: string;
+  recipientName: string;
+  status: 'Sent' | 'Failed';
+}
+
+// ─── End Audit CAR Portal Models ────────────────────────────────────────────
+
 export interface learninganalysis {
    sNo?: number;
   id?: number;

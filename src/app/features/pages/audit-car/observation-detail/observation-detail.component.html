@@ -1,0 +1,335 @@
+<!-- Observation Detail -->
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Observation Detail</h2>
+        <nav><ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/index"><i class="ti ti-smart-home"></i></a></li>
+          <li class="breadcrumb-item"><a routerLink="/audit-car/dashboard">Audit CAR</a></li>
+          <li class="breadcrumb-item"><a routerLink="/audit-car/observations/list">Observations</a></li>
+          <li class="breadcrumb-item active">{{ observation?.observationId }}</li>
+        </ol></nav>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-secondary" (click)="goBack()"><i class="ti ti-arrow-left me-2"></i>Back</button>
+        <a *ngIf="isAuditTeam && observation" [routerLink]="['/audit-car/observations/edit', observation.id]"
+           class="btn btn-outline-primary"><i class="ti ti-edit me-2"></i>Edit</a>
+      </div>
+    </div>
+
+    <div *ngIf="!observation" class="text-center py-5 text-muted">
+      <i class="ti ti-loader-2 fs-2 d-block mb-2 spin"></i>Loading...
+    </div>
+
+    <ng-container *ngIf="observation">
+      <!-- ─── Observation Header Card ────────────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="badge bg-primary fs-6 px-3 py-2">{{ observation.observationId }}</span>
+                <span class="badge" [ngClass]="getRiskClass(observation.riskRating)">{{ observation.riskRating }} Risk</span>
+                <span class="badge" [ngClass]="getStatusClass(observation.overallStatus)">{{ observation.overallStatus }}</span>
+              </div>
+              <h4 class="fw-semibold mb-2">{{ observation.observation }}</h4>
+              <p class="text-muted mb-0">{{ observation.detailsOfFindings }}</p>
+            </div>
+            <div class="col-md-4">
+              <dl class="row mb-0 small">
+                <dt class="col-5 text-muted fw-normal">Audit Year</dt><dd class="col-7">{{ observation.auditYear }}</dd>
+                <dt class="col-5 text-muted fw-normal">Audit Area</dt><dd class="col-7">{{ observation.auditArea }}</dd>
+                <dt class="col-5 text-muted fw-normal">Division</dt><dd class="col-7">{{ observation.division }}</dd>
+                <dt class="col-5 text-muted fw-normal">Created By</dt><dd class="col-7">{{ observation.createdByName }}</dd>
+                <dt class="col-5 text-muted fw-normal">Published</dt><dd class="col-7">{{ observation.publishedDate | date:'dd MMM yyyy' }}</dd>
+              </dl>
+            </div>
+          </div>
+          <hr>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6 class="text-muted mb-1 small text-uppercase fw-semibold">Management Commitment</h6>
+              <p class="mb-0">{{ observation.managementCommitment }}</p>
+            </div>
+            <div class="col-md-6" *ngIf="observation.auditorClosureComment">
+              <h6 class="text-muted mb-1 small text-uppercase fw-semibold">Auditor Closure Comment</h6>
+              <p class="mb-0 text-success">{{ observation.auditorClosureComment }}</p>
+            </div>
+          </div>
+
+          <!-- Auditor: Overall Closure -->
+          <div *ngIf="isAuditTeam && observation.overallStatus !== 'Closed'" class="mt-3">
+            <button class="btn btn-sm btn-outline-success" (click)="showClosureForm = !showClosureForm">
+              <i class="ti ti-lock-check me-1"></i>Close Observation
+            </button>
+            <div *ngIf="showClosureForm" class="mt-2 p-3 border rounded bg-light">
+              <form [formGroup]="closureForm" (ngSubmit)="submitOverallClosure()">
+                <div class="mb-2">
+                  <label class="form-label small">Auditor Closure Comment <span class="text-danger">*</span></label>
+                  <textarea class="form-control" rows="2" formControlName="auditorClosureComment"
+                    placeholder="Provide final closure comment..."></textarea>
+                </div>
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-success btn-sm" [disabled]="closureForm.invalid">Confirm Closure</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="showClosureForm = false">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Action Items ────────────────────────────────────────────────── -->
+      <div class="row">
+        <!-- Left: Action Item list -->
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header border-0 bg-light">
+              <h6 class="card-title mb-0"><i class="ti ti-users me-2"></i>Responsible Persons ({{ observation.actionItems.length }})</h6>
+            </div>
+            <div class="list-group list-group-flush">
+              <button *ngFor="let ai of observation.actionItems"
+                [class]="'list-group-item list-group-item-action px-3 py-2 ' + (selectedActionItem?.id === ai.id ? 'active' : '')"
+                (click)="selectActionItem(ai)">
+                <div class="d-flex align-items-start gap-2">
+                  <div class="avatar avatar-sm rounded-circle bg-primary-transparent d-flex align-items-center justify-content-center flex-shrink-0">
+                    <span class="text-primary fw-bold small">{{ ai.responsiblePersonName.charAt(0) }}</span>
+                  </div>
+                  <div>
+                    <div class="fw-medium small">{{ ai.responsiblePersonName }}</div>
+                    <span class="badge" [ngClass]="getStatusClass(ai.status)" style="font-size:0.65em;">{{ ai.status }}</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Action Item detail -->
+        <div class="col-md-9" *ngIf="selectedActionItem">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header border-0 d-flex align-items-center justify-content-between">
+              <div>
+                <h6 class="card-title mb-1">{{ selectedActionItem.responsiblePersonName }}</h6>
+                <small class="text-muted">{{ selectedActionItem.responsiblePersonEmail }} · {{ selectedActionItem.department }}</small>
+              </div>
+              <span class="badge fs-6 px-3 py-2" [ngClass]="getStatusClass(selectedActionItem.status)">{{ selectedActionItem.status }}</span>
+            </div>
+            <div class="card-body">
+
+              <!-- Dates row -->
+              <div class="row g-3 mb-3">
+                <div class="col-sm-4">
+                  <div class="p-3 rounded bg-light text-center">
+                    <small class="text-muted d-block">Initial Target Date</small>
+                    <span class="fw-semibold">{{ selectedActionItem.initialTargetDate | date:'dd MMM yyyy' }}</span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="p-3 rounded text-center" [class]="isOverdue(selectedActionItem.currentTargetDate, selectedActionItem.status) ? 'bg-danger-light' : 'bg-success-light'">
+                    <small class="text-muted d-block">Current Target Date</small>
+                    <span class="fw-semibold" [class.text-danger]="isOverdue(selectedActionItem.currentTargetDate, selectedActionItem.status)">
+                      {{ selectedActionItem.currentTargetDate | date:'dd MMM yyyy' }}
+                    </span>
+                    <small *ngIf="selectedActionItem.status !== 'Closed'" [class]="isOverdue(selectedActionItem.currentTargetDate, selectedActionItem.status) ? 'text-danger' : 'text-success'" class="d-block">
+                      {{ isOverdue(selectedActionItem.currentTargetDate, selectedActionItem.status) ? (getDaysRemaining(selectedActionItem.currentTargetDate) * -1) + ' days overdue' : getDaysRemaining(selectedActionItem.currentTargetDate) + ' days remaining' }}
+                    </small>
+                  </div>
+                </div>
+                <div class="col-sm-4" *ngIf="selectedActionItem.closureDate">
+                  <div class="p-3 rounded bg-success-light text-center">
+                    <small class="text-muted d-block">Closure Date</small>
+                    <span class="fw-semibold text-success">{{ selectedActionItem.closureDate | date:'dd MMM yyyy' }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Taken -->
+              <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <h6 class="mb-0 text-muted small text-uppercase fw-semibold">Action Taken</h6>
+                  <button *ngIf="isResponsiblePerson(selectedActionItem) && selectedActionItem.status !== 'Closed'"
+                    class="btn btn-sm btn-outline-primary" (click)="showActionTakenForm = !showActionTakenForm">
+                    <i class="ti ti-edit me-1"></i>Update
+                  </button>
+                </div>
+                <div class="p-3 bg-light rounded" *ngIf="!showActionTakenForm">
+                  <p class="mb-0" *ngIf="selectedActionItem.actionTaken">{{ selectedActionItem.actionTaken }}</p>
+                  <span class="text-muted fst-italic" *ngIf="!selectedActionItem.actionTaken">No action taken recorded yet.</span>
+                </div>
+
+                <!-- Action Taken Form -->
+                <div *ngIf="showActionTakenForm" class="p-3 border rounded bg-light">
+                  <form [formGroup]="actionTakenForm" (ngSubmit)="submitActionTaken()">
+                    <div class="mb-2">
+                      <label class="form-label small">Action Taken <span class="text-danger">*</span></label>
+                      <textarea class="form-control" rows="3" formControlName="actionTaken"
+                        placeholder="Describe the corrective action taken..."></textarea>
+                    </div>
+                    <div class="row g-2 mb-2">
+                      <div class="col-md-6">
+                        <label class="form-label small">Update Status <span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="status">
+                          <option value="Not Due">Not Due</option>
+                          <option value="Partially Open">Partially Open</option>
+                          <option value="Request Closure">Request Closure</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small">Management Comment</label>
+                        <input type="text" class="form-control" formControlName="managementComment"
+                          placeholder="Optional management note...">
+                      </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button type="submit" class="btn btn-primary btn-sm" [disabled]="actionTakenForm.invalid">Save</button>
+                      <button type="button" class="btn btn-secondary btn-sm" (click)="showActionTakenForm = false">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Management Comment -->
+              <div class="mb-3" *ngIf="selectedActionItem.managementComment">
+                <h6 class="mb-1 text-muted small text-uppercase fw-semibold">Management Comment</h6>
+                <div class="p-3 bg-warning-light rounded">
+                  <p class="mb-0">{{ selectedActionItem.managementComment }}</p>
+                </div>
+              </div>
+
+              <!-- Auditor Confirmation -->
+              <div class="mb-3" *ngIf="isAuditTeam && selectedActionItem.status === 'Request Closure'">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <h6 class="mb-0 text-muted small text-uppercase fw-semibold">Auditor Confirmation</h6>
+                  <button class="btn btn-sm btn-outline-success" (click)="showAuditorForm = !showAuditorForm">
+                    <i class="ti ti-check me-1"></i>Confirm / Reject
+                  </button>
+                </div>
+                <div *ngIf="showAuditorForm" class="p-3 border rounded bg-light">
+                  <form [formGroup]="auditorForm" (ngSubmit)="submitAuditorConfirmation()">
+                    <div class="row g-2 mb-2">
+                      <div class="col-md-5">
+                        <label class="form-label small">Decision <span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="confirmationStatus">
+                          <option value="">Select...</option>
+                          <option value="Confirmed">Confirm Closure</option>
+                          <option value="Rejected">Reject & Reopen</option>
+                        </select>
+                      </div>
+                      <div class="col-md-7">
+                        <label class="form-label small">Comment</label>
+                        <input type="text" class="form-control" formControlName="confirmationComment" placeholder="Auditor comment...">
+                      </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button type="submit" class="btn btn-success btn-sm" [disabled]="auditorForm.invalid">Submit</button>
+                      <button type="button" class="btn btn-secondary btn-sm" (click)="showAuditorForm = false">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+                <div *ngIf="selectedActionItem.auditorConfirmationStatus" class="p-2 rounded"
+                  [class.bg-success-light]="selectedActionItem.auditorConfirmationStatus === 'Confirmed'"
+                  [class.bg-danger-light]="selectedActionItem.auditorConfirmationStatus === 'Rejected'">
+                  <small class="fw-medium">{{ selectedActionItem.auditorConfirmationStatus }}:
+                    {{ selectedActionItem.auditorConfirmationComment }}</small>
+                </div>
+              </div>
+
+              <!-- Target Date Revision History -->
+              <div class="mb-3" *ngIf="selectedActionItem.targetDateRevisions?.length">
+                <h6 class="mb-2 text-muted small text-uppercase fw-semibold">Target Date Revision History</h6>
+                <div class="timeline-list">
+                  <div *ngFor="let rev of selectedActionItem.targetDateRevisions" class="timeline-item mb-2 ps-3 border-start border-2 border-warning">
+                    <small class="text-muted">{{ rev.revisedDate | date:'dd MMM yyyy' }} · {{ rev.revisedByName }}</small>
+                    <p class="mb-0 small"><span class="text-muted">From</span> <strong>{{ rev.previousDate | date:'dd MMM yyyy' }}</strong>
+                      <span class="text-muted mx-1">→</span> <strong class="text-primary">{{ rev.newDate | date:'dd MMM yyyy' }}</strong></p>
+                    <p class="mb-0 small text-muted">{{ rev.reason }}</p>
+                  </div>
+                </div>
+                <button *ngIf="isResponsiblePerson(selectedActionItem) && selectedActionItem.status !== 'Closed'"
+                  class="btn btn-sm btn-outline-warning mt-2" (click)="showTargetDateForm = !showTargetDateForm">
+                  <i class="ti ti-calendar-plus me-1"></i>Request Date Extension
+                </button>
+              </div>
+
+              <div *ngIf="!selectedActionItem.targetDateRevisions?.length && isResponsiblePerson(selectedActionItem) && selectedActionItem.status !== 'Closed'" class="mb-3">
+                <button class="btn btn-sm btn-outline-warning" (click)="showTargetDateForm = !showTargetDateForm">
+                  <i class="ti ti-calendar-plus me-1"></i>Request Date Extension
+                </button>
+              </div>
+
+              <!-- Target Date Revision Form -->
+              <div *ngIf="showTargetDateForm" class="p-3 border rounded bg-warning-light mb-3">
+                <form [formGroup]="targetDateForm" (ngSubmit)="submitTargetDateRevision()">
+                  <div class="row g-2 mb-2">
+                    <div class="col-md-4">
+                      <label class="form-label small">New Target Date <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control" formControlName="newDate">
+                    </div>
+                    <div class="col-md-8">
+                      <label class="form-label small">Reason for Extension <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" formControlName="reason" placeholder="Explain reason...">
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-warning btn-sm text-white" [disabled]="targetDateForm.invalid">Request Extension</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="showTargetDateForm = false">Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Follow-ups -->
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <h6 class="mb-0 text-muted small text-uppercase fw-semibold">
+                    Follow-ups ({{ selectedActionItem.followUps?.length ?? 0 }})
+                  </h6>
+                  <button *ngIf="selectedActionItem.status !== 'Closed'"
+                    class="btn btn-sm btn-outline-info" (click)="showFollowUpForm = !showFollowUpForm">
+                    <i class="ti ti-plus me-1"></i>Add Follow-up
+                  </button>
+                </div>
+
+                <div *ngIf="showFollowUpForm" class="p-3 border rounded bg-light mb-2">
+                  <form [formGroup]="followUpForm" (ngSubmit)="submitFollowUp()">
+                    <div class="mb-2">
+                      <textarea class="form-control" rows="2" formControlName="remarks"
+                        placeholder="Enter follow-up remarks..."></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button type="submit" class="btn btn-info btn-sm text-white" [disabled]="followUpForm.invalid">Add</button>
+                      <button type="button" class="btn btn-secondary btn-sm" (click)="showFollowUpForm = false">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+
+                <div *ngIf="!selectedActionItem.followUps?.length" class="text-muted fst-italic small">No follow-ups yet.</div>
+
+                <div *ngFor="let fu of selectedActionItem.followUps; let i = index"
+                  class="p-3 border rounded mb-2 bg-light">
+                  <div class="d-flex align-items-start gap-2">
+                    <div class="avatar avatar-sm rounded-circle bg-info-transparent d-flex align-items-center justify-content-center flex-shrink-0">
+                      <span class="text-info small fw-bold">{{ i + 1 }}</span>
+                    </div>
+                    <div class="flex-grow-1">
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <small class="fw-semibold">{{ fu.addedByName }}</small>
+                        <small class="text-muted">{{ fu.date | date:'dd MMM yyyy' }}</small>
+                      </div>
+                      <p class="mb-0 small">{{ fu.remarks }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>
