@@ -91,8 +91,8 @@ export class ObservationListComponent implements OnInit {
 
     // Sort
     result.sort((a, b) => {
-      const rawA = (a as Record<string, unknown>)[this.sortField] ?? '';
-      const rawB = (b as Record<string, unknown>)[this.sortField] ?? '';
+      const rawA = (a as unknown as Record<string, unknown>)[this.sortField] ?? '';
+      const rawB = (b as unknown as Record<string, unknown>)[this.sortField] ?? '';
       const valA = typeof rawA === 'string' ? rawA.toLowerCase() : rawA;
       const valB = typeof rawB === 'string' ? rawB.toLowerCase() : rawB;
       if (valA < valB) return this.sortAsc ? -1 : 1;
