@@ -1,0 +1,37 @@
+.badge-soft-success  { background: rgba(var(--bs-success-rgb), 0.1);   color: var(--bs-success); }
+.badge-soft-danger   { background: rgba(var(--bs-danger-rgb), 0.1);    color: var(--bs-danger); }
+.badge-soft-info     { background: rgba(var(--bs-info-rgb), 0.1);      color: var(--bs-info); }
+.badge-soft-primary  { background: rgba(var(--bs-primary-rgb), 0.1);   color: var(--bs-primary); }
+.badge-soft-warning  { background: rgba(var(--bs-warning-rgb), 0.1);   color: var(--bs-warning); }
+.badge-soft-secondary{ background: rgba(var(--bs-secondary-rgb), 0.1); color: var(--bs-secondary); }
+
+.audit-timeline {
+  .audit-item { position: relative; }
+  .audit-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .icon-dot {
+      width: 40px; height: 40px; flex-shrink: 0; font-size: 18px;
+      &.dot-approved  { background: rgba(var(--bs-success-rgb), 0.1); }
+      &.dot-rejected  { background: rgba(var(--bs-danger-rgb), 0.1); }
+      &.dot-uploaded  { background: rgba(var(--bs-info-rgb), 0.1); }
+      &.dot-submitted { background: rgba(var(--bs-primary-rgb), 0.1); }
+      &.dot-pending   { background: rgba(var(--bs-warning-rgb), 0.1); }
+    }
+    .connector-line {
+      flex: 1;
+      width: 2px;
+      background: #e9ecef;
+      min-height: 20px;
+      margin: 4px 0;
+    }
+  }
+}
+
+.doc-item {
+  transition: background 0.15s;
+  &:hover { background: rgba(var(--bs-primary-rgb), 0.03); }
+}
+
+.btn-xs { padding: 0.15rem 0.4rem; font-size: 0.72rem; }

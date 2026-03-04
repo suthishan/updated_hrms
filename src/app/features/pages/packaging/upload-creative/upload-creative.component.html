@@ -1,0 +1,203 @@
+<div class="content">
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Upload Creative" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+      <a routerLink="/pages/packaging/dashboard" class="btn btn-outline-secondary me-2">
+        <i class="ti ti-arrow-left me-1"></i>Back to Dashboard
+      </a>
+    </div>
+  </div>
+  <!-- /Breadcrumb -->
+
+  <!-- Step Indicator -->
+  <div class="card mb-4">
+    <div class="card-body py-3">
+      <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+        <div class="d-flex align-items-center">
+          <span class="avatar avatar-sm bg-primary rounded-circle me-2 fw-bold text-white">1</span>
+          <span class="fw-semibold text-primary">Upload Creative</span>
+        </div>
+        <i class="ti ti-chevron-right text-muted"></i>
+        <div class="d-flex align-items-center">
+          <span class="avatar avatar-sm bg-light rounded-circle me-2 fw-bold text-muted">2</span>
+          <span class="text-muted">Select Approvers</span>
+        </div>
+        <i class="ti ti-chevron-right text-muted"></i>
+        <div class="d-flex align-items-center">
+          <span class="avatar avatar-sm bg-light rounded-circle me-2 fw-bold text-muted">3</span>
+          <span class="text-muted">Confirmation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Alert -->
+  <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center mb-3" role="alert">
+    <i class="ti ti-circle-check me-2 fs-20"></i>
+    <div>{{ successMessage }}</div>
+  </div>
+
+  <!-- Error Alert -->
+  <div *ngIf="validationError" class="alert alert-danger d-flex align-items-center mb-3" role="alert">
+    <i class="ti ti-alert-circle me-2 fs-20"></i>
+    <div>{{ validationError }}</div>
+  </div>
+
+  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <div class="row g-4">
+      <!-- Left: Document Details -->
+      <div class="col-xl-5">
+        <div class="card h-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-file-info me-2 text-primary"></i>Creative Details
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label fw-medium">Creative Title <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="title"
+                placeholder="e.g., Protein Bar – Chocolate Almond Packaging"
+                [class.is-invalid]="isFieldInvalid('title')">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('title')">
+                Title must be at least 5 characters.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Product Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="productName"
+                placeholder="e.g., Protein Bar – Chocolate Almond"
+                [class.is-invalid]="isFieldInvalid('productName')">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('productName')">
+                Product name is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Product Category <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="productCategory"
+                [class.is-invalid]="isFieldInvalid('productCategory')">
+                <option value="">Select Category</option>
+                <option value="Health Bars">Health Bars</option>
+                <option value="Breakfast Cereals">Breakfast Cereals</option>
+                <option value="Sports Nutrition">Sports Nutrition</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Dairy Products">Dairy Products</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('productCategory')">
+                Please select a product category.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Batch/SKU Reference <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="batchRef"
+                placeholder="e.g., PB-CA-2026-001"
+                [class.is-invalid]="isFieldInvalid('batchRef')">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('batchRef')">
+                Batch reference is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Description / Change Notes <span class="text-danger">*</span></label>
+              <textarea class="form-control" formControlName="description" rows="4"
+                placeholder="Describe the packaging changes or the purpose of this creative submission..."
+                [class.is-invalid]="isFieldInvalid('description')"></textarea>
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('description')">
+                Description must be at least 10 characters.
+              </div>
+            </div>
+
+            <!-- Format Notice -->
+            <div class="alert alert-info d-flex align-items-start py-2 px-3" role="alert">
+              <i class="ti ti-info-circle me-2 mt-1 fs-16"></i>
+              <div class="fs-13">
+                <strong>Accepted Formats:</strong> PDF and JPEG only (Max 10MB per file).
+                Multiple files can be uploaded.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: File Upload -->
+      <div class="col-xl-7">
+        <div class="card h-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-cloud-upload me-2 text-primary"></i>Upload Files
+            </h5>
+          </div>
+          <div class="card-body">
+            <!-- Drop Zone -->
+            <div class="drop-zone"
+              [class.drag-over]="isDragOver"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave($event)"
+              (drop)="onDrop($event)"
+              (click)="fileInput.click()">
+              <input #fileInput type="file" multiple accept=".pdf,.jpg,.jpeg"
+                style="display:none" (change)="onFileSelected($event)">
+              <div class="drop-zone-content text-center">
+                <div class="mb-3">
+                  <i class="ti ti-cloud-upload text-primary drop-icon"></i>
+                </div>
+                <h6 class="fw-semibold mb-1">Drag & Drop files here</h6>
+                <p class="text-muted fs-13 mb-2">or click to browse</p>
+                <span class="badge bg-light text-dark border me-1">PDF</span>
+                <span class="badge bg-light text-dark border">JPEG</span>
+              </div>
+            </div>
+
+            <!-- Uploaded Files List -->
+            <div class="mt-3" *ngIf="uploadedFiles.length > 0">
+              <h6 class="fw-semibold mb-2">
+                <i class="ti ti-paperclip me-1 text-primary"></i>
+                Uploaded Files ({{ uploadedFiles.length }})
+              </h6>
+              <div class="uploaded-file-item d-flex align-items-center justify-content-between p-3 border rounded mb-2"
+                *ngFor="let file of uploadedFiles; let i = index">
+                <div class="d-flex align-items-center overflow-hidden">
+                  <span class="avatar avatar-sm rounded me-3" [class]="getFileIconColor(file.type)">
+                    <i [class]="getFileIcon(file.type) + ' fs-20'"></i>
+                  </span>
+                  <div class="overflow-hidden">
+                    <p class="mb-0 fw-medium text-truncate">{{ file.name }}</p>
+                    <small class="text-muted">{{ formatFileSize(file.size) }} · Uploaded {{ file.uploadedAt | date:'dd MMM, HH:mm' }}</small>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-icon btn-sm btn-outline-danger ms-2 flex-shrink-0"
+                  (click)="removeFile(i)" title="Remove file">
+                  <i class="ti ti-trash"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="text-center py-3 text-muted" *ngIf="uploadedFiles.length === 0">
+              <i class="ti ti-files fs-32 d-block mb-1"></i>
+              <small>No files uploaded yet</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="d-flex align-items-center justify-content-end gap-3 mt-4">
+      <a routerLink="/pages/packaging/dashboard" class="btn btn-outline-secondary">
+        <i class="ti ti-x me-1"></i>Cancel
+      </a>
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+        <i *ngIf="!isSubmitting" class="ti ti-arrow-right me-1"></i>
+        {{ isSubmitting ? 'Saving...' : 'Save & Continue' }}
+      </button>
+    </div>
+  </form>
+</div>
