@@ -19,7 +19,7 @@ import { BreadcrumbsComponent } from '../../../../shared/breadcrumbs/breadcrumbs
 export class ApprovalDetailComponent implements OnInit {
   breadCrumbItems: breadCrumbItems[] = [
     { label: 'Packaging Portal' },
-    { label: 'Approval Inbox', route: '/pages/packaging/inbox' },
+    { label: 'Approval Inbox' },
     { label: 'Document Detail', active: true }
   ];
 
@@ -59,6 +59,11 @@ export class ApprovalDetailComponent implements OnInit {
 
   get pendingApprovers(): PackagingStepApprover[] {
     return this.currentStep?.approvers.filter(a => a.status === 'pending') || [];
+  }
+
+  get pendingApproverRoles(): string {
+    const roles = this.pendingApprovers.map(a => a.role);
+    return roles.length ? roles.join(', ') : 'approver(s)';
   }
 
   get canTakeAction(): boolean {
