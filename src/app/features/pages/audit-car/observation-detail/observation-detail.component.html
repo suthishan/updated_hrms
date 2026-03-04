@@ -239,7 +239,7 @@
               </div>
 
               <!-- Target Date Revision History -->
-              <div class="mb-3" *ngIf="selectedActionItem.targetDateRevisions?.length">
+              <div class="mb-3" *ngIf="selectedActionItem.targetDateRevisions.length">
                 <h6 class="mb-2 text-muted small text-uppercase fw-semibold">Target Date Revision History</h6>
                 <div class="timeline-list">
                   <div *ngFor="let rev of selectedActionItem.targetDateRevisions" class="timeline-item mb-2 ps-3 border-start border-2 border-warning">
@@ -255,7 +255,7 @@
                 </button>
               </div>
 
-              <div *ngIf="!selectedActionItem.targetDateRevisions?.length && isResponsiblePerson(selectedActionItem) && selectedActionItem.status !== 'Closed'" class="mb-3">
+              <div *ngIf="!selectedActionItem.targetDateRevisions.length && isResponsiblePerson(selectedActionItem) && selectedActionItem.status !== 'Closed'" class="mb-3">
                 <button class="btn btn-sm btn-outline-warning" (click)="showTargetDateForm = !showTargetDateForm">
                   <i class="ti ti-calendar-plus me-1"></i>Request Date Extension
                 </button>
@@ -285,7 +285,7 @@
               <div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
                   <h6 class="mb-0 text-muted small text-uppercase fw-semibold">
-                    Follow-ups ({{ selectedActionItem.followUps?.length ?? 0 }})
+                    Follow-ups ({{ selectedActionItem.followUps.length }})
                   </h6>
                   <button *ngIf="selectedActionItem.status !== 'Closed'"
                     class="btn btn-sm btn-outline-info" (click)="showFollowUpForm = !showFollowUpForm">
@@ -306,7 +306,7 @@
                   </form>
                 </div>
 
-                <div *ngIf="!selectedActionItem.followUps?.length" class="text-muted fst-italic small">No follow-ups yet.</div>
+                <div *ngIf="!selectedActionItem.followUps.length" class="text-muted fst-italic small">No follow-ups yet.</div>
 
                 <div *ngFor="let fu of selectedActionItem.followUps; let i = index"
                   class="p-3 border rounded mb-2 bg-light">

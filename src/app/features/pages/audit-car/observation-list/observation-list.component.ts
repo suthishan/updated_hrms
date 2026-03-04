@@ -91,10 +91,10 @@ export class ObservationListComponent implements OnInit {
 
     // Sort
     result.sort((a, b) => {
-      let valA: string | number = (a as never)[this.sortField] ?? '';
-      let valB: string | number = (b as never)[this.sortField] ?? '';
-      if (typeof valA === 'string') valA = valA.toLowerCase();
-      if (typeof valB === 'string') valB = valB.toLowerCase();
+      const rawA = (a as Record<string, unknown>)[this.sortField] ?? '';
+      const rawB = (b as Record<string, unknown>)[this.sortField] ?? '';
+      const valA = typeof rawA === 'string' ? rawA.toLowerCase() : rawA;
+      const valB = typeof rawB === 'string' ? rawB.toLowerCase() : rawB;
       if (valA < valB) return this.sortAsc ? -1 : 1;
       if (valA > valB) return this.sortAsc ? 1 : -1;
       return 0;
