@@ -156,7 +156,7 @@ exports.assignMultiLevelApprovers = async (request_type_id, reqData) => {
       throw new Error(`Invalid approval level: ${approval_level}`);
     }
 
-    const role = `APPROVER_L${approval_level}`;
+    const role = `APPROVER`;
 
     approvers.forEach(approver => {
       const key = `${department}|${request_type_id}|${approval_level}|${approver.approver_emp_uuid}`;
@@ -255,11 +255,6 @@ exports.updateMultiLevelApprovers = async (request_type_id, reqData) => {
   try {
     await client.query("BEGIN");
 
-    /* ======================================
-       1️⃣ Deactivate ALL existing rows first
-          (both true and any stale false rows 
-           — just delete them cleanly)
-    ====================================== */
     await client.query(
       `
       DELETE FROM tbl_department_approvers
@@ -269,9 +264,6 @@ exports.updateMultiLevelApprovers = async (request_type_id, reqData) => {
       [request_type_id, department]
     );
 
-    /* ======================================
-       2️⃣ Build & deduplicate insert data
-    ====================================== */
     const approverValues = [];
     const approverPlaceholders = [];
 
@@ -299,7 +291,7 @@ exports.updateMultiLevelApprovers = async (request_type_id, reqData) => {
         throw new Error(`Invalid approval level: ${approval_level}`);
       }
 
-      const role = `APPROVER_L${approval_level}`;
+      const role = `APPROVER`;
 
       approvers.forEach(approver => {
         const key = `${department}|${request_type_id}|${approval_level}|${approver.approver_emp_uuid}`;

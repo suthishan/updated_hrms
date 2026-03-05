@@ -76,20 +76,134 @@ exports.createApprovalFlow = async (requestId, department, requestTypeId) => {
   await pool.query(query, values);
 };
 
-exports.updateFormData = async (requestId, formData,status) => {
-  const q = `UPDATE tbl_requests
-    SET form_data = $1,
-        status = $2,
-        updated_at = NOW(),
-        submitted_at = NOW()
-    WHERE id = $3
-    RETURNING id;`;
-  const res = await pool.query(q, [formData, status, requestId]);
-  console.log(q);
+exports.updateFormData = async (requestId, formData, status, currentUser, tag_emp) => {
+  const client = await pool.connect(); // Use a client for transaction
 
-  return res.rows.length > 0;
+  try {
+    await client.query('BEGIN'); // Start Transaction
+
+    // 1. Update the main request table
+    const updateQuery = `
+      UPDATE tbl_requests
+      SET form_data = $1,
+          status = $2,
+          updated_at = NOW(),
+          submitted_at = NOW()
+      WHERE id = $3
+      RETURNING id
+    `;
+
+    const updateRes = await client.query(updateQuery, [formData, status, requestId]);
+
+    // 2. Insert into tbl_request_emp_tag if tag_emp array has data
+    if (tag_emp && Array.isArray(tag_emp) && tag_emp.length > 0) {
+      const insertValues = [];
+      const placeholders = [];
+
+      // Loop through the tag_emp array to build placeholders ($1, $2, $3...) and values
+      tag_emp.forEach((empId, index) => {
+        const offset = index * 3;
+        placeholders.push(`($${offset + 1}, $${offset + 2}, $${offset + 3})`);
+
+        insertValues.push(requestId, empId, currentUser);
+
+      });
+      const deleteQuery = `
+        DELETE FROM tbl_request_emp_tag
+        WHERE request_id = $1
+      `;
+      await client.query(deleteQuery, [requestId]);
+
+      const insertQuery = `
+        INSERT INTO tbl_request_emp_tag 
+        (request_id, emp_id, tagged_emp_name, tagged_by)
+        VALUES ${placeholders.join(', ')}
+        ON CONFLICT (request_id, emp_id) DO NOTHING
+      `;
+
+      await client.query(insertQuery, insertValues);
+    }
+
+    if (status === 'SUBMITTED') {
+      const employees = tag_emp
+        .map(empId => findemployeeById(empId))
+        .filter(emp => emp?.emp_email);
+
+      for (const employee of employees) {
+      await sendMail({
+            to: toEmail,
+            subject: `You Were Mentioned in ${formInfo.req_name} `,
+            html: `
+              <div style="font-family: Arial, Helvetica, sans-serif; color: #333; line-height: 1.6;">
+            <p>Dear ${employee.emp_name},</p>
+      
+            <p>
+              Your request for
+              <strong>#${formInfo.req_name} (${formInfo.req_doc_code})</strong>
+              has been ${decision.toLowerCase()} at level <strong>${level}</strong>.
+            </p>
+      
+            <p>
+              <strong>Approved By:</strong> ${formInfo.assigned_approver_name}
+            </p>
+      
+            <p>
+              <strong>Current Status:</strong> ${requestStatus}
+            </p>
+      
+            <br />
+      
+            <a href="${dashboardUrl}"
+               style="
+                 display: inline-block;
+                 padding: 10px 18px;
+                 color: #110072ff;
+                 text-decoration: none;
+                 border-radius: 4px;
+                 font-weight: bold;
+               ">
+              View Approval Dashboard
+            </a>
+      
+            <br /><br />
+      
+            <p>
+              Regards,<br />
+              <strong>Japfa Intranet Team</strong>
+            </p>
+      
+            <p style="font-size: 12px; color: #777;">
+              This is an automated notification. Please do not reply.
+            </p>
+          </div>
+            `
+          });
+
+        // Wait 1 second between emails to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
+    await client.query('COMMIT'); // Commit Transaction
+    return updateRes.rows.length > 0;
+
+  } catch (error) {
+    await client.query('ROLLBACK'); // Rollback on error
+    console.error("Error in updateFormData:", error);
+    throw error;
+  } finally {
+    client.release(); // Release the client back to the pool
+  }
 };
 
+exports.findemployeeById = async (empId) => {
+  const query = `
+    SELECT *
+    FROM tbl_emp_master
+    WHERE emp_uuid = $1
+  `;
+  const result = await pool.query(query, [empId]);
+  return result.rows[0];
+};
 
 exports.getAllRequestsAdmin = async (size) => {
   const parsedSize = Number.parseInt(size, 10);
@@ -175,6 +289,12 @@ exports.getRequestsByRequester = async (empUuid, size) => {
         ORDER BY a_all.approval_level
       ) AS approvals,
 
+      json_agg(
+        json_build_object(
+          'emp_id', a_tag.emp_id
+        )
+      ) AS tagged_emps,
+
       /* CURRENT pending approval (always single row) */
       (
         SELECT json_build_object(
@@ -197,6 +317,8 @@ exports.getRequestsByRequester = async (empUuid, size) => {
     /* ONLY for aggregation */
     LEFT JOIN tbl_approvals a_all
       ON a_all.request_id = r.id
+    JOIN tbl_request_emp_tag a_tag
+      ON a_tag.request_id = r.id  
     JOIN tbl_emp_master e  
       ON e.emp_uuid = r.emp_id
     JOIN tbl_req_master rt
@@ -363,14 +485,8 @@ exports.getL2PendingRequests = async (empUuid, size) => {
     -- filter: L2 must be this user & pending
     JOIN tbl_approvals a_filter_l2
       ON a_filter_l2.request_id = r.id
-     AND a_filter_l2.approval_level = 2
      AND a_filter_l2.decision = 'PENDING'
 
-    -- filter: L1 must be approved
-    JOIN tbl_approvals a_filter_l1
-      ON a_filter_l1.request_id = r.id
-     AND a_filter_l1.approval_level = 1
-     AND a_filter_l1.decision = 'APPROVED'
 
     JOIN tbl_emp_master e  
       ON e.emp_uuid = r.emp_id     
@@ -489,115 +605,115 @@ exports.fetchDashboardOverview = async (empUuid, role) => {
 
   switch (role) {
 
+    /* ============================================================
+       REQUESTER DASHBOARD
+    ============================================================ */
     case 'REQUESTER':
       query = `
         SELECT
-          COUNT(*) FILTER (WHERE a.decision != 'DRAFT') AS total_request,
-          COUNT(*) FILTER (WHERE status = 'SUBMITTED')    AS l1_pending,
-          COUNT(*) FILTER (WHERE status = 'L1_APPROVED')  AS l2_pending,
-          COUNT(*) FILTER (WHERE status = 'L1_REJECTED')  AS l1_rejected,
-          COUNT(*) FILTER (WHERE status = 'L2_REJECTED')  AS l2_rejected,
-          COUNT(*) FILTER (WHERE status = 'L2_APPROVED')  AS final_approved,
-          COUNT(*) FILTER (WHERE status = 'DRAFT')        AS draft_request
-        FROM tbl_requests
-        WHERE emp_id = $1
+          COUNT(*) FILTER (WHERE r.status != 'DRAFT')      AS total_request,
+          COUNT(*) FILTER (WHERE r.status = 'SUBMITTED')   AS l1_pending,
+          COUNT(*) FILTER (WHERE r.status = 'L1_APPROVED') AS l2_pending,
+          COUNT(*) FILTER (WHERE r.status = 'L1_REJECTED') AS l1_rejected,
+          COUNT(*) FILTER (WHERE r.status = 'L2_REJECTED') AS l2_rejected,
+          COUNT(*) FILTER (WHERE r.status = 'L2_APPROVED') AS final_approved,
+          COUNT(*) FILTER (WHERE r.status = 'DRAFT')       AS draft_request,
+
+          (
+            SELECT json_agg(
+              json_build_object(
+                'department', department,
+                'department_total_req', dept_count
+              )
+              ORDER BY department
+            )
+            FROM (
+              SELECT department, COUNT(*) AS dept_count
+              FROM tbl_requests
+              WHERE emp_id = $1
+              GROUP BY department
+            ) dept
+          ) AS department_summary
+
+        FROM tbl_requests r
+        WHERE r.emp_id = $1
       `;
       params = [empUuid];
       break;
 
-    case 'APPROVER_L1':
+
+    /* ============================================================
+       LEVEL 1 APPROVER DASHBOARD
+    ============================================================ */
+    case 'APPROVER':
       query = `
         SELECT
-          COUNT(*) FILTER (WHERE a.decision != 'DRAFT') AS total_request,
-          COUNT(*) FILTER (WHERE a.decision = 'PENDING')   AS l1_pending,
-          COUNT(*) FILTER (WHERE a.decision = 'APPROVED')  AS approved_by_me,
-          COUNT(*) FILTER (WHERE a.decision = 'REJECTED')  AS rejected_by_me,
-           (
-        SELECT json_agg(
-          json_build_object(
-            'department', department,
-            'department_total_req', dept_count
-          )
-          ORDER BY department
-        )
-        FROM (
-          SELECT
-            department,
-            COUNT(*) AS dept_count
-          FROM tbl_requests
-          GROUP BY department
-        ) dept
-      ) AS department_summary
+          COUNT(*)                                   AS total_assigned_requests,
+          COUNT(*) FILTER (WHERE a.decision = 'PENDING')  AS pending,
+          COUNT(*) FILTER (WHERE a.decision = 'APPROVED') AS approved_by_me,
+          COUNT(*) FILTER (WHERE a.decision = 'REJECTED') AS rejected_by_me,
+
+          (
+            SELECT json_agg(
+              json_build_object(
+                'department', department,
+                'department_total_req', dept_count
+              )
+              ORDER BY department
+            )
+            FROM (
+              SELECT r.department, COUNT(*) AS dept_count
+              FROM tbl_requests r
+              JOIN tbl_approvals a2 
+                ON r.id = a2.request_id
+              WHERE a2.assigned_approver_uuid = $1
+              GROUP BY r.department
+            ) dept
+          ) AS department_summary
+
         FROM tbl_approvals a
         WHERE a.assigned_approver_uuid = $1
       `;
       params = [empUuid];
       break;
-
-    case 'APPROVER_L2':
-      query = `
-        SELECT
-          COUNT(*) FILTER (WHERE a.decision != 'DRAFT') AS total_request,
-          COUNT(*) FILTER (WHERE a.decision = 'PENDING')   AS l2_pending,
-          COUNT(*) FILTER (WHERE a.decision = 'APPROVED')  AS approved_by_me,
-          COUNT(*) FILTER (WHERE a.decision = 'REJECTED')  AS rejected_by_me,
-           (
-        SELECT json_agg(
-          json_build_object(
-            'department', department,
-            'department_total_req', dept_count
-          )
-          ORDER BY department
-        )
-        FROM (
-          SELECT
-            department,
-            COUNT(*) AS dept_count
-          FROM tbl_requests
-          GROUP BY department
-        ) dept
-      ) AS department_summary
-        FROM tbl_approvals a
-        WHERE a.assigned_approver_uuid = $1
-      `;
-      params = [empUuid];
-      break;
-
+    /* ============================================================
+       ADMIN DASHBOARD
+    ============================================================ */
     case 'ADMIN':
-      query = `SELECT
-      COUNT(*) FILTER (WHERE decision != 'DRAFT') AS total_request,
-      COUNT(*) FILTER (WHERE status = 'SUBMITTED')   AS l1_pending,
-      COUNT(*) FILTER (WHERE status = 'L1_APPROVED') AS l2_pending,
-      COUNT(*) FILTER (WHERE status = 'L2_APPROVED') AS final_approved,
-      COUNT(*) FILTER (WHERE status LIKE '%REJECTED') AS rejected,
+      query = `
+        SELECT
+          COUNT(*) FILTER (WHERE r.status != 'DRAFT')      AS total_request,
+          COUNT(*) FILTER (WHERE r.status = 'SUBMITTED')   AS l1_pending,
+          COUNT(*) FILTER (WHERE r.status = 'L1_APPROVED') AS l2_pending,
+          COUNT(*) FILTER (WHERE r.status = 'L2_APPROVED') AS final_approved,
+          COUNT(*) FILTER (WHERE r.status LIKE '%REJECTED') AS rejected,
 
-      (
-        SELECT json_agg(
-          json_build_object(
-            'department', department,
-            'department_total_req', dept_count
-          )
-          ORDER BY department
-        )
-        FROM (
-          SELECT
-            department,
-            COUNT(*) AS dept_count
-          FROM tbl_requests
-          GROUP BY department
-        ) dept
-      ) AS department_summary
+          (
+            SELECT json_agg(
+              json_build_object(
+                'department', department,
+                'department_total_req', dept_count
+              )
+              ORDER BY department
+            )
+            FROM (
+              SELECT department, COUNT(*) AS dept_count
+              FROM tbl_requests
+              GROUP BY department
+            ) dept
+          ) AS department_summary
 
-        FROM tbl_requests
-  `;
+        FROM tbl_requests r
+      `;
       params = [];
       break;
+
     default:
       throw new Error('Invalid role for dashboard overview');
   }
 
   const { rows } = await pool.query(query, params);
-  return rows[0];
+  return rows[0] || {};
 };
 
 exports.getApproverHistory = async (empUuid) => {
@@ -655,4 +771,31 @@ exports.getRequestTypeById = async (requestTypeId) => {
   `;
   const result = await pool.query(query, [requestTypeId]);
   return result.rows[0];
+};
+
+
+exports.fetchTaggedRequests = async (empUuid) => {
+  const query = `
+    SELECT
+      r.id AS request_id,
+      r.requester_name,
+      r.department,
+      r.status,
+      r.priority,
+      r.created_at,
+      r.updated_at,
+      r.submitted_at,
+      r.form_data,
+      r.requester_name as tagged_by,
+      rt.req_name AS request_name
+    FROM tbl_requests r
+    INNER JOIN tbl_req_master rt
+      ON rt.rid = r.request_type_id
+    INNER JOIN tbl_approvals a
+      ON a.request_id = r.id
+    WHERE a.tagged_emp_uuid = $1
+    ORDER BY r.created_at DESC
+  `;
+  const result = await pool.query(query, [empUuid]);
+  return result.rows;
 };

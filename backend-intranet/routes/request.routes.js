@@ -42,7 +42,7 @@ router.post('/get-Request-byid',
 
 router.post('/approve',  
   authenticate, // first authenticate
-  allowRoles('APPROVER_L1', 'APPROVER_L2', 'APPROVER_L3', 'APPROVER_L4'), // then check roles
+  allowRoles('APPROVER'), // then check roles
      /* 
       #swagger.tags = ['Requests']
       #swagger.path = '/api/requests/approve'
@@ -77,6 +77,15 @@ router.get('/fetch/request-notifications',
       #swagger.path = '/api/requests/fetch/request-notifications'
     */ 
   requestcontroller.fetchRequestNotifications
+);
+
+router.get('/fetch/tagged-request',  
+  authenticate, // first authenticate
+     /* 
+      #swagger.tags = ['Requests']
+      #swagger.path = '/api/requests/fetch/tagged-request'
+    */ 
+  requestcontroller.fetchTaggedRequests
 );
 
 

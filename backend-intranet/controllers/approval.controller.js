@@ -13,7 +13,7 @@ exports.approve = async (req, res) => {
   }
   const approvalLevel =
     Number.isInteger(level) && level > 0
-      ? `APPROVER_L${level}`
+      ? `APPROVER`
       : null;
   if (!userRoles.includes(approvalLevel)) {
     console.log("User Role", userRoles + approvalLevel + "Level " + level);

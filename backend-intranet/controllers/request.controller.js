@@ -98,6 +98,7 @@ exports.createRequest = async (req, res) => {
     });
   }
 };
+
 exports.fetchRequestNotifications = async (req, res) => {
   try {
     console.log("Fetching notifications for emp_uuid:", req.user.emp_uuid);
@@ -118,13 +119,15 @@ exports.fetchRequestNotifications = async (req, res) => {
 
 exports.updateFormData = async (req, res) => {
   try {
-    const { requestId, form_data , status} = req.body;
+    const { requestId, form_data , status, tag_emp} = req.body;
     console.log(req.body);
-
+    const currentUser = req.user.emp_uuid;
     const updated = await RequestModel.updateFormData(
       requestId,
       form_data,
-      status
+      status,
+      currentUser,
+      tag_emp
     );
 
     if (!updated) {
@@ -192,11 +195,7 @@ exports.dashOverview = async (req, res) => {
         result = await RequestModel.fetchDashboardOverview(emp_uuid, emp_role);
         break;
 
-      case 'APPROVER_L1':
-        result = await RequestModel.fetchDashboardOverview(emp_uuid, emp_role);
-        break;
-
-      case 'APPROVER_L2':
+      case 'APPROVER':
         result = await RequestModel.fetchDashboardOverview(emp_uuid, emp_role);
         break;
 
@@ -238,13 +237,7 @@ exports.getRequestsbyrole = async (req, res) => {
         result = await RequestModel.getRequestsByRequester(emp_uuid, size);
         break;
 
-      case 'APPROVER_L1':
-        result = await RequestModel.getL1PendingRequests(emp_uuid, size);
-        break;
-
-      case 'APPROVER_L2':
-      case 'APPROVER_L3':
-      case 'APPROVER_L4':
+      case 'APPROVER':
         result = await RequestModel.getL2PendingRequests(emp_uuid, size);
         break;
 
@@ -312,3 +305,22 @@ exports.getRequest = async (req, res) => {
   }
 };
 
+
+exports.fetchTaggedRequests = async (req, res) => {
+  try {
+    const { emp_uuid } = req.user.emp_uuid;
+
+    const requests = await RequestModel.fetchTaggedRequests(emp_uuid);
+    return res.json({
+      sts: "1",
+      message: "Tagged requests fetched successfully",
+      result: requests
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      sts: "0",
+      message: "Failed to fetch tagged requests"
+    });
+  }
+};
