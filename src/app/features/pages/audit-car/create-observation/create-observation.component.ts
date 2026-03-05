@@ -1,9 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { AuditCarService } from '../services/audit-car.service';
-import { AuditObservation, AuditActionItem, AuditUser } from '../../../../core/models/models';
+import { AuditObservation, AuditEmployee } from '../../../../core/models/models';
+
+interface AuditAreaOption { id: number; name: string; }
+interface DivisionOption  { id: number; name: string; }
+
+/** These IDs must match the seed data in audit-car.sql */
+const AUDIT_AREAS: AuditAreaOption[] = [
+  { id: 1,  name: 'Procurement' },
+  { id: 2,  name: 'Finance' },
+  { id: 3,  name: 'IT Security' },
+  { id: 4,  name: 'IT Operations' },
+  { id: 5,  name: 'Human Resources' },
+  { id: 6,  name: 'Operations' },
+  { id: 7,  name: 'Logistics' },
+  { id: 8,  name: 'Quality Control' },
+  { id: 9,  name: 'Compliance' },
+  { id: 10, name: 'Legal' },
+  { id: 11, name: 'Administration' },
+];
+
+const DIVISIONS: DivisionOption[] = [
+  { id: 1, name: 'Supply Chain' },
+  { id: 2, name: 'Finance & Accounts' },
+  { id: 3, name: 'Information Technology' },
+  { id: 4, name: 'Human Resources' },
+  { id: 5, name: 'Poultry Operations' },
+  { id: 6, name: 'Aquaculture' },
+  { id: 7, name: 'Feed Business' },
+  { id: 8, name: 'Corporate' },
+  { id: 9, name: 'Legal & Compliance' },
+];
 
 @Component({
   selector: 'app-create-observation',
@@ -15,22 +46,25 @@ import { AuditObservation, AuditActionItem, AuditUser } from '../../../../core/m
 export class CreateObservationComponent implements OnInit {
   form: FormGroup;
   isEditMode = false;
-  observationId: string | null = null;
-  currentUser: AuditUser | null = null;
-  allUsers: AuditUser[] = [];
-  responsiblePersonOptions: AuditUser[] = [];
-  submitAttempted = false;
-  saveSuccess = false;
+  observationId: number | null = null;
 
+  // Reference data
+  auditAreas = AUDIT_AREAS;
+  divisions = DIVISIONS;
   riskRatings = ['High', 'Medium', 'Low', 'Improvement'];
-  auditAreas = [
-    'Procurement', 'Finance', 'IT Security', 'IT Operations', 'HR', 'Operations',
-    'Logistics', 'Quality Control', 'Compliance', 'Legal', 'Admin',
-  ];
-  divisions = [
-    'Supply Chain', 'Finance & Accounts', 'Information Technology', 'Human Resources',
-    'Poultry Operations', 'Aquaculture', 'Feed Business', 'Corporate', 'Legal & Compliance',
-  ];
+  statusOptions = ['Open', 'Repeated', 'Overdue', 'Closed'];
+
+  // Employee typeahead
+  employeeSearch = '';
+  employeeResults: AuditEmployee[] = [];
+  selectedEmployee: AuditEmployee | null = null;
+  private empSearch$ = new Subject<string>();
+  empSearching = false;
+
+  submitAttempted = false;
+  saving = false;
+  saveSuccess = false;
+  errorMsg = '';
 
   constructor(
     private fb: FormBuilder,
@@ -38,136 +72,85 @@ export class CreateObservationComponent implements OnInit {
     private router: Router,
     private auditService: AuditCarService
   ) {
-    this.form = this.createForm();
+    this.form = this.buildForm();
   }
 
-  createForm(): FormGroup {
+  private buildForm(): FormGroup {
     return this.fb.group({
-      auditYear: [new Date().getFullYear(), [Validators.required, Validators.min(2000), Validators.max(2100)]],
-      auditArea: ['', Validators.required],
-      division: ['', Validators.required],
-      riskRating: ['', Validators.required],
-      observation: ['', [Validators.required, Validators.minLength(10)]],
-      detailsOfFindings: ['', [Validators.required, Validators.minLength(20)]],
-      managementCommitment: ['', Validators.required],
-      actionItems: this.fb.array([this.createActionItemGroup()]),
-    });
-  }
-
-  createActionItemGroup(ai?: Partial<AuditActionItem>): FormGroup {
-    return this.fb.group({
-      responsiblePersonId: [ai?.responsiblePersonId ?? '', Validators.required],
-      initialTargetDate: [ai?.initialTargetDate ?? '', Validators.required],
+      auditYear:          [new Date().getFullYear(), [Validators.required, Validators.min(2000), Validators.max(2100)]],
+      auditAreaId:        [null as number | null],
+      divisionId:         [null as number | null],
+      observationTitle:   ['', [Validators.required, Validators.minLength(5)]],
+      riskRating:         ['', Validators.required],
+      detailsOfFindings:  ['', [Validators.required, Validators.minLength(10)]],
+      followupCommitment: ['', Validators.required],
+      initialTargetDate:  ['', Validators.required],
+      subsequentFollowup1:[''],
+      updatedTargetDate1: [''],
+      status:             ['Open'],
     });
   }
 
   ngOnInit(): void {
-    this.currentUser = this.auditService.getCurrentUser();
-    this.auditService.getUsers().subscribe((res) => {
-      this.allUsers = res.data;
-      this.responsiblePersonOptions = res.data.filter((u) => u.role === 'Responsible Person');
+    // Employee typeahead with debounce
+    this.empSearch$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((term) => {
+      if (term.length < 2) { this.employeeResults = []; return; }
+      this.empSearching = true;
+      this.auditService.searchEmployees(term).subscribe({
+        next: (list) => { this.employeeResults = list; this.empSearching = false; },
+        error: () => { this.employeeResults = []; this.empSearching = false; },
+      });
     });
 
-    this.observationId = this.route.snapshot.paramMap.get('id');
-    if (this.observationId) {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
       this.isEditMode = true;
+      this.observationId = Number(idParam);
       this.auditService.getObservationById(this.observationId).subscribe((obs) => {
         if (obs) this.patchForm(obs);
       });
     }
   }
 
-  patchForm(obs: AuditObservation): void {
+  private patchForm(obs: AuditObservation): void {
     this.form.patchValue({
-      auditYear: obs.auditYear,
-      auditArea: obs.auditArea,
-      division: obs.division,
-      riskRating: obs.riskRating,
-      observation: obs.observation,
-      detailsOfFindings: obs.detailsOfFindings,
-      managementCommitment: obs.managementCommitment,
+      auditYear:          obs.auditYear,
+      auditAreaId:        obs.auditAreaId ?? null,
+      divisionId:         obs.divisionId ?? null,
+      observationTitle:   obs.observationTitle,
+      riskRating:         obs.riskRating,
+      detailsOfFindings:  obs.detailsOfFindings,
+      followupCommitment: obs.followupCommitment,
+      initialTargetDate:  obs.initialTargetDate,
+      subsequentFollowup1:obs.subsequentFollowup1 ?? '',
+      updatedTargetDate1: obs.updatedTargetDate1 ?? '',
+      status:             obs.status,
     });
-    this.actionItems.clear();
-    obs.actionItems.forEach((ai) => {
-      this.actionItems.push(this.createActionItemGroup(ai));
-    });
-  }
-
-  get actionItems(): FormArray {
-    return this.form.get('actionItems') as FormArray;
-  }
-
-  getActionItemGroup(index: number): FormGroup {
-    return this.actionItems.at(index) as FormGroup;
-  }
-
-  addActionItem(): void {
-    this.actionItems.push(this.createActionItemGroup());
-  }
-
-  removeActionItem(index: number): void {
-    if (this.actionItems.length > 1) {
-      this.actionItems.removeAt(index);
+    if (obs.responsiblePerson) {
+      this.employeeSearch = obs.responsiblePerson;
+      this.selectedEmployee = {
+        eid: obs.responsiblePersonId ?? 0,
+        emp_name: obs.responsiblePerson,
+        emp_code: obs.responsiblePersonCode ?? '',
+        emp_email: obs.responsiblePersonEmail,
+      };
     }
   }
 
-  getSelectedUser(id: string): AuditUser | undefined {
-    return this.allUsers.find((u) => u.id === id);
+  onEmployeeSearchInput(): void {
+    this.empSearch$.next(this.employeeSearch);
+    if (!this.employeeSearch) this.clearEmployee();
   }
 
-  onSubmit(publish = false): void {
-    this.submitAttempted = true;
-    if (this.form.invalid) return;
+  selectEmployee(emp: AuditEmployee): void {
+    this.selectedEmployee = emp;
+    this.employeeSearch = emp.emp_name;
+    this.employeeResults = [];
+  }
 
-    const formVal = this.form.value;
-    const year: number = formVal.auditYear;
-    const obsId = this.isEditMode && this.observationId
-      ? this.observationId
-      : this.auditService.generateObservationId(year);
-
-    const actionItems: AuditActionItem[] = formVal.actionItems.map((ai: { responsiblePersonId: string; initialTargetDate: string }, idx: number) => {
-      const user = this.getSelectedUser(ai.responsiblePersonId);
-      return {
-        id: this.auditService.generateActionItemId(obsId, idx + 1),
-        observationId: obsId,
-        responsiblePersonId: ai.responsiblePersonId,
-        responsiblePersonName: user?.name ?? '',
-        responsiblePersonEmail: user?.email ?? '',
-        department: user?.department ?? '',
-        division: user?.division ?? '',
-        initialTargetDate: ai.initialTargetDate,
-        currentTargetDate: ai.initialTargetDate,
-        status: 'Not Due' as const,
-        followUps: [],
-        targetDateRevisions: [],
-      };
-    });
-
-    const observation: AuditObservation = {
-      id: this.isEditMode ? this.observationId! : String(Date.now()),
-      observationId: obsId,
-      auditYear: year,
-      auditArea: formVal.auditArea,
-      division: formVal.division,
-      riskRating: formVal.riskRating,
-      observation: formVal.observation,
-      detailsOfFindings: formVal.detailsOfFindings,
-      managementCommitment: formVal.managementCommitment,
-      overallStatus: 'Open',
-      createdBy: this.currentUser?.id ?? '',
-      createdByName: this.currentUser?.name ?? '',
-      createdDate: new Date().toISOString().split('T')[0],
-      publishedDate: publish ? new Date().toISOString().split('T')[0] : undefined,
-      isPublished: publish,
-      actionItems,
-    };
-
-    this.auditService.saveObservation(observation).subscribe(() => {
-      this.saveSuccess = true;
-      setTimeout(() => {
-        this.router.navigate(['/audit-car/observations/list']);
-      }, 1200);
-    });
+  clearEmployee(): void {
+    this.selectedEmployee = null;
+    this.employeeResults = [];
   }
 
   isFieldInvalid(field: string): boolean {
@@ -175,9 +158,55 @@ export class CreateObservationComponent implements OnInit {
     return !!(ctrl && ctrl.invalid && (ctrl.touched || this.submitAttempted));
   }
 
-  isAiFieldInvalid(index: number, field: string): boolean {
-    const ctrl = this.getActionItemGroup(index).get(field);
-    return !!(ctrl && ctrl.invalid && (ctrl.touched || this.submitAttempted));
+  onSubmit(): void {
+    this.submitAttempted = true;
+    this.errorMsg = '';
+    if (this.form.invalid || !this.selectedEmployee) return;
+
+    const v = this.form.value;
+    const payload = {
+      audit_year:           Number(v.auditYear),
+      audit_area_id:        v.auditAreaId || undefined,
+      division_id:          v.divisionId  || undefined,
+      observation_title:    v.observationTitle,
+      risk_rating:          v.riskRating,
+      details_of_findings:  v.detailsOfFindings,
+      followup_commitment:  v.followupCommitment,
+      responsible_person_id: this.selectedEmployee.eid,
+      initial_target_date:  v.initialTargetDate,
+      subsequent_followup_1: v.subsequentFollowup1 || undefined,
+      updated_target_date_1: v.updatedTargetDate1  || undefined,
+      status:               v.status || 'Open',
+    };
+
+    this.saving = true;
+    const request$ = this.isEditMode && this.observationId
+      ? this.auditService.updateObservation(this.observationId, {
+          audit_area_id:        payload.audit_area_id,
+          division_id:          payload.division_id,
+          observation_title:    payload.observation_title,
+          risk_rating:          payload.risk_rating,
+          details_of_findings:  payload.details_of_findings,
+          followup_commitment:  payload.followup_commitment,
+          responsible_person_id: payload.responsible_person_id,
+          initial_target_date:  payload.initial_target_date,
+          subsequent_followup_1: payload.subsequent_followup_1,
+          updated_target_date_1: payload.updated_target_date_1,
+          status:               payload.status,
+        })
+      : this.auditService.createObservation(payload);
+
+    request$.subscribe({
+      next: () => {
+        this.saving = false;
+        this.saveSuccess = true;
+        setTimeout(() => this.router.navigate(['/audit-car/observations/list']), 1200);
+      },
+      error: (err: Error) => {
+        this.saving = false;
+        this.errorMsg = err.message ?? 'Save failed. Please try again.';
+      },
+    });
   }
 
   cancel(): void {

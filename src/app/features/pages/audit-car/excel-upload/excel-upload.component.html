@@ -1,4 +1,4 @@
-<!-- Excel Upload -->
+<!-- Excel Upload — 2-Step: Upload → Sync -->
 <div class="page-wrapper">
   <div class="content">
 
@@ -13,7 +13,7 @@
         </ol></nav>
       </div>
       <div class="d-flex gap-2">
-        <button class="btn btn-outline-secondary d-flex align-items-center" (click)="downloadTemplate()">
+        <button class="btn btn-outline-secondary" (click)="downloadTemplate()">
           <i class="ti ti-download me-2"></i>Download Template
         </button>
         <a routerLink="/audit-car/observations/list" class="btn btn-outline-primary">
@@ -22,22 +22,56 @@
       </div>
     </div>
 
-    <!-- ─── Upload Zone ────────────────────────────────────────────────────── -->
-    <div class="card border-0 shadow-sm mb-3" *ngIf="uploadStep === 'idle'">
+    <!-- Error -->
+    <div *ngIf="errorMsg" class="alert alert-danger d-flex align-items-center">
+      <i class="ti ti-alert-circle me-2"></i>{{ errorMsg }}
+      <button class="btn btn-sm btn-outline-danger ms-auto" (click)="reset()">Dismiss</button>
+    </div>
+
+    <!-- ─── Step Progress Bar ─────────────────────────────────────────────── -->
+    <div class="card border-0 shadow-sm mb-3" *ngIf="step !== 'idle'">
+      <div class="card-body py-3">
+        <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge rounded-pill"
+              [class.bg-primary]="step === 'uploading'"
+              [class.bg-success]="step !== 'uploading' && step !== 'idle'"
+              [class.bg-secondary]="step === 'idle'">1</span>
+            <span class="fw-medium small">Upload to Staging</span>
+          </div>
+          <div class="flex-grow-1 border-top"></div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge rounded-pill"
+              [class.bg-primary]="step === 'staging' || step === 'syncing'"
+              [class.bg-success]="step === 'done'"
+              [class.bg-secondary]="step === 'uploading' || step === 'idle'">2</span>
+            <span class="fw-medium small">Preview &amp; Sync</span>
+          </div>
+          <div class="flex-grow-1 border-top"></div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge rounded-pill"
+              [class.bg-success]="step === 'done'"
+              [class.bg-secondary]="step !== 'done'">3</span>
+            <span class="fw-medium small">Done</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Idle: Drop Zone ────────────────────────────────────────────────── -->
+    <div class="card border-0 shadow-sm mb-3" *ngIf="step === 'idle' || step === 'error'">
       <div class="card-header border-0">
-        <h5 class="card-title mb-0"><i class="ti ti-upload me-2 text-primary"></i>Upload Audit Observations</h5>
+        <h5 class="card-title mb-0">
+          <i class="ti ti-upload me-2 text-primary"></i>Upload Audit Observations Excel
+        </h5>
       </div>
       <div class="card-body">
-
-        <!-- Drop Zone -->
         <div class="drop-zone p-5 text-center border-2 border-dashed rounded mb-3"
           [class.drag-active]="dragOver"
-          (dragover)="onDragOver($event)"
-          (dragleave)="onDragLeave()"
-          (drop)="onDrop($event)">
+          (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
           <i class="ti ti-cloud-upload fs-1 text-primary mb-3 d-block"></i>
-          <h5 class="mb-2">Drag & Drop your Excel file here</h5>
-          <p class="text-muted mb-3">Supports .xlsx, .xls, .csv formats</p>
+          <h5 class="mb-2">Drag &amp; Drop your Excel / CSV file here</h5>
+          <p class="text-muted mb-3">Supports .xlsx, .xls, .csv</p>
           <label class="btn btn-primary mb-0">
             <i class="ti ti-folder-open me-2"></i>Browse File
             <input #fileInput type="file" class="d-none" accept=".xlsx,.xls,.csv"
@@ -45,177 +79,195 @@
           </label>
         </div>
 
-        <!-- Template info -->
         <div class="alert alert-info mb-0">
-          <h6 class="alert-heading"><i class="ti ti-info-circle me-2"></i>Template Requirements</h6>
-          <p class="mb-2 small">Ensure your Excel/CSV file contains the following columns in order:</p>
-          <div class="d-flex flex-wrap gap-1">
+          <h6 class="alert-heading"><i class="ti ti-info-circle me-2"></i>Template Columns (in order)</h6>
+          <div class="d-flex flex-wrap gap-1 mb-2">
             <span *ngFor="let col of templateColumns; let i = index" class="badge bg-light text-dark border">
               {{ i + 1 }}. {{ col }}
             </span>
           </div>
-          <hr class="my-2">
           <ul class="mb-0 small">
-            <li>Risk Rating must be: <strong>High / Medium / Low / Improvement</strong></li>
-            <li>Date format: <strong>YYYY-MM-DD</strong></li>
-            <li>Multiple responsible persons for the same observation → add separate rows with the same Observation text</li>
-            <li>System will automatically group rows with same Observation under one Observation ID</li>
+            <li><strong>Risk Ratings</strong> must be: High / Medium / Low / Improvement</li>
+            <li><strong>Status</strong> must be: Open / Repeated / Closed / Overdue</li>
+            <li>Dates: <strong>YYYY-MM-DD</strong> format recommended</li>
+            <li><strong>Responsible Personnel</strong> must match an employee name in the system</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- ─── Preview ────────────────────────────────────────────────────────── -->
-    <div *ngIf="uploadStep === 'preview'" class="card border-0 shadow-sm mb-3">
-      <div class="card-header border-0 d-flex align-items-center justify-content-between">
+    <!-- ─── Uploading Spinner ─────────────────────────────────────────────── -->
+    <div class="card border-0 shadow-sm mb-3" *ngIf="step === 'uploading'">
+      <div class="card-body text-center py-5">
+        <div class="spinner-border text-primary mb-3" style="width:3rem;height:3rem;"></div>
+        <h5>Uploading to staging…</h5>
+        <p class="text-muted">Please wait while the file is being processed.</p>
+      </div>
+    </div>
+
+    <!-- ─── Staging Preview ────────────────────────────────────────────────── -->
+    <div class="card border-0 shadow-sm mb-3" *ngIf="step === 'staging'">
+      <div class="card-header border-0 d-flex align-items-center justify-content-between flex-wrap gap-2">
         <div>
-          <h5 class="card-title mb-1"><i class="ti ti-table me-2 text-primary"></i>Preview: {{ selectedFile?.name }}</h5>
-          <div class="d-flex gap-2">
-            <span class="badge bg-success-transparent text-success">{{ validRowCount }} valid rows</span>
-            <span *ngIf="errorRowCount > 0" class="badge bg-danger-transparent text-danger">{{ errorRowCount }} errors</span>
+          <h5 class="card-title mb-1">
+            <i class="ti ti-table me-2 text-primary"></i>
+            Staging Preview — Batch: <code>{{ currentBatchId }}</code>
+          </h5>
+          <div class="d-flex gap-2 flex-wrap" *ngIf="stagingSummary">
+            <span class="badge bg-secondary-transparent text-secondary">Total: {{ totalCount }}</span>
+            <span class="badge bg-warning-transparent text-warning">Pending: {{ pendingCount }}</span>
+            <span class="badge bg-success-transparent text-success">Synced: {{ syncedCount }}</span>
+            <span *ngIf="errorCount > 0" class="badge bg-danger-transparent text-danger">
+              Errors: {{ errorCount }}
+            </span>
           </div>
         </div>
-        <button class="btn btn-outline-secondary btn-sm" (click)="resetUpload()">
-          <i class="ti ti-x me-1"></i>Cancel
-        </button>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary btn-sm" (click)="reset()">
+            <i class="ti ti-x me-1"></i>Cancel
+          </button>
+          <button class="btn btn-primary" (click)="syncBatch()">
+            <i class="ti ti-refresh me-2"></i>Sync to Master Table
+          </button>
+        </div>
       </div>
       <div class="card-body p-0">
-        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <div class="table-responsive" style="max-height:400px;overflow-y:auto;">
           <table class="table table-sm table-hover mb-0">
             <thead class="bg-light sticky-top">
               <tr>
                 <th>#</th>
-                <th>Audit Year</th>
+                <th>Year</th>
                 <th>Audit Area</th>
                 <th>Division</th>
-                <th>Risk Rating</th>
+                <th>Risk</th>
                 <th>Responsible Person</th>
                 <th>Target Date</th>
                 <th>Status</th>
-                <th>Validation</th>
+                <th>Sync Status</th>
+                <th>Error</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let row of parsedRows; let i = index"
-                [class.table-danger]="!row.valid" [class.table-success]="row.valid">
+              <tr *ngFor="let row of stagingRows; let i = index"
+                [class.table-danger]="row.syncStatus === 'Error'"
+                [class.table-success]="row.syncStatus === 'Synced'">
                 <td>{{ i + 1 }}</td>
                 <td>{{ row.auditYear }}</td>
                 <td>{{ row.auditArea }}</td>
                 <td>{{ row.division }}</td>
-                <td>
-                  <span class="badge" [class.bg-success-transparent]="validRatings.has(row.riskRating)"
-                    [class.text-success]="validRatings.has(row.riskRating)"
-                    [class.bg-danger-transparent]="!validRatings.has(row.riskRating)"
-                    [class.text-danger]="!validRatings.has(row.riskRating)">
-                    {{ row.riskRating || '—' }}
-                  </span>
-                </td>
+                <td><span class="badge bg-light text-dark border">{{ row.riskRating }}</span></td>
                 <td>{{ row.responsiblePerson }}</td>
                 <td>{{ row.initialTargetDate }}</td>
                 <td>{{ row.status }}</td>
                 <td>
-                  <div *ngIf="row.valid"><span class="badge bg-success-transparent text-success"><i class="ti ti-check me-1"></i>Valid</span></div>
-                  <div *ngIf="!row.valid">
-                    <span class="badge bg-danger-transparent text-danger mb-1 d-block" *ngFor="let err of row.errors">
-                      <i class="ti ti-x me-1"></i>{{ err }}
-                    </span>
-                  </div>
+                  <span class="badge" [ngClass]="getSyncStatusClass(row.syncStatus)">
+                    {{ row.syncStatus }}
+                  </span>
                 </td>
+                <td>
+                  <small *ngIf="row.syncError" class="text-danger">{{ row.syncError }}</small>
+                  <span *ngIf="!row.syncError" class="text-muted">—</span>
+                </td>
+              </tr>
+              <tr *ngIf="stagingRows.length === 0">
+                <td colspan="10" class="text-center text-muted py-3">Loading preview…</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="card-footer border-0 d-flex align-items-center justify-content-between">
-        <div>
-          <span *ngIf="errorRowCount > 0" class="text-warning small">
-            <i class="ti ti-alert-triangle me-1"></i>{{ errorRowCount }} rows with errors will be skipped.
-          </span>
-          <span *ngIf="!errorRowCount" class="text-success small">
-            <i class="ti ti-circle-check me-1"></i>All rows are valid.
-          </span>
-        </div>
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-secondary" (click)="resetUpload()">
-            <i class="ti ti-x me-2"></i>Cancel
-          </button>
-          <button class="btn btn-primary" (click)="confirmUpload()" [disabled]="!validRowCount">
-            <i class="ti ti-upload me-2"></i>Upload {{ validRowCount }} Valid Rows
-          </button>
-        </div>
-      </div>
     </div>
 
-    <!-- ─── Uploading ──────────────────────────────────────────────────────── -->
-    <div *ngIf="uploadStep === 'uploading'" class="card border-0 shadow-sm mb-3">
+    <!-- ─── Syncing Spinner ───────────────────────────────────────────────── -->
+    <div class="card border-0 shadow-sm mb-3" *ngIf="step === 'syncing'">
       <div class="card-body text-center py-5">
-        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"></div>
-        <h5>Uploading observations...</h5>
-        <p class="text-muted">Please wait while we process your file.</p>
+        <div class="spinner-border text-success mb-3" style="width:3rem;height:3rem;"></div>
+        <h5>Syncing to master table…</h5>
+        <p class="text-muted">Resolving employees, areas, and divisions. Please wait.</p>
       </div>
     </div>
 
-    <!-- ─── Done ───────────────────────────────────────────────────────────── -->
-    <div *ngIf="uploadStep === 'done' && uploadResult" class="card border-0 shadow-sm mb-3">
+    <!-- ─── Done ──────────────────────────────────────────────────────────── -->
+    <div class="card border-0 shadow-sm mb-3" *ngIf="step === 'done' && syncResult">
       <div class="card-body text-center py-5">
         <i class="ti ti-circle-check text-success fs-1 d-block mb-3"></i>
-        <h4>Upload Complete!</h4>
+        <h4>Sync Complete!</h4>
         <div class="d-flex justify-content-center gap-4 my-3">
           <div class="text-center">
-            <h3 class="text-success mb-0">{{ uploadResult.success }}</h3>
-            <small class="text-muted">Records Uploaded</small>
+            <h3 class="text-success mb-0">{{ syncResult.synced }}</h3>
+            <small class="text-muted">Observations Synced</small>
           </div>
-          <div class="text-center" *ngIf="uploadResult.errors > 0">
-            <h3 class="text-danger mb-0">{{ uploadResult.errors }}</h3>
-            <small class="text-muted">Errors Skipped</small>
+          <div class="text-center" *ngIf="syncResult.errors > 0">
+            <h3 class="text-danger mb-0">{{ syncResult.errors }}</h3>
+            <small class="text-muted">Errors</small>
           </div>
         </div>
+        <div *ngIf="syncResult.errors > 0" class="mb-3">
+          <button class="btn btn-outline-warning me-2" (click)="retryBatch()">
+            <i class="ti ti-refresh me-2"></i>Retry Failed Rows
+          </button>
+        </div>
         <div class="d-flex justify-content-center gap-2">
-          <button class="btn btn-outline-secondary" (click)="resetUpload()">Upload Another</button>
+          <button class="btn btn-outline-secondary" (click)="reset()">Upload Another File</button>
           <a routerLink="/audit-car/observations/list" class="btn btn-primary">View Observations</a>
         </div>
       </div>
     </div>
 
-    <!-- ─── Upload History ─────────────────────────────────────────────────── -->
+    <!-- ─── Batch History ─────────────────────────────────────────────────── -->
     <div class="card border-0 shadow-sm">
-      <div class="card-header border-0">
-        <h5 class="card-title mb-0"><i class="ti ti-history me-2 text-primary"></i>Upload History</h5>
+      <div class="card-header border-0 d-flex align-items-center justify-content-between">
+        <h5 class="card-title mb-0">
+          <i class="ti ti-history me-2 text-primary"></i>Upload Batch History
+        </h5>
+        <button class="btn btn-sm btn-outline-secondary" (click)="loadBatches()">
+          <i class="ti ti-refresh"></i>
+        </button>
       </div>
       <div class="card-body p-0">
-        <div class="table-responsive">
+        <div *ngIf="batchesLoading" class="text-center py-4">
+          <div class="spinner-border spinner-border-sm text-primary"></div>
+        </div>
+        <div *ngIf="!batchesLoading" class="table-responsive">
           <table class="table table-hover align-middle mb-0">
             <thead class="bg-light">
               <tr>
+                <th>Batch ID</th>
                 <th>File Name</th>
-                <th>Uploaded By</th>
-                <th>Upload Date</th>
-                <th class="text-center">Records</th>
+                <th>Uploaded At</th>
+                <th class="text-center">Total</th>
+                <th class="text-center text-success">Synced</th>
+                <th class="text-center text-danger">Errors</th>
                 <th>Status</th>
-                <th>Errors</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let h of uploadHistory">
+              <tr *ngFor="let b of batches">
+                <td>
+                  <code class="small">{{ b.batch_id }}</code>
+                </td>
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <i class="ti ti-file-spreadsheet text-success fs-5"></i>
-                    <span class="fw-medium">{{ h.fileName }}</span>
+                    <i class="ti ti-file-spreadsheet text-success"></i>
+                    <span class="small fw-medium">{{ b.upload_filename }}</span>
                   </div>
                 </td>
-                <td>{{ h.uploadedByName }}</td>
-                <td>{{ h.uploadDate | date:'dd MMM yyyy' }}</td>
-                <td class="text-center">{{ h.recordsUploaded }}</td>
-                <td><span class="badge" [ngClass]="getStatusClass(h.status)">{{ h.status }}</span></td>
+                <td class="small">{{ b.uploaded_at | date:'dd MMM yyyy, HH:mm' }}</td>
+                <td class="text-center">{{ b.total_rows }}</td>
+                <td class="text-center text-success">{{ b.synced }}</td>
+                <td class="text-center">
+                  <span *ngIf="+b.errors > 0" class="text-danger fw-medium">{{ b.errors }}</span>
+                  <span *ngIf="+b.errors === 0" class="text-muted">0</span>
+                </td>
                 <td>
-                  <span *ngIf="!h.errors?.length" class="text-muted">—</span>
-                  <div *ngFor="let err of h.errors">
-                    <small class="text-danger">{{ err }}</small>
-                  </div>
+                  <span class="badge" [ngClass]="getBatchStatusClass(b)">
+                    {{ getBatchStatusLabel(b) }}
+                  </span>
                 </td>
               </tr>
-              <tr *ngIf="!uploadHistory.length">
-                <td colspan="6" class="text-center text-muted py-4">No upload history found.</td>
+              <tr *ngIf="batches.length === 0">
+                <td colspan="7" class="text-center text-muted py-4">No upload history found.</td>
               </tr>
             </tbody>
           </table>

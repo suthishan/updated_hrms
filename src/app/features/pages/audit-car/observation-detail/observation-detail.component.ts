@@ -3,14 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuditCarService } from '../services/audit-car.service';
-import {
-  AuditObservation,
-  AuditActionItem,
-  AuditUser,
-  AuditFollowUp,
-  AuditTargetDateRevision,
-  AuditActionItemStatus,
-} from '../../../../core/models/models';
+import { AuditObservation, AuditRiskRating } from '../../../../core/models/models';
 
 @Component({
   selector: 'app-observation-detail',
@@ -21,29 +14,23 @@ import {
 })
 export class ObservationDetailComponent implements OnInit {
   observation: AuditObservation | null = null;
-  currentUser: AuditUser | null = null;
-  selectedActionItem: AuditActionItem | null = null;
-  activeTab = 'overview';
+  loading = true;
+  errorMsg = '';
 
-  // Follow-up form
-  followUpForm: FormGroup;
-  showFollowUpForm = false;
+  // Update status form
+  updateForm: FormGroup;
+  showUpdateForm = false;
+  updating = false;
+  updateSuccess = false;
 
-  // Target date revision form
-  targetDateForm: FormGroup;
-  showTargetDateForm = false;
+  // Close form
+  closeForm: FormGroup;
+  showCloseForm = false;
+  closing = false;
+  closeSuccess = false;
 
-  // Action taken update
-  actionTakenForm: FormGroup;
-  showActionTakenForm = false;
-
-  // Auditor confirmation
-  auditorForm: FormGroup;
-  showAuditorForm = false;
-
-  // Auditor overall closure
-  closureForm: FormGroup;
-  showClosureForm = false;
+  // Delete
+  deleting = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,184 +38,129 @@ export class ObservationDetailComponent implements OnInit {
     private auditService: AuditCarService,
     private fb: FormBuilder
   ) {
-    this.followUpForm = this.fb.group({ remarks: ['', Validators.required] });
-    this.targetDateForm = this.fb.group({
-      newDate: ['', Validators.required],
-      reason: ['', Validators.required],
-    });
-    this.actionTakenForm = this.fb.group({
-      actionTaken: ['', Validators.required],
+    this.updateForm = this.fb.group({
+      subsequent_followup_1: [''],
+      updated_target_date_1: [''],
       status: ['', Validators.required],
-      managementComment: [''],
     });
-    this.auditorForm = this.fb.group({
-      confirmationStatus: ['', Validators.required],
-      confirmationComment: [''],
-    });
-    this.closureForm = this.fb.group({
-      auditorClosureComment: ['', Validators.required],
+
+    this.closeForm = this.fb.group({
+      closure_date:    [new Date().toISOString().split('T')[0], Validators.required],
+      closure_remarks: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.currentUser = this.auditService.getCurrentUser();
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.auditService.getObservationById(id).subscribe((obs) => {
-        if (obs) {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.auditService.getObservationById(Number(idParam)).subscribe({
+        next: (obs) => {
           this.observation = obs;
-          if (obs.actionItems.length > 0) {
-            this.selectActionItem(obs.actionItems[0]);
+          this.loading = false;
+          if (obs) {
+            this.updateForm.patchValue({
+              subsequent_followup_1: obs.subsequentFollowup1 ?? '',
+              updated_target_date_1: obs.updatedTargetDate1  ?? '',
+              status: obs.status,
+            });
           }
-        }
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Failed to load observation.';
+          this.loading = false;
+        },
       });
     }
   }
 
-  selectActionItem(ai: AuditActionItem): void {
-    this.selectedActionItem = ai;
-    this.closeAllForms();
-    if (this.isResponsiblePerson(ai)) {
-      this.actionTakenForm.patchValue({
-        actionTaken: ai.actionTaken ?? '',
-        status: ai.status,
-        managementComment: ai.managementComment ?? '',
+  submitUpdate(): void {
+    if (this.updateForm.invalid || !this.observation) return;
+    this.updating = true;
+    const v = this.updateForm.value;
+    this.auditService
+      .updateObservation(this.observation.observationId, {
+        subsequent_followup_1: v.subsequent_followup_1 || undefined,
+        updated_target_date_1: v.updated_target_date_1 || undefined,
+        status: v.status,
+      })
+      .subscribe({
+        next: (updated) => {
+          this.observation = updated;
+          this.updating = false;
+          this.updateSuccess = true;
+          this.showUpdateForm = false;
+          setTimeout(() => (this.updateSuccess = false), 3000);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Update failed.';
+          this.updating = false;
+        },
       });
-    }
-    if (this.isAuditTeam) {
-      this.auditorForm.patchValue({
-        confirmationStatus: ai.auditorConfirmationStatus ?? '',
-        confirmationComment: ai.auditorConfirmationComment ?? '',
+  }
+
+  submitClose(): void {
+    if (this.closeForm.invalid || !this.observation) return;
+    this.closing = true;
+    const v = this.closeForm.value;
+    this.auditService
+      .closeObservation(this.observation.observationId, v.closure_date, v.closure_remarks)
+      .subscribe({
+        next: (updated) => {
+          this.observation = updated;
+          this.closing = false;
+          this.closeSuccess = true;
+          this.showCloseForm = false;
+          setTimeout(() => (this.closeSuccess = false), 3000);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Close operation failed.';
+          this.closing = false;
+        },
       });
-    }
   }
 
-  closeAllForms(): void {
-    this.showFollowUpForm = false;
-    this.showTargetDateForm = false;
-    this.showActionTakenForm = false;
-    this.showAuditorForm = false;
-    this.showClosureForm = false;
+  deleteObservation(): void {
+    if (!this.observation) return;
+    if (!confirm(`Delete observation ${this.observation.observationNumber}? This cannot be undone.`)) return;
+    this.deleting = true;
+    this.auditService.deleteObservation(this.observation.observationId).subscribe({
+      next: () => this.router.navigate(['/audit-car/observations/list']),
+      error: (err: Error) => {
+        this.errorMsg = err.message ?? 'Delete failed.';
+        this.deleting = false;
+      },
+    });
   }
 
-  isResponsiblePerson(ai: AuditActionItem): boolean {
-    return ai.responsiblePersonId === this.currentUser?.id ||
-      this.currentUser?.role === 'Responsible Person';
-  }
-
-  get isAuditTeam(): boolean {
-    return this.currentUser?.role === 'Audit Team';
-  }
-
-  get isHoD(): boolean {
-    return this.currentUser?.role === 'HoD';
-  }
-
-  // ─── Follow-up ─────────────────────────────────────────────────────────────
-  submitFollowUp(): void {
-    if (this.followUpForm.invalid || !this.selectedActionItem) return;
-    const followUp: AuditFollowUp = {
-      id: `FU-${Date.now()}`,
-      actionItemId: this.selectedActionItem.id,
-      date: new Date().toISOString().split('T')[0],
-      remarks: this.followUpForm.value.remarks,
-      addedBy: this.currentUser?.id ?? '',
-      addedByName: this.currentUser?.name ?? '',
-    };
-    if (this.observation && this.selectedActionItem) {
-      const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-      if (ai) {
-        ai.followUps = [...(ai.followUps ?? []), followUp];
-        this.selectedActionItem = { ...ai };
-      }
-    }
-    this.followUpForm.reset();
-    this.showFollowUpForm = false;
-  }
-
-  // ─── Target Date Revision ──────────────────────────────────────────────────
-  submitTargetDateRevision(): void {
-    if (this.targetDateForm.invalid || !this.selectedActionItem) return;
-    const revision: AuditTargetDateRevision = {
-      id: `TDR-${Date.now()}`,
-      actionItemId: this.selectedActionItem.id,
-      previousDate: this.selectedActionItem.currentTargetDate,
-      newDate: this.targetDateForm.value.newDate,
-      reason: this.targetDateForm.value.reason,
-      revisedDate: new Date().toISOString().split('T')[0],
-      revisedBy: this.currentUser?.id ?? '',
-      revisedByName: this.currentUser?.name ?? '',
-    };
-    if (this.observation) {
-      const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-      if (ai) {
-        ai.targetDateRevisions = [...(ai.targetDateRevisions ?? []), revision];
-        ai.currentTargetDate = revision.newDate;
-        this.selectedActionItem = { ...ai };
-      }
-    }
-    this.targetDateForm.reset();
-    this.showTargetDateForm = false;
-  }
-
-  // ─── Action Taken Update ───────────────────────────────────────────────────
-  submitActionTaken(): void {
-    if (this.actionTakenForm.invalid || !this.selectedActionItem || !this.observation) return;
-    const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-    if (ai) {
-      ai.actionTaken = this.actionTakenForm.value.actionTaken;
-      ai.status = this.actionTakenForm.value.status as AuditActionItemStatus;
-      ai.managementComment = this.actionTakenForm.value.managementComment;
-      this.selectedActionItem = { ...ai };
-      this.observation.overallStatus = this.auditService.computeOverallStatus(this.observation.actionItems);
-    }
-    this.showActionTakenForm = false;
-  }
-
-  // ─── Auditor Confirmation ──────────────────────────────────────────────────
-  submitAuditorConfirmation(): void {
-    if (this.auditorForm.invalid || !this.selectedActionItem || !this.observation) return;
-    const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-    if (ai) {
-      ai.auditorConfirmationStatus = this.auditorForm.value.confirmationStatus;
-      ai.auditorConfirmationComment = this.auditorForm.value.confirmationComment;
-      if (ai.auditorConfirmationStatus === 'Confirmed') {
-        ai.status = 'Closed';
-        ai.closureDate = new Date().toISOString().split('T')[0];
-      } else if (ai.auditorConfirmationStatus === 'Rejected') {
-        ai.status = 'Partially Open';
-      }
-      this.selectedActionItem = { ...ai };
-      this.observation.overallStatus = this.auditService.computeOverallStatus(this.observation.actionItems);
-    }
-    this.showAuditorForm = false;
-  }
-
-  // ─── Overall Closure ───────────────────────────────────────────────────────
-  submitOverallClosure(): void {
-    if (this.closureForm.invalid || !this.observation) return;
-    this.observation.auditorClosureComment = this.closureForm.value.auditorClosureComment;
-    this.observation.overallStatus = 'Closed';
-    this.showClosureForm = false;
+  goBack(): void {
+    this.router.navigate(['/audit-car/observations/list']);
   }
 
   getStatusClass(status: string): string {
-    return this.auditService.getStatusBadgeClass(status as never);
+    return this.auditService.getStatusBadgeClass(status);
   }
 
   getRiskClass(rating: string): string {
-    return this.auditService.getRiskBadgeClass(rating as never);
+    return this.auditService.getRiskBadgeClass(rating as AuditRiskRating);
   }
 
   getDaysRemaining(date: string): number {
     return this.auditService.getDaysRemaining(date);
   }
 
-  isOverdue(date: string, status: string): boolean {
-    return this.auditService.isOverdue(date, status as never);
+  get effectiveTargetDate(): string {
+    if (!this.observation) return '';
+    return this.observation.updatedTargetDate1 || this.observation.initialTargetDate || '';
   }
 
-  goBack(): void {
-    this.router.navigate(['/audit-car/observations/list']);
+  get isOverdue(): boolean {
+    if (!this.observation) return false;
+    if (this.observation.status === 'Closed') return false;
+    const target = this.effectiveTargetDate;
+    return target ? new Date(target) < new Date() : false;
+  }
+
+  get isClosed(): boolean {
+    return this.observation?.status === 'Closed';
   }
 }
