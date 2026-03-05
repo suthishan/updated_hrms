@@ -6,318 +6,333 @@
     <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
       <div class="my-auto mb-2">
         <h2 class="mb-1">Audit CAR Dashboard</h2>
-        <nav>
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a routerLink="/dashboard/index"><i class="ti ti-smart-home"></i></a></li>
-            <li class="breadcrumb-item">Audit CAR</li>
-            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-          </ol>
-        </nav>
+        <nav><ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a routerLink="/dashboard/index"><i class="ti ti-smart-home"></i></a></li>
+          <li class="breadcrumb-item">Audit CAR</li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol></nav>
       </div>
-      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
-        <!-- Role Switcher (Demo) -->
-        <div class="me-2 mb-2">
-          <div class="btn-group" role="group">
-            <button *ngFor="let role of demoRoles"
-              [class]="'btn btn-sm ' + (viewMode === role ? 'btn-primary' : 'btn-outline-primary')"
-              (click)="switchRole(role)">{{ role }}</button>
-          </div>
-        </div>
-        <a routerLink="/audit-car/observations/list" class="btn btn-primary d-flex align-items-center me-2 mb-2">
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap gap-2">
+        <select class="form-select form-select-sm" style="width:auto;" [(ngModel)]="filterYear" (change)="onYearChange()">
+          <option value="">All Years</option>
+          <option *ngFor="let yr of availableYears" [value]="yr">{{ yr }}</option>
+        </select>
+        <a routerLink="/audit-car/observations/list" class="btn btn-primary d-flex align-items-center">
           <i class="ti ti-list me-2"></i>All Observations
         </a>
-        <a *ngIf="viewMode === 'Audit Team'" routerLink="/audit-car/observations/create" class="btn btn-outline-primary d-flex align-items-center mb-2">
+        <a routerLink="/audit-car/observations/create" class="btn btn-outline-primary d-flex align-items-center">
           <i class="ti ti-plus me-2"></i>New Observation
+        </a>
+        <a routerLink="/audit-car/excel-upload" class="btn btn-outline-secondary d-flex align-items-center">
+          <i class="ti ti-upload me-2"></i>Excel Upload
         </a>
       </div>
     </div>
 
-    <!-- ─── Summary Cards ─────────────────────────────────────────────────── -->
-    <div class="row">
-      <div class="col-xxl-3 col-sm-6">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="avatar avatar-lg bg-primary-transparent rounded-circle d-flex align-items-center justify-content-center">
-                <i class="ti ti-clipboard-list fs-22 text-primary"></i>
-              </div>
-              <span class="badge bg-primary-transparent text-primary">Total</span>
-            </div>
-            <h2 class="mb-1 fw-bold">{{ observations.length }}</h2>
-            <p class="text-muted mb-0">Total Observations</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-sm-6">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="avatar avatar-lg bg-danger-transparent rounded-circle d-flex align-items-center justify-content-center">
-                <i class="ti ti-alert-circle fs-22 text-danger"></i>
-              </div>
-              <span class="badge bg-danger-transparent text-danger">Open</span>
-            </div>
-            <h2 class="mb-1 fw-bold text-danger">{{ openCount }}</h2>
-            <p class="text-muted mb-0">Open Observations</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-sm-6">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="avatar avatar-lg bg-warning-transparent rounded-circle d-flex align-items-center justify-content-center">
-                <i class="ti ti-clock fs-22 text-warning"></i>
-              </div>
-              <span class="badge bg-danger-transparent text-danger">Overdue</span>
-            </div>
-            <h2 class="mb-1 fw-bold text-danger">{{ overdueCount }}</h2>
-            <p class="text-muted mb-0">Overdue Items</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-sm-6">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="avatar avatar-lg bg-success-transparent rounded-circle d-flex align-items-center justify-content-center">
-                <i class="ti ti-circle-check fs-22 text-success"></i>
-              </div>
-              <span class="badge bg-success-transparent text-success">Closed</span>
-            </div>
-            <h2 class="mb-1 fw-bold text-success">{{ closedCount }}</h2>
-            <p class="text-muted mb-0">Closed Observations</p>
-          </div>
-        </div>
-      </div>
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary mb-2"></div>
+      <p class="text-muted">Loading dashboard…</p>
     </div>
 
-    <div class="row">
-      <!-- ─── Risk Rating Distribution ─────────────────────────────────── -->
-      <div class="col-xl-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-          <div class="card-header border-0 pb-0">
-            <h5 class="card-title mb-0"><i class="ti ti-chart-pie me-2 text-primary"></i>Risk Rating Distribution</h5>
-          </div>
-          <div class="card-body">
-            <div *ngFor="let item of riskChartData" class="mb-3">
-              <div class="d-flex justify-content-between mb-1">
-                <span class="fw-medium">{{ item.label }}</span>
-                <span class="fw-bold">{{ item.value }}</span>
+    <!-- Error -->
+    <div *ngIf="errorMsg" class="alert alert-danger">
+      <i class="ti ti-alert-circle me-2"></i>{{ errorMsg }}
+      <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadAll()">Retry</button>
+    </div>
+
+    <ng-container *ngIf="!loading && stats">
+
+      <!-- ─── Summary Cards ───────────────────────────────────────────── -->
+      <div class="row g-3 mb-3">
+        <div class="col-xxl-3 col-sm-6">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="avatar avatar-lg bg-primary-transparent rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="ti ti-clipboard-list fs-22 text-primary"></i>
+                </div>
+                <span class="badge bg-primary-transparent text-primary">Total</span>
               </div>
-              <div class="progress" style="height: 8px;">
-                <div class="progress-bar" role="progressbar"
-                  [style.width]="getProgressWidth(item.value, observations.length)"
-                  [style.background-color]="item.color">
+              <h2 class="mb-1 fw-bold">{{ stats.totalObservations }}</h2>
+              <p class="text-muted mb-0">Total Observations</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-sm-6">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="avatar avatar-lg bg-danger-transparent rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="ti ti-alert-circle fs-22 text-danger"></i>
+                </div>
+                <span class="badge bg-danger-transparent text-danger">Open</span>
+              </div>
+              <h2 class="mb-1 fw-bold text-danger">{{ stats.openObservations }}</h2>
+              <p class="text-muted mb-0">Open</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-sm-6">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="avatar avatar-lg bg-warning-transparent rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="ti ti-clock fs-22 text-warning"></i>
+                </div>
+                <span class="badge bg-danger-transparent text-danger">Overdue</span>
+              </div>
+              <h2 class="mb-1 fw-bold text-danger">{{ stats.overdueObservations }}</h2>
+              <p class="text-muted mb-0">Overdue</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-sm-6">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="avatar avatar-lg bg-success-transparent rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="ti ti-circle-check fs-22 text-success"></i>
+                </div>
+                <span class="badge bg-success-transparent text-success">Closed</span>
+              </div>
+              <h2 class="mb-1 fw-bold text-success">{{ stats.closedObservations }}</h2>
+              <p class="text-muted mb-0">Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <!-- Risk Rating Distribution -->
+        <div class="col-xl-4 col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header border-0 pb-0">
+              <h5 class="card-title mb-0">
+                <i class="ti ti-chart-pie me-2 text-primary"></i>Risk Rating Distribution
+              </h5>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let item of riskChartData" class="mb-3">
+                <div class="d-flex justify-content-between mb-1">
+                  <span class="fw-medium">{{ item.label }}</span>
+                  <span class="fw-bold">{{ item.value }}</span>
+                </div>
+                <div class="progress" style="height:8px;">
+                  <div class="progress-bar" role="progressbar"
+                    [style.width]="getProgressWidth(item.value, stats!.totalObservations)"
+                    [style.background-color]="item.color">
+                  </div>
                 </div>
               </div>
+              <div class="mt-2 pt-2 border-top d-flex justify-content-between small text-muted">
+                <span>Repeated: <strong>{{ stats.repeatedObservations }}</strong></span>
+                <span>Overdue: <strong class="text-danger">{{ stats.overdueObservations }}</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Division-wise Summary -->
+        <div class="col-xl-4 col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header border-0 pb-0">
+              <h5 class="card-title mb-0">
+                <i class="ti ti-building me-2 text-primary"></i>Division-wise Summary
+              </h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-borderless table-sm mb-0">
+                  <thead class="bg-light">
+                    <tr>
+                      <th>Division</th>
+                      <th class="text-center">Total</th>
+                      <th class="text-center text-danger">Open</th>
+                      <th class="text-center text-success">Closed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let d of stats.byDivision">
+                      <td class="fw-medium small">{{ d.division }}</td>
+                      <td class="text-center">{{ d.count }}</td>
+                      <td class="text-center text-danger">{{ d.open }}</td>
+                      <td class="text-center text-success">{{ d.closed }}</td>
+                    </tr>
+                    <tr *ngIf="stats.byDivision.length === 0">
+                      <td colspan="4" class="text-muted text-center py-3">No data</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Year-wise Trend -->
+        <div class="col-xl-4 col-md-12">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header border-0 pb-0">
+              <h5 class="card-title mb-0">
+                <i class="ti ti-trending-up me-2 text-primary"></i>Year-wise Trend
+              </h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-borderless table-sm mb-0">
+                  <thead class="bg-light">
+                    <tr>
+                      <th>Year</th>
+                      <th class="text-center">Total</th>
+                      <th class="text-center text-danger">Open</th>
+                      <th class="text-center text-success">Closed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let yr of stats.byYear">
+                      <td class="fw-medium">{{ yr.year }}</td>
+                      <td class="text-center">{{ yr.total }}</td>
+                      <td class="text-center text-danger">{{ yr.open }}</td>
+                      <td class="text-center text-success">{{ yr.closed }}</td>
+                    </tr>
+                    <tr *ngIf="stats.byYear.length === 0">
+                      <td colspan="4" class="text-muted text-center py-3">No data</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ─── By Division ───────────────────────────────────────────────── -->
-      <div class="col-xl-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-          <div class="card-header border-0 pb-0">
-            <h5 class="card-title mb-0"><i class="ti ti-building me-2 text-primary"></i>Division-wise Summary</h5>
+      <!-- ─── Responsible Person Stats ──────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-users me-2 text-primary"></i>Responsible Personnel Tracking
+          </h5>
+          <a routerLink="/audit-car/observations/list" class="btn btn-sm btn-outline-primary">View All</a>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Name</th>
+                  <th class="text-center">Total</th>
+                  <th class="text-center">Open</th>
+                  <th class="text-center text-success">Closed</th>
+                  <th class="text-center text-danger">Overdue</th>
+                  <th>Compliance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of stats.responsiblePersonStats">
+                  <td class="fw-medium">{{ p.name }}</td>
+                  <td class="text-center">{{ p.total }}</td>
+                  <td class="text-center">{{ p.open }}</td>
+                  <td class="text-center text-success">{{ p.closed }}</td>
+                  <td class="text-center">
+                    <span *ngIf="p.overdue > 0" class="badge bg-danger text-white">{{ p.overdue }}</span>
+                    <span *ngIf="p.overdue === 0" class="badge bg-success-transparent text-success">0</span>
+                  </td>
+                  <td style="min-width:120px;">
+                    <div class="progress" style="height:6px;">
+                      <div class="progress-bar bg-success"
+                        [style.width]="getProgressWidth(p.closed, p.total)"></div>
+                    </div>
+                    <small class="text-muted">{{ getProgressWidth(p.closed, p.total) }}</small>
+                  </td>
+                </tr>
+                <tr *ngIf="stats.responsiblePersonStats.length === 0">
+                  <td colspan="6" class="text-muted text-center py-3">No data</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-borderless table-sm mb-0">
-                <thead class="thead-light bg-light">
-                  <tr><th>Division</th><th class="text-center">Total</th><th class="text-center text-danger">Open</th><th class="text-center text-success">Closed</th></tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let div of stats?.byDivision">
-                    <td class="fw-medium">{{ div.division }}</td>
-                    <td class="text-center">{{ div.count }}</td>
-                    <td class="text-center text-danger">{{ div.open }}</td>
-                    <td class="text-center text-success">{{ div.closed }}</td>
-                  </tr>
-                </tbody>
-              </table>
+        </div>
+      </div>
+
+      <!-- ─── Observations List with Tabs ──────────────────────────── -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <div class="d-flex align-items-center gap-2">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-clipboard me-2 text-primary"></i>Observations
+            </h5>
+            <div class="btn-group btn-group-sm ms-2">
+              <button [class]="'btn ' + (activeTab === 'all'      ? 'btn-primary'          : 'btn-outline-secondary')" (click)="setTab('all')">All</button>
+              <button [class]="'btn ' + (activeTab === 'overdue'  ? 'btn-danger'           : 'btn-outline-secondary')" (click)="setTab('overdue')">Overdue</button>
+              <button [class]="'btn ' + (activeTab === 'repeated' ? 'btn-warning text-white': 'btn-outline-secondary')" (click)="setTab('repeated')">Repeated</button>
             </div>
           </div>
+          <a routerLink="/audit-car/observations/list" class="btn btn-sm btn-outline-primary">View All</a>
         </div>
-      </div>
-
-      <!-- ─── Year-wise Trend ───────────────────────────────────────────── -->
-      <div class="col-xl-4 col-md-12">
-        <div class="card border-0 shadow-sm h-100">
-          <div class="card-header border-0 pb-0">
-            <h5 class="card-title mb-0"><i class="ti ti-trending-up me-2 text-primary"></i>Year-wise Trend</h5>
-          </div>
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-borderless table-sm mb-0">
-                <thead class="thead-light bg-light">
-                  <tr><th>Year</th><th class="text-center">Total</th><th class="text-center text-danger">Open</th><th class="text-center text-success">Closed</th></tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let yr of stats?.byYear">
-                    <td class="fw-medium">{{ yr.year }}</td>
-                    <td class="text-center">{{ yr.total }}</td>
-                    <td class="text-center text-danger">{{ yr.open }}</td>
-                    <td class="text-center text-success">{{ yr.closed }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ─── Overdue Items (Escalation / HoD View) ─────────────────────────── -->
-    <div class="card border-0 shadow-sm mt-2" *ngIf="overdueItems.length">
-      <div class="card-header border-0 d-flex align-items-center justify-content-between">
-        <h5 class="card-title mb-0 text-danger"><i class="ti ti-alert-triangle me-2"></i>Overdue Observations (Escalation View)</h5>
-        <span class="badge bg-danger">{{ overdueItems.length }} Overdue</span>
-      </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead class="bg-light">
-              <tr>
-                <th>Obs ID</th>
-                <th>Audit Area</th>
-                <th>Division</th>
-                <th>Risk</th>
-                <th>Responsible Person</th>
-                <th>Target Date</th>
-                <th>Days Overdue</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of overdueItems" class="table-danger-light">
-                <td><span class="fw-medium">{{ item.obs.observationId }}</span></td>
-                <td>{{ item.obs.auditArea }}</td>
-                <td>{{ item.obs.division }}</td>
-                <td><span class="badge" [ngClass]="getRiskClass(item.obs.riskRating)">{{ item.obs.riskRating }}</span></td>
-                <td>{{ item.ai.responsiblePersonName }}</td>
-                <td class="text-danger fw-medium">{{ item.ai.currentTargetDate | date:'dd MMM yyyy' }}</td>
-                <td>
-                  <span class="badge bg-danger text-white">
-                    {{ getDaysRemaining(item.ai.currentTargetDate) * -1 }} days
-                  </span>
-                </td>
-                <td><span class="badge badge-soft-danger">{{ item.ai.status }}</span></td>
-                <td>
-                  <a [routerLink]="['/audit-car/observations/detail', item.obs.id]" class="btn btn-sm btn-outline-primary">
-                    <i class="ti ti-eye me-1"></i>View
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ─── Responsible Person Stats ─────────────────────────────────────── -->
-    <div class="card border-0 shadow-sm mt-2">
-      <div class="card-header border-0 d-flex align-items-center justify-content-between">
-        <h5 class="card-title mb-0"><i class="ti ti-users me-2 text-primary"></i>Responsible Personnel Tracking</h5>
-        <a routerLink="/audit-car/observations/list" class="btn btn-sm btn-outline-primary">View All</a>
-      </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead class="bg-light">
-              <tr>
-                <th>Name</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Open</th>
-                <th class="text-center text-success">Closed</th>
-                <th class="text-center text-danger">Overdue</th>
-                <th>Compliance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let person of stats?.responsiblePersonStats">
-                <td class="fw-medium">{{ person.name }}</td>
-                <td class="text-center">{{ person.total }}</td>
-                <td class="text-center">{{ person.open }}</td>
-                <td class="text-center text-success">{{ person.closed }}</td>
-                <td class="text-center">
-                  <span *ngIf="person.overdue > 0" class="badge bg-danger text-white">{{ person.overdue }}</span>
-                  <span *ngIf="person.overdue === 0" class="badge bg-success-transparent text-success">0</span>
-                </td>
-                <td style="min-width: 120px;">
-                  <div class="progress" style="height:6px;">
-                    <div class="progress-bar bg-success" [style.width]="getProgressWidth(person.closed, person.total)"></div>
-                  </div>
-                  <small class="text-muted">{{ getProgressWidth(person.closed, person.total) }}</small>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ─── Recent Observations ───────────────────────────────────────────── -->
-    <div class="card border-0 shadow-sm mt-2">
-      <div class="card-header border-0 d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-2">
-          <h5 class="card-title mb-0"><i class="ti ti-clipboard me-2 text-primary"></i>Observations</h5>
-          <div class="btn-group btn-group-sm ms-2">
-            <button [class]="'btn ' + (activeTab === 'all' ? 'btn-primary' : 'btn-outline-secondary')" (click)="setTab('all')">All</button>
-            <button [class]="'btn ' + (activeTab === 'overdue' ? 'btn-danger' : 'btn-outline-secondary')" (click)="setTab('overdue')">Overdue</button>
-            <button [class]="'btn ' + (activeTab === 'partial' ? 'btn-warning' : 'btn-outline-secondary')" (click)="setTab('partial')">Partially Closed</button>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Obs #</th>
+                  <th>Year</th>
+                  <th>Audit Area</th>
+                  <th>Division</th>
+                  <th>Risk</th>
+                  <th>Responsible Person</th>
+                  <th>Target Date</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let obs of filteredObservations | slice:0:20">
+                  <td>
+                    <span class="fw-medium text-primary">{{ obs.observationNumber }}</span>
+                  </td>
+                  <td>{{ obs.auditYear }}</td>
+                  <td>
+                    <span class="d-block fw-medium small">{{ obs.auditArea }}</span>
+                    <small class="text-muted" style="max-width:160px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                      {{ obs.observationTitle }}
+                    </small>
+                  </td>
+                  <td>{{ obs.division }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="getRiskClass(obs.riskRating)">{{ obs.riskRating }}</span>
+                  </td>
+                  <td>
+                    <span class="small fw-medium">{{ obs.responsiblePerson || '—' }}</span>
+                  </td>
+                  <td>
+                    <small [class.text-danger]="obs.status === 'Overdue'">
+                      {{ effectiveTarget(obs) | date:'dd MMM yyyy' }}
+                    </small>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="getStatusClass(obs.status)">{{ obs.status }}</span>
+                  </td>
+                  <td>
+                    <a [routerLink]="['/audit-car/observations/detail', obs.observationId]"
+                       class="btn btn-sm btn-outline-primary me-1">
+                      <i class="ti ti-eye"></i>
+                    </a>
+                    <a [routerLink]="['/audit-car/observations/edit', obs.observationId]"
+                       class="btn btn-sm btn-outline-secondary">
+                      <i class="ti ti-edit"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredObservations.length === 0">
+                  <td colspan="9" class="text-center text-muted py-4">No observations found</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <a routerLink="/audit-car/observations/list" class="btn btn-sm btn-outline-primary">View All</a>
       </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="bg-light">
-              <tr>
-                <th>Obs ID</th>
-                <th>Audit Year</th>
-                <th>Audit Area</th>
-                <th>Division</th>
-                <th>Risk Rating</th>
-                <th>Responsible Persons</th>
-                <th>Overall Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let obs of filteredObservations">
-                <td><span class="fw-medium text-primary">{{ obs.observationId }}</span></td>
-                <td>{{ obs.auditYear }}</td>
-                <td>{{ obs.auditArea }}</td>
-                <td>{{ obs.division }}</td>
-                <td><span class="badge" [ngClass]="getRiskClass(obs.riskRating)">{{ obs.riskRating }}</span></td>
-                <td>
-                  <div *ngFor="let ai of obs.actionItems" class="d-flex align-items-center gap-1 mb-1">
-                    <span class="badge badge-soft-secondary">{{ ai.responsiblePersonName }}</span>
-                    <span class="badge" [ngClass]="getStatusClass(ai.status)" style="font-size:0.7em;">{{ ai.status }}</span>
-                  </div>
-                </td>
-                <td><span class="badge" [ngClass]="getStatusClass(obs.overallStatus)">{{ obs.overallStatus }}</span></td>
-                <td>
-                  <a [routerLink]="['/audit-car/observations/detail', obs.id]" class="btn btn-sm btn-outline-primary me-1">
-                    <i class="ti ti-eye"></i>
-                  </a>
-                  <a *ngIf="viewMode === 'Audit Team'" [routerLink]="['/audit-car/observations/edit', obs.id]" class="btn btn-sm btn-outline-secondary">
-                    <i class="ti ti-edit"></i>
-                  </a>
-                </td>
-              </tr>
-              <tr *ngIf="filteredObservations.length === 0">
-                <td colspan="8" class="text-center text-muted py-4">No observations found</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+
+    </ng-container>
 
   </div>
 </div>

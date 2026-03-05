@@ -1351,95 +1351,124 @@ export interface resumeParse {
 // ─── Audit CAR Portal Models ────────────────────────────────────────────────
 
 export type AuditRiskRating = 'High' | 'Medium' | 'Low' | 'Improvement';
-export type AuditObservationStatus = 'Open' | 'Partially Closed' | 'Closed';
-export type AuditActionItemStatus = 'Not Due' | 'Overdue' | 'Partially Open' | 'Request Closure' | 'Closed';
+/** Backend statuses: Open | Repeated | Closed | Overdue */
+export type AuditObservationStatus = 'Open' | 'Repeated' | 'Closed' | 'Overdue';
 export type AuditUserRole = 'Audit Team' | 'Responsible Person' | 'HoD';
-export type AuditorConfirmationStatus = 'Pending' | 'Confirmed' | 'Rejected';
 
-export interface AuditFollowUp {
-  id: string;
-  actionItemId: string;
-  date: string;
-  remarks: string;
-  addedBy: string;
-  addedByName: string;
-}
-
-export interface AuditTargetDateRevision {
-  id: string;
-  actionItemId: string;
-  previousDate: string;
-  newDate: string;
-  reason: string;
-  revisedDate: string;
-  revisedBy: string;
-  revisedByName: string;
-}
-
-export interface AuditActionItem {
-  id: string;
-  observationId: string;
-  responsiblePersonId: string;
-  responsiblePersonName: string;
-  responsiblePersonEmail: string;
-  department: string;
-  division: string;
-  initialTargetDate: string;
-  currentTargetDate: string;
-  status: AuditActionItemStatus;
-  actionTaken?: string;
-  managementComment?: string;
-  auditorConfirmationStatus?: AuditorConfirmationStatus;
-  auditorConfirmationComment?: string;
-  closureDate?: string;
-  followUps: AuditFollowUp[];
-  targetDateRevisions: AuditTargetDateRevision[];
-}
-
+/**
+ * Maps to tbl_audit_observations with JOINed fields from
+ * tbl_audit_areas, tbl_divisions, tbl_emp_master.
+ */
 export interface AuditObservation {
-  id: string;
-  observationId: string;
+  /** tbl_audit_observations.observation_id */
+  observationId: number;
+  /** Auto-generated: OBS-YEAR-0001 */
+  observationNumber: string;
   auditYear: number;
+  auditAreaId?: number;
+  divisionId?: number;
+  observationTitle: string;
+  riskRating: AuditRiskRating;
+  detailsOfFindings: string;
+  followupCommitment: string;
+  responsiblePersonId?: number;
+  initialTargetDate: string;
+  subsequentFollowup1?: string;
+  updatedTargetDate1?: string;
+  status: AuditObservationStatus;
+  closureDate?: string;
+  closureRemarks?: string;
+  closedByUserId?: number;
+  createdByUserId?: number;
+  createdAt: string;
+  updatedAt: string;
+  // JOINed display fields
+  auditArea?: string;
+  division?: string;
+  responsiblePerson?: string;
+  responsiblePersonCode?: string;
+  responsiblePersonEmail?: string;
+  closedBy?: string;
+  createdBy?: string;
+}
+
+/** Reference data for audit area lookup */
+export interface AuditArea {
+  id: number;
+  areaName: string;
+}
+
+/** Reference data for division lookup */
+export interface AuditDivision {
+  id: number;
+  divisionName: string;
+}
+
+/** Employee record from /api/master/employees */
+export interface AuditEmployee {
+  eid: number;
+  emp_name: string;
+  emp_code: string;
+  emp_email?: string;
+  emp_dept?: string;
+  emp_status?: string;
+}
+
+/** Staging row from tbl_audit_observations_staging */
+export interface AuditStagingRow {
+  stagingId: number;
+  batchId: string;
+  uploadFilename: string;
+  auditYear: string;
   auditArea: string;
   division: string;
-  riskRating: AuditRiskRating;
-  observation: string;
+  observationTitle: string;
+  riskRating: string;
   detailsOfFindings: string;
-  managementCommitment: string;
-  auditorClosureComment?: string;
-  overallStatus: AuditObservationStatus;
-  createdBy: string;
-  createdByName: string;
-  createdDate: string;
-  publishedDate?: string;
-  isPublished: boolean;
-  actionItems: AuditActionItem[];
+  followupCommitment: string;
+  responsiblePerson: string;
+  initialTargetDate: string;
+  subsequentFollowup1: string;
+  updatedTargetDate1: string;
+  status: string;
+  syncStatus: 'Pending' | 'Synced' | 'Error';
+  syncError?: string;
+  syncedObservationId?: number;
 }
 
-export interface AuditUser {
-  id: string;
-  name: string;
-  email: string;
-  employeeId: string;
-  role: AuditUserRole;
-  division: string;
-  department: string;
-  hodId?: string;
-  image?: string;
+/** Batch summary from listBatches */
+export interface AuditBatch {
+  batch_id: string;
+  upload_filename: string;
+  uploaded_by_user_id: number;
+  uploaded_at: string;
+  total_rows: number;
+  synced: number;
+  errors: number;
 }
 
+/** Batch sync status summary */
+export interface AuditBatchSummary {
+  pending: number;
+  synced: number;
+  error: number;
+  total: number;
+}
+
+/** Computed dashboard statistics (assembled client-side from list API) */
 export interface AuditDashboardStats {
   totalObservations: number;
   openObservations: number;
   closedObservations: number;
   overdueObservations: number;
-  partiallyClosedObservations: number;
+  repeatedObservations: number;
   byRiskRating: { high: number; medium: number; low: number; improvement: number };
   byDivision: { division: string; count: number; open: number; closed: number }[];
   byYear: { year: number; total: number; open: number; closed: number }[];
   responsiblePersonStats: { name: string; total: number; open: number; closed: number; overdue: number }[];
 }
 
+/** Kept for backward-compat; prefer AuditBatch for new code */
 export interface AuditUploadHistory {
   id: string;
   fileName: string;
@@ -1449,17 +1478,6 @@ export interface AuditUploadHistory {
   recordsUploaded: number;
   status: 'Success' | 'Failed' | 'Partial';
   errors?: string[];
-}
-
-export interface AuditNotificationLog {
-  id: string;
-  type: 'T-15' | 'T-0' | 'Monthly-25';
-  sentDate: string;
-  observationId: string;
-  actionItemId: string;
-  recipientEmail: string;
-  recipientName: string;
-  status: 'Sent' | 'Failed';
 }
 
 // ─── End Audit CAR Portal Models ────────────────────────────────────────────

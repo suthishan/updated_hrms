@@ -3,14 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuditCarService } from '../services/audit-car.service';
-import {
-  AuditDashboardStats,
-  AuditObservation,
-  AuditUser,
-  AuditActionItem,
-  AuditUserRole,
-} from '../../../../core/models/models';
-import { routes } from '../../../../core/routes/routes';
+import { AuditObservation, AuditDashboardStats, AuditRiskRating } from '../../../../core/models/models';
+
+type DashTab = 'all' | 'overdue' | 'repeated';
 
 @Component({
   selector: 'app-audit-dashboard',
@@ -20,121 +15,86 @@ import { routes } from '../../../../core/routes/routes';
   styleUrl: './audit-dashboard.component.scss',
 })
 export class AuditDashboardComponent implements OnInit {
-  stats: AuditDashboardStats | null = null;
   observations: AuditObservation[] = [];
   filteredObservations: AuditObservation[] = [];
-  currentUser: AuditUser | null = null;
-  activeTab: 'all' | 'overdue' | 'partial' = 'all';
-  selectedYear = new Date().getFullYear();
-  availableYears: number[] = [2022, 2023, 2024];
+  stats: AuditDashboardStats | null = null;
+  loading = true;
+  errorMsg = '';
 
-  // View mode controlled by user role
-  viewMode: AuditUserRole = 'Audit Team';
-  routes = routes;
-
-  // For simulating role switch (demo)
-  demoRoles: AuditUserRole[] = ['Audit Team', 'HoD', 'Responsible Person'];
-
-  overdueItems: { obs: AuditObservation; ai: AuditActionItem }[] = [];
+  activeTab: DashTab = 'all';
+  filterYear = '';
+  availableYears: number[] = [];
 
   constructor(private auditService: AuditCarService) {}
 
   ngOnInit(): void {
-    this.currentUser = this.auditService.getCurrentUser();
-    this.viewMode = this.currentUser.role;
-    this.loadDashboard();
+    const yr = new Date().getFullYear();
+    this.availableYears = [yr, yr - 1, yr - 2, yr - 3];
+    this.loadAll();
   }
 
-  loadDashboard(): void {
-    this.auditService.getDashboardStats().subscribe((s) => (this.stats = s));
-    this.auditService.getObservations().subscribe((res) => {
-      this.observations = res.data;
-      this.applyFilters();
-      this.buildOverdueItems();
+  loadAll(): void {
+    this.loading = true;
+    const filters = this.filterYear ? { audit_year: Number(this.filterYear), limit: 500, offset: 0 } : { limit: 500, offset: 0 };
+    this.auditService.getObservations(filters).subscribe({
+      next: ({ rows }) => {
+        this.observations = rows;
+        this.stats = this.auditService.buildDashboardStats(rows);
+        this.applyTab();
+        this.loading = false;
+      },
+      error: (err: Error) => {
+        this.errorMsg = err.message ?? 'Failed to load data.';
+        this.loading = false;
+      },
     });
   }
 
-  applyFilters(): void {
-    let obs = this.observations;
-    if (this.activeTab === 'overdue') {
-      obs = obs.filter((o) =>
-        o.actionItems.some((ai) =>
-          this.auditService.isOverdue(ai.currentTargetDate, ai.status)
-        )
-      );
-    } else if (this.activeTab === 'partial') {
-      obs = obs.filter((o) => o.overallStatus === 'Partially Closed');
+  applyTab(): void {
+    switch (this.activeTab) {
+      case 'overdue':
+        this.filteredObservations = this.observations.filter((o) => o.status === 'Overdue');
+        break;
+      case 'repeated':
+        this.filteredObservations = this.observations.filter((o) => o.status === 'Repeated');
+        break;
+      default:
+        this.filteredObservations = [...this.observations];
     }
-    this.filteredObservations = obs;
   }
 
-  buildOverdueItems(): void {
-    this.overdueItems = [];
-    this.observations.forEach((obs) => {
-      obs.actionItems.forEach((ai) => {
-        if (this.auditService.isOverdue(ai.currentTargetDate, ai.status)) {
-          this.overdueItems.push({ obs, ai });
-        }
-      });
-    });
-  }
-
-  setTab(tab: 'all' | 'overdue' | 'partial'): void {
+  setTab(tab: DashTab): void {
     this.activeTab = tab;
-    this.applyFilters();
+    this.applyTab();
   }
 
-  switchRole(role: AuditUserRole): void {
-    this.viewMode = role;
+  onYearChange(): void {
+    this.loadAll();
   }
 
   getStatusClass(status: string): string {
-    return this.auditService.getStatusBadgeClass(status as never);
+    return this.auditService.getStatusBadgeClass(status);
   }
 
   getRiskClass(rating: string): string {
-    return this.auditService.getRiskBadgeClass(rating as never);
-  }
-
-  getDaysRemaining(date: string): number {
-    return this.auditService.getDaysRemaining(date);
-  }
-
-  isOverdue(date: string, status: string): boolean {
-    return this.auditService.isOverdue(date, status as never);
-  }
-
-  get openCount(): number {
-    return this.observations.filter((o) => o.overallStatus === 'Open').length;
-  }
-
-  get closedCount(): number {
-    return this.observations.filter((o) => o.overallStatus === 'Closed').length;
-  }
-
-  get partialCount(): number {
-    return this.observations.filter((o) => o.overallStatus === 'Partially Closed').length;
-  }
-
-  get overdueCount(): number {
-    return this.overdueItems.length;
-  }
-
-  get highRiskCount(): number {
-    return this.observations.filter((o) => o.riskRating === 'High').length;
-  }
-
-  get riskChartData(): { label: string; value: number; color: string }[] {
-    return [
-      { label: 'High', value: this.observations.filter((o) => o.riskRating === 'High').length, color: '#f44336' },
-      { label: 'Medium', value: this.observations.filter((o) => o.riskRating === 'Medium').length, color: '#ff9800' },
-      { label: 'Low', value: this.observations.filter((o) => o.riskRating === 'Low').length, color: '#2196f3' },
-      { label: 'Improvement', value: this.observations.filter((o) => o.riskRating === 'Improvement').length, color: '#9c27b0' },
-    ];
+    return this.auditService.getRiskBadgeClass(rating as AuditRiskRating);
   }
 
   getProgressWidth(value: number, total: number): string {
-    if (!total) return '0%';
-    return `${Math.round((value / total) * 100)}%`;
+    return this.auditService.getProgressWidth(value, total);
+  }
+
+  get riskChartData(): { label: string; value: number; color: string }[] {
+    if (!this.stats) return [];
+    return [
+      { label: 'High',        value: this.stats.byRiskRating.high,        color: '#f44336' },
+      { label: 'Medium',      value: this.stats.byRiskRating.medium,      color: '#ff9800' },
+      { label: 'Low',         value: this.stats.byRiskRating.low,         color: '#2196f3' },
+      { label: 'Improvement', value: this.stats.byRiskRating.improvement, color: '#9c27b0' },
+    ];
+  }
+
+  effectiveTarget(obs: AuditObservation): string {
+    return obs.updatedTargetDate1 || obs.initialTargetDate || '';
   }
 }
