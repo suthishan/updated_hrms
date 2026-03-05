@@ -109,6 +109,7 @@
                 <th class="cursor-pointer" (click)="sortBy('status')">
                   Status <i [class]="sortIcon('status')"></i>
                 </th>
+                <th class="text-center">Annexures</th>
                 <th class="text-end">Actions</th>
               </tr>
             </thead>
@@ -152,6 +153,15 @@
                 <td>
                   <span class="badge" [ngClass]="getStatusClass(obs.status)">{{ obs.status }}</span>
                 </td>
+                <td class="text-center">
+                  <span *ngIf="obs.annexureCount && obs.annexureCount > 0"
+                        class="badge bg-primary-transparent text-primary"
+                        [title]="obs.annexureCount + ' annexure(s)'">
+                    <i class="ti ti-paperclip me-1"></i>{{ obs.annexureCount }}
+                  </span>
+                  <span *ngIf="!obs.annexureCount || obs.annexureCount === 0"
+                        class="text-muted small">—</span>
+                </td>
                 <td class="text-end">
                   <div class="d-flex justify-content-end gap-1">
                     <a [routerLink]="['/audit-car/observations/detail', obs.observationId]"
@@ -162,11 +172,17 @@
                        class="btn btn-sm btn-outline-secondary" title="Edit">
                       <i class="ti ti-edit"></i>
                     </a>
+                    <a *ngIf="obs.annexureCount && obs.annexureCount > 0"
+                       [routerLink]="['/audit-car/observations/detail', obs.observationId]"
+                       [fragment]="'annexures'"
+                       class="btn btn-sm btn-outline-info" title="Download Annexures">
+                      <i class="ti ti-download"></i>
+                    </a>
                   </div>
                 </td>
               </tr>
               <tr *ngIf="observations.length === 0 && !loading">
-                <td colspan="9" class="text-center text-muted py-5">
+                <td colspan="10" class="text-center text-muted py-5">
                   <i class="ti ti-database-off fs-2 d-block mb-2"></i>
                   No observations found
                 </td>

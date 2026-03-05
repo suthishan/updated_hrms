@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuditCarService, ObservationFilters } from '../services/audit-car.service';
 import { AuditObservation, AuditRiskRating } from '../../../../core/models/models';
@@ -35,11 +35,21 @@ export class ObservationListComponent implements OnInit {
 
   availableYears: number[] = [];
 
-  constructor(private auditService: AuditCarService) {}
+  constructor(private auditService: AuditCarService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const yr = new Date().getFullYear();
     this.availableYears = [yr, yr - 1, yr - 2, yr - 3];
+
+    // Pre-populate filters from dashboard navigation queryParams
+    const qp = this.route.snapshot.queryParamMap;
+    if (qp.get('status'))   this.filterStatus = qp.get('status')!;
+    if (qp.get('risk'))     this.filterRisk   = qp.get('risk')!;
+    if (qp.get('division')) {
+      // division is a free-text field; put it in search so client-side filter picks it up
+      this.searchTerm = qp.get('division')!;
+    }
+
     this.load();
   }
 
@@ -50,9 +60,9 @@ export class ObservationListComponent implements OnInit {
       limit: this.pageSize,
       offset: (this.currentPage - 1) * this.pageSize,
     };
-    if (this.filterYear) filters.audit_year = Number(this.filterYear);
-    if (this.filterRisk) filters.risk_rating = this.filterRisk;
-    if (this.filterStatus) filters.status = this.filterStatus;
+    if (this.filterYear)   filters.audit_year   = Number(this.filterYear);
+    if (this.filterRisk)   filters.risk_rating   = this.filterRisk;
+    if (this.filterStatus) filters.status        = this.filterStatus;
 
     this.auditService.getObservations(filters).subscribe({
       next: ({ rows, total }) => {
@@ -120,6 +130,13 @@ export class ObservationListComponent implements OnInit {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     this.load();
+  }
+
+  downloadAnnexures(obs: AuditObservation, event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+    // Navigate to detail page where all annexures can be downloaded individually
+    window.open(`/audit-car/observations/detail/${obs.observationId}`, '_blank');
   }
 
   get totalPages(): number {

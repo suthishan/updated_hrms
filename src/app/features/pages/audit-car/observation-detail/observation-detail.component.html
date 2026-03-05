@@ -22,10 +22,6 @@
            class="btn btn-outline-primary">
           <i class="ti ti-edit me-2"></i>Edit
         </a>
-        <button *ngIf="observation && !isClosed"
-          class="btn btn-outline-success" (click)="showCloseForm = !showCloseForm">
-          <i class="ti ti-lock-check me-2"></i>Close Observation
-        </button>
         <button *ngIf="observation"
           class="btn btn-outline-danger" (click)="deleteObservation()" [disabled]="deleting">
           <span *ngIf="deleting" class="spinner-border spinner-border-sm me-1"></span>
@@ -51,8 +47,30 @@
     <div *ngIf="closeSuccess" class="alert alert-success d-flex align-items-center">
       <i class="ti ti-lock-check me-2"></i>Observation closed successfully.
     </div>
+    <div *ngIf="followupSuccess" class="alert alert-success d-flex align-items-center">
+      <i class="ti ti-circle-check me-2"></i>Follow-up submitted successfully.
+    </div>
+    <div *ngIf="closureRequestSuccess" class="alert alert-info d-flex align-items-center">
+      <i class="ti ti-hourglass me-2"></i>Closure request submitted. Pending auditor approval.
+    </div>
+    <div *ngIf="approveCloseSuccess" class="alert alert-success d-flex align-items-center">
+      <i class="ti ti-circle-check me-2"></i>Observation approved and closed.
+    </div>
 
     <ng-container *ngIf="observation && !loading">
+
+      <!-- ─── Pending Auditor Banner ─────────────────────────────────── -->
+      <div *ngIf="isPendingAuditor" class="alert alert-info d-flex align-items-center mb-3">
+        <i class="ti ti-hourglass fs-4 me-3 flex-shrink-0 text-info"></i>
+        <div class="flex-grow-1">
+          <strong>Pending Auditor Approval.</strong>
+          The responsible person has requested closure. Auditor review required.
+        </div>
+        <button *ngIf="IS_AUDITOR" class="btn btn-info text-white ms-3 flex-shrink-0"
+          (click)="showAuditorCloseForm = !showAuditorCloseForm">
+          <i class="ti ti-lock-check me-1"></i>Approve &amp; Close
+        </button>
+      </div>
 
       <!-- ─── Header Card ─────────────────────────────────────────────── -->
       <div class="card border-0 shadow-sm mb-3">
@@ -178,20 +196,287 @@
         </div>
       </div>
 
-      <!-- ─── Subsequent Follow-up ───────────────────────────────────── -->
-      <div class="card border-0 shadow-sm mb-3" *ngIf="observation.subsequentFollowup1">
-        <div class="card-header border-0">
+      <!-- ─── Annexures ──────────────────────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3" id="annexures">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
           <h5 class="card-title mb-0">
-            <i class="ti ti-notes me-2 text-primary"></i>Follow-up Notes
+            <i class="ti ti-paperclip me-2 text-primary"></i>Annexures
+            <span *ngIf="annexures.length > 0" class="badge bg-primary ms-2">{{ annexures.length }}</span>
           </h5>
         </div>
         <div class="card-body">
-          <p class="mb-0">{{ observation.subsequentFollowup1 }}</p>
+
+          <!-- Loading -->
+          <div *ngIf="annexuresLoading" class="text-center py-3">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+          </div>
+
+          <!-- Existing annexure list -->
+          <div *ngIf="!annexuresLoading && annexures.length > 0" class="mb-3">
+            <div class="list-group list-group-flush">
+              <div *ngFor="let a of annexures"
+                   class="list-group-item d-flex align-items-center justify-content-between px-0">
+                <span class="d-flex align-items-center gap-2 small">
+                  <i class="ti ti-file text-primary"></i>
+                  <span>{{ a.originalName }}</span>
+                  <small class="text-muted">({{ fileSizeKb(a.fileSize) }} KB)</small>
+                </span>
+                <span class="d-flex gap-1">
+                  <button class="btn btn-sm btn-outline-primary" (click)="downloadAnnexure(a)" title="Download">
+                    <i class="ti ti-download"></i>
+                  </button>
+                  <button *ngIf="IS_AUDITOR" class="btn btn-sm btn-outline-danger" (click)="deleteAnnexure(a)" title="Delete">
+                    <i class="ti ti-trash"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!annexuresLoading && annexures.length === 0" class="text-muted small mb-3">
+            No annexures uploaded yet.
+          </div>
+
+          <!-- Upload new annexures -->
+          <div class="border rounded p-3 text-center bg-light"
+               [class.border-primary]="annexureDragOver"
+               (dragover)="onAnnexureDragOver($event)"
+               (dragleave)="annexureDragOver = false"
+               (drop)="onAnnexureDrop($event)"
+               style="border-style:dashed!important;cursor:pointer;"
+               (click)="annexureUploadInput.click()">
+            <i class="ti ti-upload text-muted d-block mb-1"></i>
+            <small class="text-muted">Drag &amp; drop or click to upload more annexures</small>
+            <input #annexureUploadInput type="file" multiple style="display:none;"
+              (change)="onAnnexureFileChange($event)">
+          </div>
+
+          <div *ngIf="annexureFiles.length > 0" class="mt-2">
+            <div *ngFor="let f of annexureFiles; let i = index"
+                 class="d-flex align-items-center justify-content-between small py-1">
+              <span><i class="ti ti-file me-1 text-primary"></i>{{ f.name }}</span>
+              <button type="button" class="btn btn-sm btn-link text-danger p-0" (click)="removeAnnexureFile(i)">
+                <i class="ti ti-x"></i>
+              </button>
+            </div>
+            <button class="btn btn-sm btn-primary mt-2" (click)="uploadAnnexures()"
+              [disabled]="uploadingAnnexures">
+              <span *ngIf="uploadingAnnexures" class="spinner-border spinner-border-sm me-1"></span>
+              Upload Files
+            </button>
+          </div>
+
+          <div *ngIf="annexureMsg" class="alert alert-success mt-2 mb-0 py-2 small">
+            {{ annexureMsg }}
+          </div>
         </div>
       </div>
 
-      <!-- ─── Update Status / Follow-up Form ────────────────────────── -->
-      <div *ngIf="!isClosed" class="card border-0 shadow-sm mb-3">
+      <!-- ─── Follow-up Trail ────────────────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-notes me-2 text-primary"></i>Follow-up Trail
+            <span *ngIf="followups.length > 0" class="badge bg-primary ms-2">{{ followups.length }}</span>
+          </h5>
+          <button *ngIf="!isClosed && !isPendingAuditor"
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="showFollowupForm = !showFollowupForm">
+            <i class="ti ti-plus me-1"></i>Add Follow-up
+          </button>
+        </div>
+        <div class="card-body">
+
+          <div *ngIf="followupsLoading" class="text-center py-3">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+          </div>
+
+          <!-- Timeline -->
+          <div *ngIf="!followupsLoading && followups.length > 0" class="timeline mb-3">
+            <div *ngFor="let fu of followups" class="timeline-item mb-3 pb-3 border-bottom">
+              <div class="d-flex align-items-start gap-3">
+                <div class="flex-shrink-0">
+                  <span class="avatar avatar-sm rounded-circle"
+                    [class.bg-info-transparent]="fu.actionType === 'request_closure'"
+                    [class.bg-primary-transparent]="fu.actionType === 'follow_up'"
+                    [class.bg-success-transparent]="fu.actionType === 'auditor_note'">
+                    <i class="ti"
+                      [class.ti-hourglass]="fu.actionType === 'request_closure'"
+                      [class.ti-notes]="fu.actionType === 'follow_up'"
+                      [class.ti-lock-check]="fu.actionType === 'auditor_note'"></i>
+                  </span>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-center justify-content-between mb-1">
+                    <span class="fw-medium small">{{ fu.responsiblePerson || 'System' }}</span>
+                    <span class="text-muted small">{{ fu.createdAt | date:'dd MMM yyyy, HH:mm' }}</span>
+                  </div>
+                  <p class="mb-1 small">{{ fu.remarks }}</p>
+                  <div *ngIf="fu.updatedTargetDate" class="mb-1">
+                    <small class="text-info">
+                      <i class="ti ti-calendar me-1"></i>Updated target: {{ fu.updatedTargetDate | date:'dd MMM yyyy' }}
+                    </small>
+                  </div>
+                  <span class="badge"
+                    [class.bg-info-transparent]="fu.actionType === 'request_closure'"
+                    [class.bg-primary-transparent]="fu.actionType === 'follow_up'"
+                    [class.bg-success-transparent]="fu.actionType === 'auditor_note'"
+                    [class.text-info]="fu.actionType === 'request_closure'"
+                    [class.text-primary]="fu.actionType === 'follow_up'"
+                    [class.text-success]="fu.actionType === 'auditor_note'">
+                    {{ fu.actionType === 'request_closure' ? 'Closure Request'
+                       : fu.actionType === 'auditor_note' ? 'Auditor Note'
+                       : 'Follow-up' }}
+                  </span>
+                  <!-- Evidence files -->
+                  <div *ngIf="fu.evidenceFiles.length > 0" class="mt-2">
+                    <small class="text-muted d-block mb-1">Evidence files:</small>
+                    <div *ngFor="let ef of fu.evidenceFiles" class="d-inline-flex align-items-center me-2">
+                      <a [href]="getEvidenceUrl(ef.fileId)" target="_blank"
+                         class="btn btn-xs btn-outline-secondary d-flex align-items-center gap-1">
+                        <i class="ti ti-download"></i>
+                        <small>{{ ef.originalName }}</small>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!followupsLoading && followups.length === 0" class="text-muted small mb-3">
+            No follow-up entries yet.
+          </div>
+
+          <!-- Add Follow-up Form -->
+          <div *ngIf="showFollowupForm && !isClosed" class="card border-0 bg-light p-3 rounded mt-2">
+            <h6 class="fw-semibold mb-3">Add Follow-up Remark</h6>
+            <form [formGroup]="followupForm" (ngSubmit)="submitFollowup()">
+              <div class="row g-3">
+                <div class="col-md-8">
+                  <label class="form-label small">Remarks <span class="text-danger">*</span></label>
+                  <textarea class="form-control form-control-sm" rows="3" formControlName="remarks"
+                    placeholder="Describe the follow-up action taken…"></textarea>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small">Updated Target Date</label>
+                  <input type="date" class="form-control form-control-sm" formControlName="updated_target_date">
+                </div>
+                <div class="col-12">
+                  <label class="form-label small">Evidence Files (optional)</label>
+                  <input type="file" multiple class="form-control form-control-sm"
+                    (change)="onFollowupFileChange($event)">
+                  <div *ngFor="let f of followupFiles; let i = index"
+                       class="d-flex align-items-center gap-2 mt-1 small">
+                    <i class="ti ti-file text-primary"></i>{{ f.name }}
+                    <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                      (click)="removeFollowupFile(i)"><i class="ti ti-x"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-sm btn-primary" [disabled]="followupForm.invalid || submittingFollowup">
+                  <span *ngIf="submittingFollowup" class="spinner-border spinner-border-sm me-1"></span>
+                  Submit Follow-up
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="showFollowupForm = false">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─── Responsible Person Actions ────────────────────────────── -->
+      <div *ngIf="!isClosed && !isPendingAuditor" class="card border-0 shadow-sm mb-3 border-warning border-start border-4">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0 text-warning">
+            <i class="ti ti-user-check me-2"></i>Responsible Person Actions
+          </h5>
+          <button class="btn btn-sm btn-warning text-white"
+            (click)="showClosureRequestForm = !showClosureRequestForm">
+            <i class="ti ti-lock me-1"></i>{{ showClosureRequestForm ? 'Cancel' : 'Request Closure' }}
+          </button>
+        </div>
+        <div *ngIf="showClosureRequestForm" class="card-body">
+          <p class="text-muted small mb-3">
+            Submit a closure request with remarks and optional evidence. The auditor will review and approve.
+          </p>
+          <form [formGroup]="closureRequestForm" (ngSubmit)="submitClosureRequest()">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label small">Closure Remarks <span class="text-danger">*</span></label>
+                <textarea class="form-control" rows="3" formControlName="remarks"
+                  placeholder="Describe the actions taken to address this observation…"></textarea>
+                <div *ngIf="closureRequestForm.get('remarks')?.invalid && closureRequestForm.get('remarks')?.touched"
+                     class="text-danger small mt-1">Minimum 10 characters required.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label small">Closure Evidence (optional)</label>
+                <input type="file" multiple class="form-control"
+                  (change)="onClosureRequestFileChange($event)">
+                <div *ngFor="let f of closureRequestFiles; let i = index"
+                     class="d-flex align-items-center gap-2 mt-1 small">
+                  <i class="ti ti-file text-primary"></i>{{ f.name }}
+                  <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                    (click)="removeClosureRequestFile(i)"><i class="ti ti-x"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="submit" class="btn btn-warning text-white"
+                [disabled]="closureRequestForm.invalid || submittingClosureRequest">
+                <span *ngIf="submittingClosureRequest" class="spinner-border spinner-border-sm me-1"></span>
+                <i *ngIf="!submittingClosureRequest" class="ti ti-send me-1"></i>
+                Submit Closure Request
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="showClosureRequestForm = false">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ─── Auditor Approve-Close Form ────────────────────────────── -->
+      <div *ngIf="isPendingAuditor && IS_AUDITOR && showAuditorCloseForm"
+           class="card border-0 shadow-sm mb-3 border-success border-start border-4">
+        <div class="card-header border-0 bg-success-transparent">
+          <h5 class="card-title mb-0 text-success">
+            <i class="ti ti-lock-check me-2"></i>Auditor Approval — Close Observation
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="auditorCloseForm" (ngSubmit)="submitAuditorClose()">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label small">Closure Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" formControlName="closure_date">
+              </div>
+              <div class="col-md-8">
+                <label class="form-label small">Auditor Closure Remarks <span class="text-danger">*</span></label>
+                <textarea class="form-control" rows="3" formControlName="closure_remarks"
+                  placeholder="Auditor's final closure remarks…"></textarea>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="submit" class="btn btn-success"
+                [disabled]="auditorCloseForm.invalid || approvingClose">
+                <span *ngIf="approvingClose" class="spinner-border spinner-border-sm me-1"></span>
+                <i *ngIf="!approvingClose" class="ti ti-check me-2"></i>Approve &amp; Close
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="showAuditorCloseForm = false">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ─── Audit Team: Update Status / Follow-up Form ───────────── -->
+      <div *ngIf="!isClosed && IS_AUDITOR" class="card border-0 shadow-sm mb-3">
         <div class="card-header border-0 d-flex align-items-center justify-content-between">
           <h5 class="card-title mb-0">
             <i class="ti ti-refresh me-2 text-primary"></i>Update Status &amp; Follow-up
@@ -209,9 +494,7 @@
                   placeholder="Enter follow-up remarks…"></textarea>
               </div>
               <div class="col-md-4">
-                <label class="form-label small">
-                  Updated Target Date
-                </label>
+                <label class="form-label small">Updated Target Date</label>
                 <input type="date" class="form-control" formControlName="updated_target_date_1">
               </div>
               <div class="col-md-4">
@@ -237,14 +520,18 @@
         </div>
       </div>
 
-      <!-- ─── Close Observation Form ────────────────────────────────── -->
-      <div *ngIf="showCloseForm && !isClosed" class="card border-0 shadow-sm mb-3 border-success">
-        <div class="card-header border-0 bg-success-transparent">
-          <h5 class="card-title mb-0 text-success">
-            <i class="ti ti-lock-check me-2"></i>Close Observation
+      <!-- ─── Direct Close Form (Auditor — no RP request required) ─── -->
+      <div *ngIf="!isClosed && !isPendingAuditor && IS_AUDITOR"
+           class="card border-0 shadow-sm mb-3 border-success">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-lock-check me-2 text-success"></i>Close Observation
           </h5>
+          <button class="btn btn-sm btn-outline-success" (click)="showCloseForm = !showCloseForm">
+            {{ showCloseForm ? 'Cancel' : 'Close Observation' }}
+          </button>
         </div>
-        <div class="card-body">
+        <div *ngIf="showCloseForm" class="card-body">
           <form [formGroup]="closeForm" (ngSubmit)="submitClose()">
             <div class="row g-3">
               <div class="col-md-4">

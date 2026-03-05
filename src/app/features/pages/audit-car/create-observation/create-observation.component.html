@@ -199,6 +199,55 @@
         </div>
       </div>
 
+      <!-- ─── Annexures ─────────────────────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header border-0">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-paperclip me-2 text-primary"></i>Annexures / Attachments
+            <small class="text-muted fw-normal ms-2">(All file formats, up to 20 files, 50 MB each)</small>
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="border rounded p-3 text-center bg-light"
+               [class.border-primary]="annexureDragOver"
+               (dragover)="onAnnexureDragOver($event)"
+               (dragleave)="annexureDragOver = false"
+               (drop)="onAnnexureDrop($event)"
+               style="border-style:dashed!important;cursor:pointer;"
+               (click)="annexureInput.click()">
+            <i class="ti ti-upload fs-2 text-muted mb-2 d-block"></i>
+            <p class="mb-1 text-muted small">Drag &amp; drop files here, or click to browse</p>
+            <input #annexureInput type="file" multiple style="display:none;"
+              (change)="onAnnexureFileChange($event)">
+          </div>
+
+          <!-- Selected files list -->
+          <div *ngIf="annexureFiles.length > 0" class="mt-3">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <small class="text-muted fw-semibold">Selected files ({{ annexureFiles.length }})</small>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="clearAnnexures()">
+                <i class="ti ti-trash me-1"></i>Clear all
+              </button>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let f of annexureFiles; let i = index"
+                  class="list-group-item d-flex align-items-center justify-content-between px-0 py-1">
+                <span class="small"><i class="ti ti-file me-2 text-primary"></i>{{ f.name }}</span>
+                <span class="d-flex align-items-center gap-2">
+                  <small class="text-muted">{{ (f.size / 1024).toFixed(1) }} KB</small>
+                  <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                    (click)="removeAnnexure(i)"><i class="ti ti-x"></i></button>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="annexureUploadError" class="alert alert-danger mt-2 mb-0 py-2 small">
+            <i class="ti ti-alert-circle me-1"></i>{{ annexureUploadError }}
+          </div>
+        </div>
+      </div>
+
       <!-- ─── Actions ─────────────────────────────────────────────────── -->
       <div class="d-flex gap-2 flex-wrap">
         <button type="submit" class="btn btn-primary" [disabled]="saving || saveSuccess">
