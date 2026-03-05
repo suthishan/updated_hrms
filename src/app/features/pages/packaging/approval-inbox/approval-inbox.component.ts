@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../../../core/services/data/data.service';
-import { apiResultFormat, breadCrumbItems, PackagingDocument, PackagingDocStatus } from '../../../../core/models/models';
+import { PackagingService } from '../services/packaging.service';
+import { breadCrumbItems, PackagingDocument, PackagingDocStatus } from '../../../../core/models/models';
 import { BreadcrumbsComponent } from '../../../../shared/breadcrumbs/breadcrumbs.component';
 
 @Component({
@@ -26,6 +26,8 @@ export class ApprovalInboxComponent implements OnInit {
   filterWorkflow = '';
   pageSize = 10;
   currentPage = 1;
+  isLoading = true;
+  errorMessage = '';
 
   statusOptions = [
     { label: 'All Status', value: '' },
@@ -43,12 +45,24 @@ export class ApprovalInboxComponent implements OnInit {
     { label: 'Hybrid', value: 'hybrid' }
   ];
 
-  constructor(private data: DataService) {}
+  private get empUuid(): string { return localStorage.getItem('emp_uuid') ?? ''; }
+  private get empRole(): 'REQUESTER' | 'APPROVER' | 'ADMIN' {
+    return (localStorage.getItem('emp_role') ?? 'REQUESTER') as 'REQUESTER' | 'APPROVER' | 'ADMIN';
+  }
+
+  constructor(private packaging: PackagingService) {}
 
   ngOnInit(): void {
-    this.data.getPackagingDocuments().subscribe((res: apiResultFormat) => {
-      this.allDocuments = res.data as unknown as PackagingDocument[];
-      this.applyFilter();
+    this.packaging.getRequests(this.empUuid, this.empRole).subscribe({
+      next: (docs: PackagingDocument[]) => {
+        this.allDocuments = docs;
+        this.isLoading    = false;
+        this.applyFilter();
+      },
+      error: (err: Error) => {
+        this.errorMessage = err.message;
+        this.isLoading    = false;
+      }
     });
   }
 
