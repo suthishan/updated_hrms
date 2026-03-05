@@ -3,7 +3,7 @@
     {
       "id": "AUD001",
       "name": "Ravi Kumar",
-      "email": "ravi.kumar@japfa.com",
+      "email": "ravi.kumar@xyz.com",
       "employeeId": "EMP-AUD-001",
       "role": "Audit Team",
       "division": "Internal Audit",
@@ -13,7 +13,7 @@
     {
       "id": "AUD002",
       "name": "Priya Nair",
-      "email": "priya.nair@japfa.com",
+      "email": "priya.nair@xyz.com",
       "employeeId": "EMP-AUD-002",
       "role": "Audit Team",
       "division": "Internal Audit",
@@ -23,7 +23,7 @@
     {
       "id": "HOD001",
       "name": "Sanjay Gupta",
-      "email": "sanjay.gupta@japfa.com",
+      "email": "sanjay.gupta@xyz.com",
       "employeeId": "EMP-HOD-001",
       "role": "HoD",
       "division": "Supply Chain",
@@ -33,7 +33,7 @@
     {
       "id": "HOD002",
       "name": "Lakshmi Devi",
-      "email": "lakshmi.devi@japfa.com",
+      "email": "lakshmi.devi@xyz.com",
       "employeeId": "EMP-HOD-002",
       "role": "HoD",
       "division": "Finance & Accounts",
@@ -43,7 +43,7 @@
     {
       "id": "HOD003",
       "name": "Arun Chandran",
-      "email": "arun.chandran@japfa.com",
+      "email": "arun.chandran@xyz.com",
       "employeeId": "EMP-HOD-003",
       "role": "HoD",
       "division": "Information Technology",
@@ -53,7 +53,7 @@
     {
       "id": "EMP101",
       "name": "Anjali Sharma",
-      "email": "anjali.sharma@japfa.com",
+      "email": "anjali.sharma@xyz.com",
       "employeeId": "EMP-101",
       "role": "Responsible Person",
       "division": "Supply Chain",
@@ -64,7 +64,7 @@
     {
       "id": "EMP102",
       "name": "Karthik Menon",
-      "email": "karthik.menon@japfa.com",
+      "email": "karthik.menon@xyz.com",
       "employeeId": "EMP-102",
       "role": "Responsible Person",
       "division": "Supply Chain",
@@ -75,7 +75,7 @@
     {
       "id": "EMP103",
       "name": "Meena Pillai",
-      "email": "meena.pillai@japfa.com",
+      "email": "meena.pillai@xyz.com",
       "employeeId": "EMP-103",
       "role": "Responsible Person",
       "division": "Finance & Accounts",
@@ -86,7 +86,7 @@
     {
       "id": "EMP104",
       "name": "Suresh Babu",
-      "email": "suresh.babu@japfa.com",
+      "email": "suresh.babu@xyz.com",
       "employeeId": "EMP-104",
       "role": "Responsible Person",
       "division": "Information Technology",
@@ -97,7 +97,7 @@
     {
       "id": "EMP105",
       "name": "Deepa Krishnan",
-      "email": "deepa.krishnan@japfa.com",
+      "email": "deepa.krishnan@xyz.com",
       "employeeId": "EMP-105",
       "role": "Responsible Person",
       "division": "Information Technology",
@@ -108,7 +108,7 @@
     {
       "id": "EMP106",
       "name": "Ramesh Iyer",
-      "email": "ramesh.iyer@japfa.com",
+      "email": "ramesh.iyer@xyz.com",
       "employeeId": "EMP-106",
       "role": "Responsible Person",
       "division": "Human Resources",
@@ -118,7 +118,7 @@
     {
       "id": "EMP107",
       "name": "Venkat Rao",
-      "email": "venkat.rao@japfa.com",
+      "email": "venkat.rao@xyz.com",
       "employeeId": "EMP-107",
       "role": "Responsible Person",
       "division": "Poultry Operations",
