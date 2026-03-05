@@ -10,37 +10,37 @@ const { v4: uuidv4 } = require('uuid');
 // ─── Users ────────────────────────────────────────────────────────────────────
 const users = [
   {
-    id: 'AUD001', name: 'Ravi Kumar', email: 'ravi.kumar@japfa.com',
+    id: 'AUD001', name: 'Ravi Kumar', email: 'ravi.kumar@xyz.com',
     employeeId: 'EMP-AUD-001', role: 'Audit Team',
     division: 'Internal Audit', department: 'Internal Audit',
     passwordHash: '$2a$10$examplehash1', // bcrypt hash of 'password123'
   },
   {
-    id: 'AUD002', name: 'Priya Nair', email: 'priya.nair@japfa.com',
+    id: 'AUD002', name: 'Priya Nair', email: 'priya.nair@xyz.com',
     employeeId: 'EMP-AUD-002', role: 'Audit Team',
     division: 'Internal Audit', department: 'Internal Audit',
     passwordHash: '$2a$10$examplehash2',
   },
   {
-    id: 'HOD001', name: 'Sanjay Gupta', email: 'sanjay.gupta@japfa.com',
+    id: 'HOD001', name: 'Sanjay Gupta', email: 'sanjay.gupta@xyz.com',
     employeeId: 'EMP-HOD-001', role: 'HoD',
     division: 'Supply Chain', department: 'Supply Chain Management',
     passwordHash: '$2a$10$examplehash3',
   },
   {
-    id: 'HOD002', name: 'Lakshmi Devi', email: 'lakshmi.devi@japfa.com',
+    id: 'HOD002', name: 'Lakshmi Devi', email: 'lakshmi.devi@xyz.com',
     employeeId: 'EMP-HOD-002', role: 'HoD',
     division: 'Finance & Accounts', department: 'Finance',
     passwordHash: '$2a$10$examplehash4',
   },
   {
-    id: 'EMP101', name: 'Anjali Sharma', email: 'anjali.sharma@japfa.com',
+    id: 'EMP101', name: 'Anjali Sharma', email: 'anjali.sharma@xyz.com',
     employeeId: 'EMP-101', role: 'Responsible Person',
     division: 'Supply Chain', department: 'Procurement', hodId: 'HOD001',
     passwordHash: '$2a$10$examplehash5',
   },
   {
-    id: 'EMP103', name: 'Meena Pillai', email: 'meena.pillai@japfa.com',
+    id: 'EMP103', name: 'Meena Pillai', email: 'meena.pillai@xyz.com',
     employeeId: 'EMP-103', role: 'Responsible Person',
     division: 'Finance & Accounts', department: 'Finance', hodId: 'HOD002',
     passwordHash: '$2a$10$examplehash6',
@@ -72,7 +72,7 @@ const observations = [
         observationId: 'OBS-2024-001',
         responsiblePersonId: 'EMP101',
         responsiblePersonName: 'Anjali Sharma',
-        responsiblePersonEmail: 'anjali.sharma@japfa.com',
+        responsiblePersonEmail: 'anjali.sharma@xyz.com',
         department: 'Procurement',
         division: 'Supply Chain',
         initialTargetDate: '2024-03-31',
