@@ -30,7 +30,7 @@ export class AuditCarService {
   private mockCurrentUser: AuditUser = {
     id: 'AUD001',
     name: 'Ravi Kumar',
-    email: 'ravi.kumar@japfa.com',
+    email: 'ravi.kumar@xyz.com',
     employeeId: 'EMP-AUD-001',
     role: 'Audit Team',
     division: 'Internal Audit',
