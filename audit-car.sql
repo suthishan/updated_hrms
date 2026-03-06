@@ -261,3 +261,108 @@ VALUES
      'Monthly patch schedule will be enforced. Policy to be revised.',
      3, '2024-07-31', 'Overdue', 1);
 */
+
+
+-- =============================================================================
+-- 9. Annexures — observation-level attached files
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS tbl_audit_annexures (
+    annexure_id       SERIAL PRIMARY KEY,
+    observation_id    INTEGER        NOT NULL REFERENCES tbl_audit_observations(observation_id) ON DELETE CASCADE,
+    original_name     VARCHAR(500)   NOT NULL,
+    stored_name       VARCHAR(500)   NOT NULL,        -- disk filename (UUID-based)
+    file_size         BIGINT         NOT NULL DEFAULT 0,
+    mime_type         VARCHAR(200),
+    uploaded_by       INTEGER        REFERENCES tbl_user_master(user_id) ON DELETE SET NULL,
+    uploaded_at       TIMESTAMPTZ    NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_audit_annexures_obs ON tbl_audit_annexures(observation_id);
+
+
+-- =============================================================================
+-- 10. Follow-up records — activity trail (responsible person + auditor)
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS tbl_audit_followups (
+    followup_id           SERIAL PRIMARY KEY,
+    observation_id        INTEGER        NOT NULL REFERENCES tbl_audit_observations(observation_id) ON DELETE CASCADE,
+    responsible_person_id INTEGER        REFERENCES tbl_emp_master(eid) ON DELETE SET NULL,
+    remarks               TEXT           NOT NULL,
+    updated_target_date   DATE,
+    -- 'follow_up' | 'request_closure' | 'auditor_note'
+    action_type           VARCHAR(50)    NOT NULL DEFAULT 'follow_up'
+                              CHECK (action_type IN ('follow_up', 'request_closure', 'auditor_note')),
+    created_at            TIMESTAMPTZ    NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_audit_followups_obs ON tbl_audit_followups(observation_id);
+
+
+-- =============================================================================
+-- 11. Evidence files — attached to a follow-up entry
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS tbl_audit_evidence_files (
+    file_id       SERIAL PRIMARY KEY,
+    followup_id   INTEGER        NOT NULL REFERENCES tbl_audit_followups(followup_id) ON DELETE CASCADE,
+    original_name VARCHAR(500)   NOT NULL,
+    stored_name   VARCHAR(500)   NOT NULL,
+    file_size     BIGINT         NOT NULL DEFAULT 0,
+    mime_type     VARCHAR(200),
+    uploaded_at   TIMESTAMPTZ    NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_audit_evidence_followup ON tbl_audit_evidence_files(followup_id);
+
+
+-- =============================================================================
+-- 12. Update CHECK constraint on tbl_audit_observations to include 'Request Closure'
+-- =============================================================================
+-- If you already ran the original DDL (without 'Request Closure'), run this ALTER:
+-- ALTER TABLE tbl_audit_observations
+--     DROP CONSTRAINT IF EXISTS tbl_audit_observations_status_check;
+-- ALTER TABLE tbl_audit_observations
+--     ADD CONSTRAINT tbl_audit_observations_status_check
+--     CHECK (status IN ('Open', 'Repeated', 'Closed', 'Overdue', 'Request Closure'));
+
+-- For fresh installs the CREATE TABLE below replaces the original status check
+-- (original table DDL at the top of this file must also have 'Request Closure'):
+-- No action needed if creating the DB fresh — just ensure the CHECK above includes it.
+
+
+-- =============================================================================
+-- 13. View: follow-up trail with aggregated evidence files
+-- =============================================================================
+
+CREATE OR REPLACE VIEW vw_audit_followups AS
+SELECT
+    f.followup_id,
+    f.observation_id,
+    f.responsible_person_id,
+    e.emp_name            AS responsible_person,
+    f.remarks,
+    f.updated_target_date,
+    f.action_type,
+    f.created_at,
+    COALESCE(
+        json_agg(
+            json_build_object(
+                'file_id',       ef.file_id,
+                'followup_id',   ef.followup_id,
+                'original_name', ef.original_name,
+                'stored_name',   ef.stored_name,
+                'file_size',     ef.file_size,
+                'mime_type',     ef.mime_type,
+                'uploaded_at',   ef.uploaded_at
+            ) ORDER BY ef.file_id
+        ) FILTER (WHERE ef.file_id IS NOT NULL),
+        '[]'::json
+    ) AS evidence_files
+FROM tbl_audit_followups f
+LEFT JOIN tbl_emp_master  e  ON e.eid        = f.responsible_person_id
+LEFT JOIN tbl_audit_evidence_files ef ON ef.followup_id = f.followup_id
+GROUP BY
+    f.followup_id, f.observation_id, f.responsible_person_id,
+    e.emp_name, f.remarks, f.updated_target_date, f.action_type, f.created_at;

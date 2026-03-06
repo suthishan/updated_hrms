@@ -66,6 +66,11 @@ export class CreateObservationComponent implements OnInit {
   saveSuccess = false;
   errorMsg = '';
 
+  // Annexures
+  annexureFiles: File[] = [];
+  annexureDragOver = false;
+  annexureUploadError = '';
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -197,16 +202,60 @@ export class CreateObservationComponent implements OnInit {
       : this.auditService.createObservation(payload);
 
     request$.subscribe({
-      next: () => {
-        this.saving = false;
-        this.saveSuccess = true;
-        setTimeout(() => this.router.navigate(['/audit-car/observations/list']), 1200);
+      next: (saved) => {
+        if (this.annexureFiles.length > 0 && saved?.observationId) {
+          this.auditService.uploadAnnexures(saved.observationId, this.annexureFiles).subscribe({
+            next: () => this.finishSave(),
+            error: () => {
+              // Annexure upload failed but observation saved — still navigate
+              this.annexureUploadError = 'Observation saved but some annexures failed to upload. You can re-upload from the detail page.';
+              this.finishSave();
+            },
+          });
+        } else {
+          this.finishSave();
+        }
       },
       error: (err: Error) => {
         this.saving = false;
         this.errorMsg = err.message ?? 'Save failed. Please try again.';
       },
     });
+  }
+
+  private finishSave(): void {
+    this.saving = false;
+    this.saveSuccess = true;
+    setTimeout(() => this.router.navigate(['/audit-car/observations/list']), 1200);
+  }
+
+  onAnnexureFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.annexureFiles.push(...Array.from(input.files));
+    }
+    input.value = '';
+  }
+
+  onAnnexureDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.annexureDragOver = true;
+  }
+
+  onAnnexureDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.annexureDragOver = false;
+    if (event.dataTransfer?.files) {
+      this.annexureFiles.push(...Array.from(event.dataTransfer.files));
+    }
+  }
+
+  removeAnnexure(index: number): void {
+    this.annexureFiles.splice(index, 1);
+  }
+
+  clearAnnexures(): void {
+    this.annexureFiles = [];
   }
 
   cancel(): void {

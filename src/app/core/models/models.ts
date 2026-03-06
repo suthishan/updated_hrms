@@ -1352,7 +1352,7 @@ export interface resumeParse {
 
 export type AuditRiskRating = 'High' | 'Medium' | 'Low' | 'Improvement';
 /** Backend statuses: Open | Repeated | Closed | Overdue */
-export type AuditObservationStatus = 'Open' | 'Repeated' | 'Closed' | 'Overdue';
+export type AuditObservationStatus = 'Open' | 'Repeated' | 'Closed' | 'Overdue' | 'Request Closure';
 export type AuditUserRole = 'Audit Team' | 'Responsible Person' | 'HoD';
 
 /**
@@ -1390,6 +1390,8 @@ export interface AuditObservation {
   responsiblePersonEmail?: string;
   closedBy?: string;
   createdBy?: string;
+  /** Count of annexed files (from subquery in list API) */
+  annexureCount?: number;
 }
 
 /** Reference data for audit area lookup */
@@ -1478,6 +1480,43 @@ export interface AuditUploadHistory {
   recordsUploaded: number;
   status: 'Success' | 'Failed' | 'Partial';
   errors?: string[];
+}
+
+/** Observation-level annexure file metadata */
+export interface AuditAnnexure {
+  annexureId: number;
+  observationId: number;
+  originalName: string;
+  storedName: string;
+  fileSize: number;
+  mimeType: string;
+  uploadedBy?: string;
+  uploadedAt: string;
+}
+
+/** Evidence file attached to a follow-up entry */
+export interface AuditEvidenceFile {
+  fileId: number;
+  followupId: number;
+  originalName: string;
+  storedName: string;
+  fileSize: number;
+  mimeType: string;
+  uploadedAt: string;
+}
+
+/** Follow-up / activity trail record for an observation */
+export interface AuditFollowupRecord {
+  followupId: number;
+  observationId: number;
+  responsiblePersonId?: number;
+  responsiblePerson?: string;
+  remarks: string;
+  updatedTargetDate?: string;
+  /** 'follow_up' | 'request_closure' | 'auditor_note' */
+  actionType: string;
+  createdAt: string;
+  evidenceFiles: AuditEvidenceFile[];
 }
 
 // ─── End Audit CAR Portal Models ────────────────────────────────────────────

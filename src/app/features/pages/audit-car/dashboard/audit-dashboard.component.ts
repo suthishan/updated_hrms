@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuditCarService } from '../services/audit-car.service';
 import { AuditObservation, AuditDashboardStats, AuditRiskRating } from '../../../../core/models/models';
@@ -17,25 +17,30 @@ type DashTab = 'all' | 'overdue' | 'repeated';
 export class AuditDashboardComponent implements OnInit {
   observations: AuditObservation[] = [];
   filteredObservations: AuditObservation[] = [];
+  pendingAuditorObservations: AuditObservation[] = [];
   stats: AuditDashboardStats | null = null;
   loading = true;
+  pendingLoading = false;
   errorMsg = '';
 
   activeTab: DashTab = 'all';
   filterYear = '';
   availableYears: number[] = [];
 
-  constructor(private auditService: AuditCarService) {}
+  constructor(private auditService: AuditCarService, private router: Router) {}
 
   ngOnInit(): void {
     const yr = new Date().getFullYear();
     this.availableYears = [yr, yr - 1, yr - 2, yr - 3];
     this.loadAll();
+    this.loadPendingAuditor();
   }
 
   loadAll(): void {
     this.loading = true;
-    const filters = this.filterYear ? { audit_year: Number(this.filterYear), limit: 500, offset: 0 } : { limit: 500, offset: 0 };
+    const filters = this.filterYear
+      ? { audit_year: Number(this.filterYear), limit: 500, offset: 0 }
+      : { limit: 500, offset: 0 };
     this.auditService.getObservations(filters).subscribe({
       next: ({ rows }) => {
         this.observations = rows;
@@ -47,6 +52,17 @@ export class AuditDashboardComponent implements OnInit {
         this.errorMsg = err.message ?? 'Failed to load data.';
         this.loading = false;
       },
+    });
+  }
+
+  loadPendingAuditor(): void {
+    this.pendingLoading = true;
+    this.auditService.getObservations({ status: 'Request Closure', limit: 100, offset: 0 }).subscribe({
+      next: ({ rows }) => {
+        this.pendingAuditorObservations = rows;
+        this.pendingLoading = false;
+      },
+      error: () => { this.pendingLoading = false; },
     });
   }
 
@@ -70,6 +86,22 @@ export class AuditDashboardComponent implements OnInit {
 
   onYearChange(): void {
     this.loadAll();
+  }
+
+  /** Navigate to list page with a pre-applied status filter */
+  goToList(status?: string): void {
+    const qp = status ? { status } : {};
+    this.router.navigate(['/audit-car/observations/list'], { queryParams: qp });
+  }
+
+  /** Navigate to list with risk-rating filter */
+  goToListByRisk(risk: string): void {
+    this.router.navigate(['/audit-car/observations/list'], { queryParams: { risk } });
+  }
+
+  /** Navigate to list with division filter */
+  goToListByDivision(division: string): void {
+    this.router.navigate(['/audit-car/observations/list'], { queryParams: { division } });
   }
 
   getStatusClass(status: string): string {

@@ -2,177 +2,144 @@ const express = require('express');
 const router = express.Router();
 const auditController = require('../controllers/car.audit.controller');
 const upload = require('../config/multer.config');
+const uploadAudit = require('../config/multer-audit.config');
 
 
-/**
- * List All Upload Batches
- */
-router.get('/batches',
-  /*
-      #swagger.path = '/api/audit/batches'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Get list of all uploaded Excel batches with sync summary'
-  */
-  auditController.listBatches
-);
+/* ─────────────────────────────────────────────────────────────────────────────
+   Excel Upload / Staging / Sync
+───────────────────────────────────────────────────────────────────────────── */
+
+router.get('/batches', auditController.listBatches);
+
+router.get('/staging/:batchId', auditController.getStagingRows);
+
+router.get('/sync/status/:batchId', auditController.getSyncStatus);
+
+router.post('/upload', upload.single('file'), auditController.uploadExcel);
+
+router.post('/sync/:batchId', auditController.syncToMaster);
+
+router.post('/sync', auditController.syncToMaster);
+
+router.post('/sync/retry/:batchId', auditController.retryErrors);
 
 
-/**
- * Get Staging Rows by Batch
- */
-router.get('/staging/:batchId',
-  /*
-      #swagger.path = '/api/audit/staging/{batchId}'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Preview all staging rows for a specific batch before sync'
-  */
-  auditController.getStagingRows
-);
+/* ─────────────────────────────────────────────────────────────────────────────
+   Observations CRUD
+───────────────────────────────────────────────────────────────────────────── */
+
+/** GET  /api/audit/list  — list with filters + pagination */
+router.post('/list', auditController.getAllObservations);
+
+/** POST /api/audit/detail — get single observation */
+router.post('/detail', auditController.getObservation);
+
+/** POST /api/audit/create — create new observation */
+router.post('/create', auditController.createObservation);
+
+/** POST /api/audit/update — update observation fields */
+router.post('/update', auditController.updateObservation);
+
+/** POST /api/audit/close  — final auditor close */
+router.post('/close', auditController.closeObservation);
+
+/** POST /api/audit/delete — delete observation */
+router.post('/delete', auditController.deleteObservation);
 
 
-/**
- * Get Sync Status of a Batch
- */
-router.get('/sync/status/:batchId',
-  /*
-      #swagger.path = '/api/audit/sync/status/{batchId}'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Check sync status and error details for a specific batch'
-  */
-  auditController.getSyncStatus
-);
-
-
-/**
- * Upload Excel to Staging Table
- */
-router.post('/upload',
-  /*
-      #swagger.path = '/api/audit/upload'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Upload bulk Excel file into the staging table for review'
-  */
-  upload.single('file'),
-  auditController.uploadExcel
-);
-
+/* ─────────────────────────────────────────────────────────────────────────────
+   Annexures (observation-level attachments)
+───────────────────────────────────────────────────────────────────────────── */
 
 /**
- * Sync Specific Batch to Master Table
+ * POST /api/audit/annexures/upload
+ * Body (multipart): observation_id, uploaded_by (optional)
+ * Files field name: "files"  (up to 20 files, all formats, 50 MB each)
  */
-router.post('/sync/:batchId',
-  /*
-      #swagger.path = '/api/audit/sync/{batchId}'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Sync all pending rows of a specific batch to the main observations table'
-  */
-  auditController.syncToMaster
-);
-
-
-/**
- * Sync All Pending Rows to Master Table
- */
-router.post('/sync',
-  /*
-      #swagger.path = '/api/audit/sync'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Sync all pending rows across all batches to the main observations table'
-  */
-  auditController.syncToMaster
-);
-
-
-/**
- * Retry Failed Rows for a Batch
- */
-router.post('/sync/retry/:batchId',
-  /*
-      #swagger.path = '/api/audit/sync/retry/{batchId}'
-      #swagger.tags = ['Audit']
-      #swagger.description = 'Reset error rows to pending and retry sync for a specific batch'
-  */
-  auditController.retryErrors
+router.post(
+  '/annexures/upload',
+  uploadAudit.array('files', 20),
+  auditController.uploadAnnexures
 );
 
 /**
- * Get All Observations (with filters + pagination)
+ * GET /api/audit/annexures/:observationId
+ * Returns array of annexure metadata for the observation
  */
-router.post('/list',
-  /*
-      #swagger.path = '/api/observation/list'
-      #swagger.tags = ['Observation']
-      #swagger.description = 'Get all observations with optional filters: audit_year, status, risk_rating, division_id, audit_area_id. Supports limit/offset pagination.'
-  */
-  auditController.getAllObservations
-);
-
+router.get('/annexures/:observationId', auditController.listAnnexures);
 
 /**
- * Get Single Observation
+ * GET /api/audit/annexures/download/:annexureId
+ * Streams the file as an attachment download
+ * NOTE: must be declared BEFORE the :observationId route so Express
+ *       doesn't accidentally match "download" as an observationId.
  */
-router.post('/detail',
-  /*
-      #swagger.path = '/api/observation/detail'
-      #swagger.tags = ['Observation']
-      #swagger.description = 'Get full details of a single observation by observation_id'
-  */
-  auditController.getObservation
-);
-
+router.get('/annexures/download/:annexureId', auditController.downloadAnnexure);
 
 /**
- * Create New Observation
+ * DELETE /api/audit/annexures/:annexureId
+ * Removes DB record + physical file
  */
-router.post('/create',
-  /*
-      #swagger.path = '/api/observation/create'
-      #swagger.tags = ['Observation']
-      #swagger.description = 'Create a new audit observation manually. observation_number is auto-generated.'
-  */
-  auditController.createObservation
-);
+router.delete('/annexures/:annexureId', auditController.deleteAnnexure);
 
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Follow-ups (responsible-person activity trail)
+───────────────────────────────────────────────────────────────────────────── */
 
 /**
- * Update Observation
+ * POST /api/audit/followups/add
+ * Body (multipart): observation_id, responsible_person_id, remarks,
+ *                   updated_target_date (optional), action_type
+ * Files field name: "files"  (optional evidence, up to 20 files)
  */
-router.post('/update',
-  /*
-      #swagger.path = '/api/observation/update'
-      #swagger.tags = ['Observation']
-      #swagger.description = 'Update any editable fields of an existing observation by observation_id'
-  */
-  auditController.updateObservation
+router.post(
+  '/followups/add',
+  uploadAudit.array('files', 20),
+  auditController.addFollowup
 );
-
 
 /**
- * Close Observation
+ * GET /api/audit/followups/:observationId
+ * Returns ordered follow-up trail with evidence file metadata
  */
-router.post('/close',
-  /*
-      #swagger.path = '/api/observation/close'
-      #swagger.tags = ['Observation']
-      #swagger.description = 'Mark an observation as Closed with closure_date and closure_remarks'
-  */
-  auditController.closeObservation
-);
-
+router.get('/followups/:observationId', auditController.listFollowups);
 
 /**
- * Delete Observation
+ * POST /api/audit/followups/request-closure
+ * Responsible person submits a closure request.
+ * Body (multipart): observation_id, responsible_person_id, remarks
+ * Files field name: "files"  (optional closure evidence)
+ * Sets observation status → 'Request Closure'
  */
-router.post('/delete',
-  /*
-      #swagger.path = '/api/observation/delete'
-      #swagger.tags = ['Observation']
-      #swagger.description = 'Permanently delete an observation by observation_id'
-  */
-  auditController.deleteObservation
+router.post(
+  '/followups/request-closure',
+  uploadAudit.array('files', 20),
+  auditController.requestClosure
 );
 
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Auditor Approval
+───────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * POST /api/audit/approve-close
+ * Auditor approves a 'Request Closure' observation → status becomes 'Closed'
+ * Body (JSON): { observation_id, auditor_user_id, closure_date, closure_remarks }
+ */
+router.post('/approve-close', auditController.approveClose);
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Evidence file download
+───────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * GET /api/audit/evidence/download/:fileId
+ * Streams an evidence file attached to a follow-up entry
+ */
+router.get('/evidence/download/:fileId', auditController.downloadEvidence);
 
 
 module.exports = router;

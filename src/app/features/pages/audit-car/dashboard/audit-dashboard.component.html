@@ -43,10 +43,11 @@
 
     <ng-container *ngIf="!loading && stats">
 
-      <!-- ─── Summary Cards ───────────────────────────────────────────── -->
+      <!-- ─── Summary Cards (clickable) ────────────────────────────────── -->
       <div class="row g-3 mb-3">
-        <div class="col-xxl-3 col-sm-6">
-          <div class="card border-0 shadow-sm">
+        <!-- Total -->
+        <div class="col-xxl-2 col-sm-6">
+          <div class="card border-0 shadow-sm cursor-pointer h-100" (click)="goToList()" style="cursor:pointer;">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="avatar avatar-lg bg-primary-transparent rounded-circle d-flex align-items-center justify-content-center">
@@ -55,12 +56,13 @@
                 <span class="badge bg-primary-transparent text-primary">Total</span>
               </div>
               <h2 class="mb-1 fw-bold">{{ stats.totalObservations }}</h2>
-              <p class="text-muted mb-0">Total Observations</p>
+              <p class="text-muted mb-0 small">Total Observations</p>
             </div>
           </div>
         </div>
-        <div class="col-xxl-3 col-sm-6">
-          <div class="card border-0 shadow-sm">
+        <!-- Open -->
+        <div class="col-xxl-2 col-sm-6">
+          <div class="card border-0 shadow-sm h-100" (click)="goToList('Open')" style="cursor:pointer;">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="avatar avatar-lg bg-danger-transparent rounded-circle d-flex align-items-center justify-content-center">
@@ -69,12 +71,13 @@
                 <span class="badge bg-danger-transparent text-danger">Open</span>
               </div>
               <h2 class="mb-1 fw-bold text-danger">{{ stats.openObservations }}</h2>
-              <p class="text-muted mb-0">Open</p>
+              <p class="text-muted mb-0 small">Open</p>
             </div>
           </div>
         </div>
-        <div class="col-xxl-3 col-sm-6">
-          <div class="card border-0 shadow-sm">
+        <!-- Overdue -->
+        <div class="col-xxl-2 col-sm-6">
+          <div class="card border-0 shadow-sm h-100" (click)="goToList('Overdue')" style="cursor:pointer;">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="avatar avatar-lg bg-warning-transparent rounded-circle d-flex align-items-center justify-content-center">
@@ -83,12 +86,43 @@
                 <span class="badge bg-danger-transparent text-danger">Overdue</span>
               </div>
               <h2 class="mb-1 fw-bold text-danger">{{ stats.overdueObservations }}</h2>
-              <p class="text-muted mb-0">Overdue</p>
+              <p class="text-muted mb-0 small">Overdue</p>
             </div>
           </div>
         </div>
-        <div class="col-xxl-3 col-sm-6">
-          <div class="card border-0 shadow-sm">
+        <!-- Repeated -->
+        <div class="col-xxl-2 col-sm-6">
+          <div class="card border-0 shadow-sm h-100" (click)="goToList('Repeated')" style="cursor:pointer;">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="avatar avatar-lg bg-warning-transparent rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="ti ti-repeat fs-22 text-warning"></i>
+                </div>
+                <span class="badge bg-warning-transparent text-warning">Repeated</span>
+              </div>
+              <h2 class="mb-1 fw-bold text-warning">{{ stats.repeatedObservations }}</h2>
+              <p class="text-muted mb-0 small">Repeated</p>
+            </div>
+          </div>
+        </div>
+        <!-- Pending Auditor -->
+        <div class="col-xxl-2 col-sm-6">
+          <div class="card border-0 shadow-sm h-100" (click)="goToList('Request Closure')" style="cursor:pointer;">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="avatar avatar-lg bg-info-transparent rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="ti ti-hourglass fs-22 text-info"></i>
+                </div>
+                <span class="badge bg-info-transparent text-info">Pending</span>
+              </div>
+              <h2 class="mb-1 fw-bold text-info">{{ pendingAuditorObservations.length }}</h2>
+              <p class="text-muted mb-0 small">Pending with Auditor</p>
+            </div>
+          </div>
+        </div>
+        <!-- Closed -->
+        <div class="col-xxl-2 col-sm-6">
+          <div class="card border-0 shadow-sm h-100" (click)="goToList('Closed')" style="cursor:pointer;">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="avatar avatar-lg bg-success-transparent rounded-circle d-flex align-items-center justify-content-center">
@@ -97,8 +131,71 @@
                 <span class="badge bg-success-transparent text-success">Closed</span>
               </div>
               <h2 class="mb-1 fw-bold text-success">{{ stats.closedObservations }}</h2>
-              <p class="text-muted mb-0">Closed</p>
+              <p class="text-muted mb-0 small">Closed</p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Pending with Auditor Section ─────────────────────────────── -->
+      <div class="card border-0 shadow-sm mb-3 border-start border-info border-4" *ngIf="pendingAuditorObservations.length > 0 || pendingLoading">
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0 text-info">
+            <i class="ti ti-hourglass me-2"></i>Pending with Auditor
+            <span class="badge bg-info text-white ms-2">{{ pendingAuditorObservations.length }}</span>
+          </h5>
+          <button class="btn btn-sm btn-outline-info" (click)="loadPendingAuditor()">
+            <i class="ti ti-refresh me-1"></i>Refresh
+          </button>
+        </div>
+        <div class="card-body p-0">
+          <div *ngIf="pendingLoading" class="text-center py-3">
+            <div class="spinner-border spinner-border-sm text-info"></div>
+          </div>
+          <div *ngIf="!pendingLoading" class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Obs #</th>
+                  <th>Audit Area</th>
+                  <th>Division</th>
+                  <th>Risk</th>
+                  <th>Responsible Person</th>
+                  <th>Target Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let obs of pendingAuditorObservations"
+                    (click)="goToList('Request Closure')" style="cursor:pointer;">
+                  <td>
+                    <a [routerLink]="['/audit-car/observations/detail', obs.observationId]"
+                       class="text-primary fw-medium" (click)="$event.stopPropagation()">
+                      {{ obs.observationNumber }}
+                    </a>
+                  </td>
+                  <td>
+                    <span class="d-block fw-medium small">{{ obs.auditArea }}</span>
+                    <small class="text-muted">{{ obs.observationTitle | slice:0:50 }}{{ (obs.observationTitle?.length ?? 0) > 50 ? '…' : '' }}</small>
+                  </td>
+                  <td>{{ obs.division }}</td>
+                  <td><span class="badge" [ngClass]="getRiskClass(obs.riskRating)">{{ obs.riskRating }}</span></td>
+                  <td class="small">{{ obs.responsiblePerson || '—' }}</td>
+                  <td><small>{{ effectiveTarget(obs) | date:'dd MMM yyyy' }}</small></td>
+                  <td>
+                    <a [routerLink]="['/audit-car/observations/detail', obs.observationId]"
+                       class="btn btn-sm btn-info text-white" (click)="$event.stopPropagation()">
+                      <i class="ti ti-lock-check me-1"></i>Review
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="pendingAuditorObservations.length === 0">
+                  <td colspan="7" class="text-center text-muted py-4">
+                    <i class="ti ti-circle-check text-success me-2"></i>No observations pending auditor approval
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -113,7 +210,8 @@
               </h5>
             </div>
             <div class="card-body">
-              <div *ngFor="let item of riskChartData" class="mb-3">
+              <div *ngFor="let item of riskChartData" class="mb-3"
+                   (click)="goToListByRisk(item.label)" style="cursor:pointer;">
                 <div class="d-flex justify-content-between mb-1">
                   <span class="fw-medium">{{ item.label }}</span>
                   <span class="fw-bold">{{ item.value }}</span>
@@ -153,7 +251,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let d of stats.byDivision">
+                    <tr *ngFor="let d of stats.byDivision"
+                        (click)="goToListByDivision(d.division)" style="cursor:pointer;"
+                        class="table-row-hover">
                       <td class="fw-medium small">{{ d.division }}</td>
                       <td class="text-center">{{ d.count }}</td>
                       <td class="text-center text-danger">{{ d.open }}</td>
@@ -189,7 +289,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let yr of stats.byYear">
+                    <tr *ngFor="let yr of stats.byYear"
+                        (click)="goToList()" style="cursor:pointer;">
                       <td class="fw-medium">{{ yr.year }}</td>
                       <td class="text-center">{{ yr.total }}</td>
                       <td class="text-center text-danger">{{ yr.open }}</td>
@@ -286,7 +387,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let obs of filteredObservations | slice:0:20">
+                <tr *ngFor="let obs of filteredObservations | slice:0:20"
+                    [routerLink]="['/audit-car/observations/detail', obs.observationId]"
+                    style="cursor:pointer;">
                   <td>
                     <span class="fw-medium text-primary">{{ obs.observationNumber }}</span>
                   </td>
@@ -312,7 +415,7 @@
                   <td>
                     <span class="badge" [ngClass]="getStatusClass(obs.status)">{{ obs.status }}</span>
                   </td>
-                  <td>
+                  <td (click)="$event.stopPropagation()">
                     <a [routerLink]="['/audit-car/observations/detail', obs.observationId]"
                        class="btn btn-sm btn-outline-primary me-1">
                       <i class="ti ti-eye"></i>

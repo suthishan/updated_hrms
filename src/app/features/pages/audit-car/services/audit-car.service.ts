@@ -10,6 +10,9 @@ import {
   AuditDashboardStats,
   AuditRiskRating,
   AuditObservationStatus,
+  AuditAnnexure,
+  AuditFollowupRecord,
+  AuditEvidenceFile,
 } from '../../../../core/models/models';
 
 // Configure to point at the Node.js backend.
@@ -63,6 +66,40 @@ interface RawObservation {
   responsible_person_email?: string;
   closed_by?: string;
   created_by?: string;
+  annexure_count?: number;
+}
+
+interface RawAnnexure {
+  annexure_id: number;
+  observation_id: number;
+  original_name: string;
+  stored_name: string;
+  file_size: number;
+  mime_type: string;
+  uploaded_by?: string;
+  uploaded_at: string;
+}
+
+interface RawEvidenceFile {
+  file_id: number;
+  followup_id: number;
+  original_name: string;
+  stored_name: string;
+  file_size: number;
+  mime_type: string;
+  uploaded_at: string;
+}
+
+interface RawFollowup {
+  followup_id: number;
+  observation_id: number;
+  responsible_person_id?: number;
+  responsible_person?: string;
+  remarks: string;
+  updated_target_date?: string;
+  action_type: string;
+  created_at: string;
+  evidence_files: RawEvidenceFile[] | string;
 }
 
 function mapRaw(r: RawObservation): AuditObservation {
@@ -94,6 +131,53 @@ function mapRaw(r: RawObservation): AuditObservation {
     responsiblePersonEmail: r.responsible_person_email,
     closedBy: r.closed_by,
     createdBy: r.created_by,
+    annexureCount: r.annexure_count ? Number(r.annexure_count) : 0,
+  };
+}
+
+function mapAnnexure(r: RawAnnexure): AuditAnnexure {
+  return {
+    annexureId: r.annexure_id,
+    observationId: r.observation_id,
+    originalName: r.original_name,
+    storedName: r.stored_name,
+    fileSize: r.file_size,
+    mimeType: r.mime_type,
+    uploadedBy: r.uploaded_by,
+    uploadedAt: r.uploaded_at,
+  };
+}
+
+function mapEvidenceFile(r: RawEvidenceFile): AuditEvidenceFile {
+  return {
+    fileId: r.file_id,
+    followupId: r.followup_id,
+    originalName: r.original_name,
+    storedName: r.stored_name,
+    fileSize: r.file_size,
+    mimeType: r.mime_type,
+    uploadedAt: r.uploaded_at,
+  };
+}
+
+function mapFollowup(r: RawFollowup): AuditFollowupRecord {
+  let files: AuditEvidenceFile[] = [];
+  if (r.evidence_files) {
+    const raw = typeof r.evidence_files === 'string'
+      ? (JSON.parse(r.evidence_files) as RawEvidenceFile[])
+      : (r.evidence_files as RawEvidenceFile[]);
+    files = (raw ?? []).filter(Boolean).map(mapEvidenceFile);
+  }
+  return {
+    followupId: r.followup_id,
+    observationId: r.observation_id,
+    responsiblePersonId: r.responsible_person_id,
+    responsiblePerson: r.responsible_person,
+    remarks: r.remarks,
+    updatedTargetDate: r.updated_target_date,
+    actionType: r.action_type,
+    createdAt: r.created_at,
+    evidenceFiles: files,
   };
 }
 
@@ -415,5 +499,125 @@ export class AuditCarService {
   getProgressWidth(value: number, total: number): string {
     if (!total) return '0%';
     return `${Math.round((value / total) * 100)}%`;
+  }
+
+  // ─── Annexures ───────────────────────────────────────────────────────────
+
+  /** POST /api/audit/annexures/upload  (multipart, field: 'files') */
+  uploadAnnexures(observationId: number, files: File[], uploadedBy = 1): Observable<AuditAnnexure[]> {
+    const form = new FormData();
+    form.append('observation_id', String(observationId));
+    form.append('uploaded_by', String(uploadedBy));
+    files.forEach((f) => form.append('files', f));
+    return this.http
+      .post<ApiResponse<RawAnnexure[]>>(`${AUDIT_API}/annexures/upload`, form)
+      .pipe(
+        map((res) => {
+          if (res.sts !== '1') throw new Error(res.message);
+          return (res.result ?? []).map(mapAnnexure);
+        })
+      );
+  }
+
+  /** GET /api/audit/annexures/:observationId */
+  listAnnexures(observationId: number): Observable<AuditAnnexure[]> {
+    return this.http
+      .get<ApiResponse<RawAnnexure[]>>(`${AUDIT_API}/annexures/${observationId}`)
+      .pipe(map((res) => (res.result ?? []).map(mapAnnexure)));
+  }
+
+  /** Returns the download URL for an annexure (use in an <a href> or window.open) */
+  getAnnexureDownloadUrl(annexureId: number): string {
+    return `${AUDIT_API}/annexures/download/${annexureId}`;
+  }
+
+  /** DELETE /api/audit/annexures/:annexureId */
+  deleteAnnexure(annexureId: number): Observable<void> {
+    return this.http
+      .delete<ApiResponse<unknown>>(`${AUDIT_API}/annexures/${annexureId}`)
+      .pipe(map((res) => { if (res.sts !== '1') throw new Error(res.message); }));
+  }
+
+  // ─── Follow-ups ──────────────────────────────────────────────────────────
+
+  /** POST /api/audit/followups/add  (multipart, optional files) */
+  addFollowup(
+    observationId: number,
+    responsiblePersonId: number,
+    remarks: string,
+    updatedTargetDate?: string,
+    files: File[] = []
+  ): Observable<AuditFollowupRecord> {
+    const form = new FormData();
+    form.append('observation_id', String(observationId));
+    form.append('responsible_person_id', String(responsiblePersonId));
+    form.append('remarks', remarks);
+    form.append('action_type', 'follow_up');
+    if (updatedTargetDate) form.append('updated_target_date', updatedTargetDate);
+    files.forEach((f) => form.append('files', f));
+    return this.http
+      .post<ApiResponse<RawFollowup>>(`${AUDIT_API}/followups/add`, form)
+      .pipe(
+        map((res) => {
+          if (res.sts !== '1' || !res.result) throw new Error(res.message);
+          return mapFollowup(res.result as unknown as RawFollowup);
+        })
+      );
+  }
+
+  /** GET /api/audit/followups/:observationId */
+  listFollowups(observationId: number): Observable<AuditFollowupRecord[]> {
+    return this.http
+      .get<ApiResponse<RawFollowup[]>>(`${AUDIT_API}/followups/${observationId}`)
+      .pipe(map((res) => (res.result ?? []).map((r) => mapFollowup(r as unknown as RawFollowup))));
+  }
+
+  /** POST /api/audit/followups/request-closure  (multipart, optional files) */
+  requestClosure(
+    observationId: number,
+    responsiblePersonId: number,
+    remarks: string,
+    files: File[] = []
+  ): Observable<AuditObservation> {
+    const form = new FormData();
+    form.append('observation_id', String(observationId));
+    form.append('responsible_person_id', String(responsiblePersonId));
+    form.append('remarks', remarks);
+    files.forEach((f) => form.append('files', f));
+    return this.http
+      .post<ApiResponse<RawObservation>>(`${AUDIT_API}/followups/request-closure`, form)
+      .pipe(
+        map((res) => {
+          if (res.sts !== '1' || !res.result) throw new Error(res.message);
+          return mapRaw(res.result as unknown as RawObservation);
+        })
+      );
+  }
+
+  /** POST /api/audit/approve-close  (JSON) — auditor final approval */
+  approveClose(
+    observationId: number,
+    auditorUserId: number,
+    closureDate: string,
+    closureRemarks: string
+  ): Observable<AuditObservation> {
+    return this.http
+      .post<ApiResponse<RawObservation>>(`${AUDIT_API}/approve-close`, {
+        observation_id: observationId,
+        auditor_user_id: auditorUserId,
+        closure_date: closureDate,
+        closure_remarks: closureRemarks,
+      })
+      .pipe(
+        map((res) => {
+          if (res.sts !== '1' || !res.result) throw new Error(res.message);
+          return mapRaw(res.result as unknown as RawObservation);
+        })
+      );
+  }
+
+  /** Returns the download URL for an evidence file */
+  getEvidenceDownloadUrl(fileId: number): string {
+    return `${AUDIT_API}/evidence/download/${fileId}`;
   }
 }
