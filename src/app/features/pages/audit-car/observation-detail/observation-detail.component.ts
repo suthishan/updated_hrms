@@ -5,11 +5,9 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { AuditCarService } from '../services/audit-car.service';
 import {
   AuditObservation,
-  AuditActionItem,
-  AuditUser,
-  AuditFollowUp,
-  AuditTargetDateRevision,
-  AuditActionItemStatus,
+  AuditRiskRating,
+  AuditAnnexure,
+  AuditFollowupRecord,
 } from '../../../../core/models/models';
 
 @Component({
@@ -21,29 +19,59 @@ import {
 })
 export class ObservationDetailComponent implements OnInit {
   observation: AuditObservation | null = null;
-  currentUser: AuditUser | null = null;
-  selectedActionItem: AuditActionItem | null = null;
-  activeTab = 'overview';
+  loading = true;
+  errorMsg = '';
 
-  // Follow-up form
-  followUpForm: FormGroup;
-  showFollowUpForm = false;
+  // Annexures
+  annexures: AuditAnnexure[] = [];
+  annexuresLoading = false;
+  annexureFiles: File[] = [];
+  annexureDragOver = false;
+  uploadingAnnexures = false;
+  annexureMsg = '';
 
-  // Target date revision form
-  targetDateForm: FormGroup;
-  showTargetDateForm = false;
+  // Follow-up trail
+  followups: AuditFollowupRecord[] = [];
+  followupsLoading = false;
 
-  // Action taken update
-  actionTakenForm: FormGroup;
-  showActionTakenForm = false;
+  // Follow-up add form (Responsible Person)
+  showFollowupForm = false;
+  followupForm: FormGroup;
+  followupFiles: File[] = [];
+  submittingFollowup = false;
+  followupSuccess = false;
 
-  // Auditor confirmation
-  auditorForm: FormGroup;
-  showAuditorForm = false;
+  // Request Closure form (Responsible Person)
+  showClosureRequestForm = false;
+  closureRequestForm: FormGroup;
+  closureRequestFiles: File[] = [];
+  submittingClosureRequest = false;
+  closureRequestSuccess = false;
 
-  // Auditor overall closure
-  closureForm: FormGroup;
-  showClosureForm = false;
+  // Auditor Approve-Close form
+  showAuditorCloseForm = false;
+  auditorCloseForm: FormGroup;
+  approvingClose = false;
+  approveCloseSuccess = false;
+
+  // Update status form (for Audit Team)
+  updateForm: FormGroup;
+  showUpdateForm = false;
+  updating = false;
+  updateSuccess = false;
+
+  // Close observation form (direct auditor close, for non-RP-initiated)
+  closeForm: FormGroup;
+  showCloseForm = false;
+  closing = false;
+  closeSuccess = false;
+
+  // Delete
+  deleting = false;
+
+  // Simulate current user — in real app, inject AuthService
+  readonly CURRENT_USER_ID = 1;
+  readonly IS_AUDITOR = true; // toggle based on logged-in role
 
   constructor(
     private route: ActivatedRoute,
@@ -51,184 +79,330 @@ export class ObservationDetailComponent implements OnInit {
     private auditService: AuditCarService,
     private fb: FormBuilder
   ) {
-    this.followUpForm = this.fb.group({ remarks: ['', Validators.required] });
-    this.targetDateForm = this.fb.group({
-      newDate: ['', Validators.required],
-      reason: ['', Validators.required],
+    this.followupForm = this.fb.group({
+      remarks: ['', Validators.required],
+      updated_target_date: [''],
     });
-    this.actionTakenForm = this.fb.group({
-      actionTaken: ['', Validators.required],
+
+    this.closureRequestForm = this.fb.group({
+      remarks: ['', [Validators.required, Validators.minLength(10)]],
+    });
+
+    this.auditorCloseForm = this.fb.group({
+      closure_date:    [new Date().toISOString().split('T')[0], Validators.required],
+      closure_remarks: ['', Validators.required],
+    });
+
+    this.updateForm = this.fb.group({
+      subsequent_followup_1: [''],
+      updated_target_date_1: [''],
       status: ['', Validators.required],
-      managementComment: [''],
     });
-    this.auditorForm = this.fb.group({
-      confirmationStatus: ['', Validators.required],
-      confirmationComment: [''],
-    });
-    this.closureForm = this.fb.group({
-      auditorClosureComment: ['', Validators.required],
+
+    this.closeForm = this.fb.group({
+      closure_date:    [new Date().toISOString().split('T')[0], Validators.required],
+      closure_remarks: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.currentUser = this.auditService.getCurrentUser();
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.auditService.getObservationById(id).subscribe((obs) => {
-        if (obs) {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      const id = Number(idParam);
+      this.auditService.getObservationById(id).subscribe({
+        next: (obs) => {
           this.observation = obs;
-          if (obs.actionItems.length > 0) {
-            this.selectActionItem(obs.actionItems[0]);
+          this.loading = false;
+          if (obs) {
+            this.updateForm.patchValue({
+              subsequent_followup_1: obs.subsequentFollowup1 ?? '',
+              updated_target_date_1: obs.updatedTargetDate1  ?? '',
+              status: obs.status,
+            });
+            this.loadAnnexures(id);
+            this.loadFollowups(id);
           }
-        }
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Failed to load observation.';
+          this.loading = false;
+        },
       });
     }
   }
 
-  selectActionItem(ai: AuditActionItem): void {
-    this.selectedActionItem = ai;
-    this.closeAllForms();
-    if (this.isResponsiblePerson(ai)) {
-      this.actionTakenForm.patchValue({
-        actionTaken: ai.actionTaken ?? '',
-        status: ai.status,
-        managementComment: ai.managementComment ?? '',
+  // ─── Annexures ────────────────────────────────────────────────────────────
+
+  loadAnnexures(id: number): void {
+    this.annexuresLoading = true;
+    this.auditService.listAnnexures(id).subscribe({
+      next: (list) => { this.annexures = list; this.annexuresLoading = false; },
+      error: () => { this.annexuresLoading = false; },
+    });
+  }
+
+  onAnnexureFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) this.annexureFiles.push(...Array.from(input.files));
+    input.value = '';
+  }
+
+  onAnnexureDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.annexureDragOver = true;
+  }
+
+  onAnnexureDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.annexureDragOver = false;
+    if (event.dataTransfer?.files) this.annexureFiles.push(...Array.from(event.dataTransfer.files));
+  }
+
+  removeAnnexureFile(i: number): void { this.annexureFiles.splice(i, 1); }
+
+  uploadAnnexures(): void {
+    if (!this.observation || this.annexureFiles.length === 0) return;
+    this.uploadingAnnexures = true;
+    this.annexureMsg = '';
+    this.auditService.uploadAnnexures(this.observation.observationId, this.annexureFiles, this.CURRENT_USER_ID).subscribe({
+      next: (added) => {
+        this.annexures.push(...added);
+        this.annexureFiles = [];
+        this.uploadingAnnexures = false;
+        this.annexureMsg = `${added.length} file(s) uploaded.`;
+        if (this.observation) this.observation.annexureCount = (this.observation.annexureCount ?? 0) + added.length;
+        setTimeout(() => (this.annexureMsg = ''), 3000);
+      },
+      error: (err: Error) => {
+        this.annexureMsg = err.message ?? 'Upload failed.';
+        this.uploadingAnnexures = false;
+      },
+    });
+  }
+
+  downloadAnnexure(annexure: AuditAnnexure): void {
+    window.open(this.auditService.getAnnexureDownloadUrl(annexure.annexureId), '_blank');
+  }
+
+  deleteAnnexure(annexure: AuditAnnexure): void {
+    if (!confirm(`Delete "${annexure.originalName}"?`)) return;
+    this.auditService.deleteAnnexure(annexure.annexureId).subscribe({
+      next: () => {
+        this.annexures = this.annexures.filter((a) => a.annexureId !== annexure.annexureId);
+        if (this.observation) this.observation.annexureCount = Math.max(0, (this.observation.annexureCount ?? 1) - 1);
+      },
+      error: (err: Error) => { this.errorMsg = err.message ?? 'Delete annexure failed.'; },
+    });
+  }
+
+  // ─── Follow-ups ───────────────────────────────────────────────────────────
+
+  loadFollowups(id: number): void {
+    this.followupsLoading = true;
+    this.auditService.listFollowups(id).subscribe({
+      next: (list) => { this.followups = list; this.followupsLoading = false; },
+      error: () => { this.followupsLoading = false; },
+    });
+  }
+
+  onFollowupFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) this.followupFiles.push(...Array.from(input.files));
+    input.value = '';
+  }
+
+  submitFollowup(): void {
+    if (this.followupForm.invalid || !this.observation) return;
+    this.submittingFollowup = true;
+    const v = this.followupForm.value;
+    this.auditService
+      .addFollowup(
+        this.observation.observationId,
+        this.CURRENT_USER_ID,
+        v.remarks,
+        v.updated_target_date || undefined,
+        this.followupFiles
+      )
+      .subscribe({
+        next: (fu) => {
+          this.followups.push(fu);
+          if (v.updated_target_date && this.observation) {
+            this.observation.updatedTargetDate1 = v.updated_target_date;
+          }
+          this.followupForm.reset({ remarks: '', updated_target_date: '' });
+          this.followupFiles = [];
+          this.showFollowupForm = false;
+          this.submittingFollowup = false;
+          this.followupSuccess = true;
+          setTimeout(() => (this.followupSuccess = false), 3000);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Follow-up submission failed.';
+          this.submittingFollowup = false;
+        },
       });
-    }
-    if (this.isAuditTeam) {
-      this.auditorForm.patchValue({
-        confirmationStatus: ai.auditorConfirmationStatus ?? '',
-        confirmationComment: ai.auditorConfirmationComment ?? '',
+  }
+
+  removeFollowupFile(i: number): void { this.followupFiles.splice(i, 1); }
+
+  onClosureRequestFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) this.closureRequestFiles.push(...Array.from(input.files));
+    input.value = '';
+  }
+
+  removeClosureRequestFile(i: number): void { this.closureRequestFiles.splice(i, 1); }
+
+  submitClosureRequest(): void {
+    if (this.closureRequestForm.invalid || !this.observation) return;
+    this.submittingClosureRequest = true;
+    const v = this.closureRequestForm.value;
+    this.auditService
+      .requestClosure(
+        this.observation.observationId,
+        this.CURRENT_USER_ID,
+        v.remarks,
+        this.closureRequestFiles
+      )
+      .subscribe({
+        next: (updated) => {
+          this.observation = updated;
+          this.closureRequestFiles = [];
+          this.showClosureRequestForm = false;
+          this.submittingClosureRequest = false;
+          this.closureRequestSuccess = true;
+          setTimeout(() => (this.closureRequestSuccess = false), 3000);
+          this.loadFollowups(updated.observationId);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Closure request failed.';
+          this.submittingClosureRequest = false;
+        },
       });
-    }
   }
 
-  closeAllForms(): void {
-    this.showFollowUpForm = false;
-    this.showTargetDateForm = false;
-    this.showActionTakenForm = false;
-    this.showAuditorForm = false;
-    this.showClosureForm = false;
+  // ─── Auditor Approval ─────────────────────────────────────────────────────
+
+  submitAuditorClose(): void {
+    if (this.auditorCloseForm.invalid || !this.observation) return;
+    this.approvingClose = true;
+    const v = this.auditorCloseForm.value;
+    this.auditService
+      .approveClose(
+        this.observation.observationId,
+        this.CURRENT_USER_ID,
+        v.closure_date,
+        v.closure_remarks
+      )
+      .subscribe({
+        next: (updated) => {
+          this.observation = updated;
+          this.showAuditorCloseForm = false;
+          this.approvingClose = false;
+          this.approveCloseSuccess = true;
+          setTimeout(() => (this.approveCloseSuccess = false), 3000);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Approval failed.';
+          this.approvingClose = false;
+        },
+      });
   }
 
-  isResponsiblePerson(ai: AuditActionItem): boolean {
-    return ai.responsiblePersonId === this.currentUser?.id ||
-      this.currentUser?.role === 'Responsible Person';
+  // ─── Update Status / Follow-up (Audit Team) ───────────────────────────────
+
+  submitUpdate(): void {
+    if (this.updateForm.invalid || !this.observation) return;
+    this.updating = true;
+    const v = this.updateForm.value;
+    this.auditService
+      .updateObservation(this.observation.observationId, {
+        subsequent_followup_1: v.subsequent_followup_1 || undefined,
+        updated_target_date_1: v.updated_target_date_1 || undefined,
+        status: v.status,
+      })
+      .subscribe({
+        next: (updated) => {
+          this.observation = updated;
+          this.updating = false;
+          this.updateSuccess = true;
+          this.showUpdateForm = false;
+          setTimeout(() => (this.updateSuccess = false), 3000);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Update failed.';
+          this.updating = false;
+        },
+      });
   }
 
-  get isAuditTeam(): boolean {
-    return this.currentUser?.role === 'Audit Team';
+  // ─── Direct Close (Audit Team) ────────────────────────────────────────────
+
+  submitClose(): void {
+    if (this.closeForm.invalid || !this.observation) return;
+    this.closing = true;
+    const v = this.closeForm.value;
+    this.auditService
+      .closeObservation(this.observation.observationId, v.closure_date, v.closure_remarks)
+      .subscribe({
+        next: (updated) => {
+          this.observation = updated;
+          this.closing = false;
+          this.closeSuccess = true;
+          this.showCloseForm = false;
+          setTimeout(() => (this.closeSuccess = false), 3000);
+        },
+        error: (err: Error) => {
+          this.errorMsg = err.message ?? 'Close operation failed.';
+          this.closing = false;
+        },
+      });
   }
 
-  get isHoD(): boolean {
-    return this.currentUser?.role === 'HoD';
+  // ─── Delete ───────────────────────────────────────────────────────────────
+
+  deleteObservation(): void {
+    if (!this.observation) return;
+    if (!confirm(`Delete observation ${this.observation.observationNumber}? This cannot be undone.`)) return;
+    this.deleting = true;
+    this.auditService.deleteObservation(this.observation.observationId).subscribe({
+      next: () => this.router.navigate(['/audit-car/observations/list']),
+      error: (err: Error) => {
+        this.errorMsg = err.message ?? 'Delete failed.';
+        this.deleting = false;
+      },
+    });
   }
 
-  // ─── Follow-up ─────────────────────────────────────────────────────────────
-  submitFollowUp(): void {
-    if (this.followUpForm.invalid || !this.selectedActionItem) return;
-    const followUp: AuditFollowUp = {
-      id: `FU-${Date.now()}`,
-      actionItemId: this.selectedActionItem.id,
-      date: new Date().toISOString().split('T')[0],
-      remarks: this.followUpForm.value.remarks,
-      addedBy: this.currentUser?.id ?? '',
-      addedByName: this.currentUser?.name ?? '',
-    };
-    if (this.observation && this.selectedActionItem) {
-      const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-      if (ai) {
-        ai.followUps = [...(ai.followUps ?? []), followUp];
-        this.selectedActionItem = { ...ai };
-      }
-    }
-    this.followUpForm.reset();
-    this.showFollowUpForm = false;
-  }
+  // ─── UI helpers ───────────────────────────────────────────────────────────
 
-  // ─── Target Date Revision ──────────────────────────────────────────────────
-  submitTargetDateRevision(): void {
-    if (this.targetDateForm.invalid || !this.selectedActionItem) return;
-    const revision: AuditTargetDateRevision = {
-      id: `TDR-${Date.now()}`,
-      actionItemId: this.selectedActionItem.id,
-      previousDate: this.selectedActionItem.currentTargetDate,
-      newDate: this.targetDateForm.value.newDate,
-      reason: this.targetDateForm.value.reason,
-      revisedDate: new Date().toISOString().split('T')[0],
-      revisedBy: this.currentUser?.id ?? '',
-      revisedByName: this.currentUser?.name ?? '',
-    };
-    if (this.observation) {
-      const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-      if (ai) {
-        ai.targetDateRevisions = [...(ai.targetDateRevisions ?? []), revision];
-        ai.currentTargetDate = revision.newDate;
-        this.selectedActionItem = { ...ai };
-      }
-    }
-    this.targetDateForm.reset();
-    this.showTargetDateForm = false;
-  }
+  goBack(): void { this.router.navigate(['/audit-car/observations/list']); }
 
-  // ─── Action Taken Update ───────────────────────────────────────────────────
-  submitActionTaken(): void {
-    if (this.actionTakenForm.invalid || !this.selectedActionItem || !this.observation) return;
-    const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-    if (ai) {
-      ai.actionTaken = this.actionTakenForm.value.actionTaken;
-      ai.status = this.actionTakenForm.value.status as AuditActionItemStatus;
-      ai.managementComment = this.actionTakenForm.value.managementComment;
-      this.selectedActionItem = { ...ai };
-      this.observation.overallStatus = this.auditService.computeOverallStatus(this.observation.actionItems);
-    }
-    this.showActionTakenForm = false;
-  }
-
-  // ─── Auditor Confirmation ──────────────────────────────────────────────────
-  submitAuditorConfirmation(): void {
-    if (this.auditorForm.invalid || !this.selectedActionItem || !this.observation) return;
-    const ai = this.observation.actionItems.find((a) => a.id === this.selectedActionItem!.id);
-    if (ai) {
-      ai.auditorConfirmationStatus = this.auditorForm.value.confirmationStatus;
-      ai.auditorConfirmationComment = this.auditorForm.value.confirmationComment;
-      if (ai.auditorConfirmationStatus === 'Confirmed') {
-        ai.status = 'Closed';
-        ai.closureDate = new Date().toISOString().split('T')[0];
-      } else if (ai.auditorConfirmationStatus === 'Rejected') {
-        ai.status = 'Partially Open';
-      }
-      this.selectedActionItem = { ...ai };
-      this.observation.overallStatus = this.auditService.computeOverallStatus(this.observation.actionItems);
-    }
-    this.showAuditorForm = false;
-  }
-
-  // ─── Overall Closure ───────────────────────────────────────────────────────
-  submitOverallClosure(): void {
-    if (this.closureForm.invalid || !this.observation) return;
-    this.observation.auditorClosureComment = this.closureForm.value.auditorClosureComment;
-    this.observation.overallStatus = 'Closed';
-    this.showClosureForm = false;
-  }
-
-  getStatusClass(status: string): string {
-    return this.auditService.getStatusBadgeClass(status as never);
-  }
+  getStatusClass(status: string): string { return this.auditService.getStatusBadgeClass(status); }
 
   getRiskClass(rating: string): string {
-    return this.auditService.getRiskBadgeClass(rating as never);
+    return this.auditService.getRiskBadgeClass(rating as AuditRiskRating);
   }
 
-  getDaysRemaining(date: string): number {
-    return this.auditService.getDaysRemaining(date);
+  getDaysRemaining(date: string): number { return this.auditService.getDaysRemaining(date); }
+
+  getEvidenceUrl(fileId: number): string { return this.auditService.getEvidenceDownloadUrl(fileId); }
+
+  get effectiveTargetDate(): string {
+    if (!this.observation) return '';
+    return this.observation.updatedTargetDate1 || this.observation.initialTargetDate || '';
   }
 
-  isOverdue(date: string, status: string): boolean {
-    return this.auditService.isOverdue(date, status as never);
+  get isOverdue(): boolean {
+    if (!this.observation) return false;
+    if (this.observation.status === 'Closed') return false;
+    const target = this.effectiveTargetDate;
+    return target ? new Date(target) < new Date() : false;
   }
 
-  goBack(): void {
-    this.router.navigate(['/audit-car/observations/list']);
-  }
+  get isClosed(): boolean { return this.observation?.status === 'Closed'; }
+
+  get isPendingAuditor(): boolean { return this.observation?.status === 'Request Closure'; }
+
+  fileSizeKb(bytes: number): string { return (bytes / 1024).toFixed(1); }
 }

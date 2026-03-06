@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuditCarService } from '../services/audit-car.service';
-import { AuditObservation, AuditUser, AuditRiskRating, AuditObservationStatus } from '../../../../core/models/models';
+import { AuditCarService, ObservationFilters } from '../services/audit-car.service';
+import { AuditObservation, AuditRiskRating } from '../../../../core/models/models';
 
 @Component({
   selector: 'app-observation-list',
@@ -14,96 +14,93 @@ import { AuditObservation, AuditUser, AuditRiskRating, AuditObservationStatus } 
 })
 export class ObservationListComponent implements OnInit {
   observations: AuditObservation[] = [];
-  filteredObservations: AuditObservation[] = [];
-  currentUser: AuditUser | null = null;
+  loading = false;
+  errorMsg = '';
 
-  // Filters
+  // Filters (server-side)
   filterYear = '';
-  filterDivision = '';
   filterRisk = '';
   filterStatus = '';
+  // search is client-side (applied after server fetch)
   searchTerm = '';
 
-  // Sort
-  sortField = 'observationId';
-  sortAsc = true;
+  // Sort (client-side on current page)
+  sortField = 'observationNumber';
+  sortAsc = false;
 
   // Pagination
-  pageSize = 10;
+  pageSize = 20;
   currentPage = 1;
-  totalPages = 1;
+  totalRecords = 0;
 
   availableYears: number[] = [];
-  availableDivisions: string[] = [];
 
-  constructor(private auditService: AuditCarService) {}
+  constructor(private auditService: AuditCarService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.currentUser = this.auditService.getCurrentUser();
-    this.loadObservations();
-  }
+    const yr = new Date().getFullYear();
+    this.availableYears = [yr, yr - 1, yr - 2, yr - 3];
 
-  loadObservations(): void {
-    const role = this.currentUser?.role;
-    if (role === 'Responsible Person' && this.currentUser?.id) {
-      this.auditService.getObservationsByUser(this.currentUser.id).subscribe((data) => {
-        this.observations = data;
-        this.buildFilterOptions();
-        this.applyFilters();
-      });
-    } else if (role === 'HoD' && this.currentUser?.division) {
-      this.auditService.getObservationsByHoD(this.currentUser.division).subscribe((data) => {
-        this.observations = data;
-        this.buildFilterOptions();
-        this.applyFilters();
-      });
-    } else {
-      this.auditService.getObservations().subscribe((res) => {
-        this.observations = res.data;
-        this.buildFilterOptions();
-        this.applyFilters();
-      });
+    // Pre-populate filters from dashboard navigation queryParams
+    const qp = this.route.snapshot.queryParamMap;
+    if (qp.get('status'))   this.filterStatus = qp.get('status')!;
+    if (qp.get('risk'))     this.filterRisk   = qp.get('risk')!;
+    if (qp.get('division')) {
+      // division is a free-text field; put it in search so client-side filter picks it up
+      this.searchTerm = qp.get('division')!;
     }
+
+    this.load();
   }
 
-  buildFilterOptions(): void {
-    this.availableYears = [...new Set(this.observations.map((o) => o.auditYear))].sort((a, b) => b - a);
-    this.availableDivisions = [...new Set(this.observations.map((o) => o.division))].sort();
+  load(): void {
+    this.loading = true;
+    this.errorMsg = '';
+    const filters: ObservationFilters = {
+      limit: this.pageSize,
+      offset: (this.currentPage - 1) * this.pageSize,
+    };
+    if (this.filterYear)   filters.audit_year   = Number(this.filterYear);
+    if (this.filterRisk)   filters.risk_rating   = this.filterRisk;
+    if (this.filterStatus) filters.status        = this.filterStatus;
+
+    this.auditService.getObservations(filters).subscribe({
+      next: ({ rows, total }) => {
+        this.totalRecords = total;
+        this.observations = this.searchTerm ? this.clientFilter(rows) : rows;
+        this.loading = false;
+      },
+      error: (err: Error) => {
+        this.errorMsg = err.message ?? 'Failed to load observations.';
+        this.loading = false;
+      },
+    });
+  }
+
+  private clientFilter(rows: AuditObservation[]): AuditObservation[] {
+    const term = this.searchTerm.toLowerCase();
+    return rows.filter(
+      (o) =>
+        (o.observationNumber ?? '').toLowerCase().includes(term) ||
+        (o.observationTitle ?? '').toLowerCase().includes(term) ||
+        (o.auditArea ?? '').toLowerCase().includes(term) ||
+        (o.division ?? '').toLowerCase().includes(term) ||
+        (o.responsiblePerson ?? '').toLowerCase().includes(term)
+    );
   }
 
   applyFilters(): void {
-    let result = [...this.observations];
+    this.currentPage = 1;
+    this.load();
+  }
 
-    if (this.searchTerm) {
-      const term = this.searchTerm.toLowerCase();
-      result = result.filter(
-        (o) =>
-          o.observationId.toLowerCase().includes(term) ||
-          o.observation.toLowerCase().includes(term) ||
-          o.auditArea.toLowerCase().includes(term) ||
-          o.division.toLowerCase().includes(term)
-      );
-    }
-    if (this.filterYear) result = result.filter((o) => o.auditYear === Number(this.filterYear));
-    if (this.filterDivision) result = result.filter((o) => o.division === this.filterDivision);
-    if (this.filterRisk) result = result.filter((o) => o.riskRating === this.filterRisk);
-    if (this.filterStatus) result = result.filter((o) => o.overallStatus === this.filterStatus);
-
-    // Sort
-    result.sort((a, b) => {
-      const rawA = (a as unknown as Record<string, unknown>)[this.sortField] ?? '';
-      const rawB = (b as unknown as Record<string, unknown>)[this.sortField] ?? '';
-      const valA = typeof rawA === 'string' ? rawA.toLowerCase() : rawA;
-      const valB = typeof rawB === 'string' ? rawB.toLowerCase() : rawB;
-      if (valA < valB) return this.sortAsc ? -1 : 1;
-      if (valA > valB) return this.sortAsc ? 1 : -1;
-      return 0;
-    });
-
-    this.totalPages = Math.ceil(result.length / this.pageSize) || 1;
-    if (this.currentPage > this.totalPages) this.currentPage = 1;
-    const start = (this.currentPage - 1) * this.pageSize;
-    this.filteredObservations = result.slice(start, start + this.pageSize);
+  clearFilters(): void {
+    this.filterYear = '';
+    this.filterRisk = '';
+    this.filterStatus = '';
+    this.searchTerm = '';
+    this.currentPage = 1;
+    this.load();
   }
 
   sortBy(field: string): void {
@@ -113,7 +110,15 @@ export class ObservationListComponent implements OnInit {
       this.sortField = field;
       this.sortAsc = true;
     }
-    this.applyFilters();
+    this.observations = [...this.observations].sort((a, b) => {
+      const rawA = (a as unknown as Record<string, unknown>)[this.sortField] ?? '';
+      const rawB = (b as unknown as Record<string, unknown>)[this.sortField] ?? '';
+      const valA = typeof rawA === 'string' ? rawA.toLowerCase() : rawA;
+      const valB = typeof rawB === 'string' ? rawB.toLowerCase() : rawB;
+      if (valA < valB) return this.sortAsc ? -1 : 1;
+      if (valA > valB) return this.sortAsc ? 1 : -1;
+      return 0;
+    });
   }
 
   sortIcon(field: string): string {
@@ -121,45 +126,52 @@ export class ObservationListComponent implements OnInit {
     return this.sortAsc ? 'ti ti-sort-ascending' : 'ti ti-sort-descending';
   }
 
-  clearFilters(): void {
-    this.filterYear = '';
-    this.filterDivision = '';
-    this.filterRisk = '';
-    this.filterStatus = '';
-    this.searchTerm = '';
-    this.currentPage = 1;
-    this.applyFilters();
-  }
-
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    this.applyFilters();
+    this.load();
+  }
+
+  downloadAnnexures(obs: AuditObservation, event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+    // Navigate to detail page where all annexures can be downloaded individually
+    window.open(`/audit-car/observations/detail/${obs.observationId}`, '_blank');
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalRecords / this.pageSize) || 1;
   }
 
   get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    const total = this.totalPages;
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    const p = this.currentPage;
+    const out: number[] = [1];
+    if (p > 3) out.push(-1);
+    for (let i = Math.max(2, p - 1); i <= Math.min(total - 1, p + 1); i++) out.push(i);
+    if (p < total - 2) out.push(-1);
+    out.push(total);
+    return out;
+  }
+
+  get startRecord(): number {
+    return this.totalRecords === 0 ? 0 : (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get endRecord(): number {
+    return Math.min(this.currentPage * this.pageSize, this.totalRecords);
   }
 
   getStatusClass(status: string): string {
-    return this.auditService.getStatusBadgeClass(status as never);
+    return this.auditService.getStatusBadgeClass(status);
   }
 
   getRiskClass(rating: string): string {
     return this.auditService.getRiskBadgeClass(rating as AuditRiskRating);
   }
 
-  getOverdueCount(obs: AuditObservation): number {
-    return obs.actionItems.filter((ai) =>
-      this.auditService.isOverdue(ai.currentTargetDate, ai.status)
-    ).length;
-  }
-
-  exportData(): void {
-    this.auditService.exportToExcel(this.observations);
-  }
-
-  get isAuditTeam(): boolean {
-    return this.currentUser?.role === 'Audit Team';
+  effectiveTarget(obs: AuditObservation): string {
+    return obs.updatedTargetDate1 || obs.initialTargetDate || '';
   }
 }
