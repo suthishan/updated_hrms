@@ -1,0 +1,377 @@
+{
+  "totalData": 10,
+  "data": [
+    {
+      "id": "PKG001",
+      "title": "Protein Bar – Chocolate Almond Packaging",
+      "description": "Revised packaging creative for Protein Bar Chocolate Almond variant with new nutritional claims and updated branding.",
+      "productName": "Protein Bar – Chocolate Almond",
+      "productCategory": "Health Bars",
+      "batchRef": "PB-CA-2026-001",
+      "files": [
+        {
+          "id": "F001",
+          "name": "protein-bar-chocolate-front.pdf",
+          "type": "pdf",
+          "size": 2456789,
+          "url": "assets/json/sample.pdf",
+          "uploadedAt": "2026-02-20T09:30:00Z"
+        },
+        {
+          "id": "F002",
+          "name": "protein-bar-chocolate-back.jpeg",
+          "type": "jpeg",
+          "size": 1234567,
+          "url": "assets/img/products/product1.jpg",
+          "uploadedAt": "2026-02-20T09:32:00Z"
+        }
+      ],
+      "workflowType": "sequential",
+      "status": "in-review",
+      "initiator": "Amit Kulkarni",
+      "initiatorEmail": "amit.kulkarni@company.com",
+      "initiatorAvatar": "assets/img/profiles/avatar-10.jpg",
+      "createdAt": "2026-02-20T09:00:00Z",
+      "updatedAt": "2026-02-28T14:20:00Z",
+      "currentStepIndex": 2,
+      "approvalSteps": [
+        {
+          "id": "STEP001",
+          "stepNumber": 1,
+          "stepType": "sequential",
+          "status": "completed",
+          "completedAt": "2026-02-22T11:00:00Z",
+          "approvers": [
+            {
+              "approverId": "APR001",
+              "approverName": "Rajesh Kumar",
+              "approverEmail": "rajesh.kumar@company.com",
+              "role": "Head of Quality",
+              "avatar": "assets/img/profiles/avatar-02.jpg",
+              "status": "approved",
+              "remarks": "Packaging design meets quality standards. Nutritional info is accurate.",
+              "actionAt": "2026-02-22T11:00:00Z"
+            }
+          ]
+        },
+        {
+          "id": "STEP002",
+          "stepNumber": 2,
+          "stepType": "parallel",
+          "status": "completed",
+          "completedAt": "2026-02-25T16:30:00Z",
+          "approvers": [
+            {
+              "approverId": "APR002",
+              "approverName": "Priya Sharma",
+              "approverEmail": "priya.sharma@company.com",
+              "role": "Head of Nutrition",
+              "avatar": "assets/img/profiles/avatar-03.jpg",
+              "status": "approved",
+              "remarks": "Nutritional claims verified and compliant.",
+              "actionAt": "2026-02-24T10:15:00Z"
+            },
+            {
+              "approverId": "APR004",
+              "approverName": "Anita Verma",
+              "approverEmail": "anita.verma@company.com",
+              "role": "Head of Sales",
+              "avatar": "assets/img/profiles/avatar-05.jpg",
+              "status": "approved",
+              "remarks": "Design aligns with market positioning.",
+              "actionAt": "2026-02-25T16:30:00Z"
+            }
+          ]
+        },
+        {
+          "id": "STEP003",
+          "stepNumber": 3,
+          "stepType": "sequential",
+          "status": "in-progress",
+          "approvers": [
+            {
+              "approverId": "APR006",
+              "approverName": "Meera Nair",
+              "approverEmail": "meera.nair@company.com",
+              "role": "Compliance Head",
+              "avatar": "assets/img/profiles/avatar-07.jpg",
+              "status": "pending",
+              "remarks": null,
+              "actionAt": null
+            }
+          ]
+        },
+        {
+          "id": "STEP004",
+          "stepNumber": 4,
+          "stepType": "sequential",
+          "status": "pending",
+          "approvers": [
+            {
+              "approverId": "APR008",
+              "approverName": "Ravi Mehta",
+              "approverEmail": "ravi.mehta@company.com",
+              "role": "Managing Director",
+              "avatar": "assets/img/profiles/avatar-09.jpg",
+              "status": "pending",
+              "remarks": null,
+              "actionAt": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PKG002",
+      "title": "Muesli Crunch – Berry Mix Packaging",
+      "description": "New product launch packaging for Muesli Crunch Berry Mix 400g variant.",
+      "productName": "Muesli Crunch – Berry Mix",
+      "productCategory": "Breakfast Cereals",
+      "batchRef": "MC-BM-2026-002",
+      "files": [
+        {
+          "id": "F003",
+          "name": "muesli-berry-main-design.pdf",
+          "type": "pdf",
+          "size": 3567890,
+          "url": "assets/json/sample.pdf",
+          "uploadedAt": "2026-02-25T10:00:00Z"
+        }
+      ],
+      "workflowType": "hybrid",
+      "status": "pending",
+      "initiator": "Sneha Patil",
+      "initiatorEmail": "sneha.patil@company.com",
+      "initiatorAvatar": "assets/img/profiles/avatar-11.jpg",
+      "createdAt": "2026-02-25T09:45:00Z",
+      "updatedAt": "2026-02-25T10:00:00Z",
+      "currentStepIndex": 0,
+      "approvalSteps": [
+        {
+          "id": "STEP005",
+          "stepNumber": 1,
+          "stepType": "parallel",
+          "status": "in-progress",
+          "approvers": [
+            {
+              "approverId": "APR001",
+              "approverName": "Rajesh Kumar",
+              "approverEmail": "rajesh.kumar@company.com",
+              "role": "Head of Quality",
+              "avatar": "assets/img/profiles/avatar-02.jpg",
+              "status": "pending",
+              "remarks": null,
+              "actionAt": null
+            },
+            {
+              "approverId": "APR002",
+              "approverName": "Priya Sharma",
+              "approverEmail": "priya.sharma@company.com",
+              "role": "Head of Nutrition",
+              "avatar": "assets/img/profiles/avatar-03.jpg",
+              "status": "pending",
+              "remarks": null,
+              "actionAt": null
+            },
+            {
+              "approverId": "APR003",
+              "approverName": "Suresh Patel",
+              "approverEmail": "suresh.patel@company.com",
+              "role": "Head of Production",
+              "avatar": "assets/img/profiles/avatar-04.jpg",
+              "status": "pending",
+              "remarks": null,
+              "actionAt": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PKG003",
+      "title": "Granola Bar – Honey Oat Packaging Refresh",
+      "description": "Packaging refresh for existing Granola Bar Honey Oat with updated logo and compliance text.",
+      "productName": "Granola Bar – Honey Oat",
+      "productCategory": "Health Bars",
+      "batchRef": "GB-HO-2026-003",
+      "files": [
+        {
+          "id": "F004",
+          "name": "granola-honey-oat-v2.pdf",
+          "type": "pdf",
+          "size": 1890345,
+          "url": "assets/json/sample.pdf",
+          "uploadedAt": "2026-01-15T08:00:00Z"
+        },
+        {
+          "id": "F005",
+          "name": "granola-honey-oat-side-panel.jpeg",
+          "type": "jpeg",
+          "size": 876543,
+          "url": "assets/img/products/product2.jpg",
+          "uploadedAt": "2026-01-15T08:05:00Z"
+        }
+      ],
+      "workflowType": "sequential",
+      "status": "approved",
+      "initiator": "Kiran Reddy",
+      "initiatorEmail": "kiran.reddy@company.com",
+      "initiatorAvatar": "assets/img/profiles/avatar-12.jpg",
+      "createdAt": "2026-01-15T07:30:00Z",
+      "updatedAt": "2026-01-30T17:00:00Z",
+      "currentStepIndex": 4,
+      "approvalSteps": [
+        {
+          "id": "STEP006",
+          "stepNumber": 1,
+          "stepType": "sequential",
+          "status": "completed",
+          "completedAt": "2026-01-17T10:00:00Z",
+          "approvers": [
+            {
+              "approverId": "APR001",
+              "approverName": "Rajesh Kumar",
+              "approverEmail": "rajesh.kumar@company.com",
+              "role": "Head of Quality",
+              "avatar": "assets/img/profiles/avatar-02.jpg",
+              "status": "approved",
+              "remarks": "Approved. Quality standards met.",
+              "actionAt": "2026-01-17T10:00:00Z"
+            }
+          ]
+        },
+        {
+          "id": "STEP007",
+          "stepNumber": 2,
+          "stepType": "sequential",
+          "status": "completed",
+          "completedAt": "2026-01-19T12:30:00Z",
+          "approvers": [
+            {
+              "approverId": "APR005",
+              "approverName": "Vikram Singh",
+              "approverEmail": "vikram.singh@company.com",
+              "role": "Business Head",
+              "avatar": "assets/img/profiles/avatar-06.jpg",
+              "status": "approved",
+              "remarks": "Good. Proceed.",
+              "actionAt": "2026-01-19T12:30:00Z"
+            }
+          ]
+        },
+        {
+          "id": "STEP008",
+          "stepNumber": 3,
+          "stepType": "sequential",
+          "status": "completed",
+          "completedAt": "2026-01-25T09:00:00Z",
+          "approvers": [
+            {
+              "approverId": "APR006",
+              "approverName": "Meera Nair",
+              "approverEmail": "meera.nair@company.com",
+              "role": "Compliance Head",
+              "avatar": "assets/img/profiles/avatar-07.jpg",
+              "status": "approved",
+              "remarks": "Regulatory compliance verified.",
+              "actionAt": "2026-01-25T09:00:00Z"
+            }
+          ]
+        },
+        {
+          "id": "STEP009",
+          "stepNumber": 4,
+          "stepType": "sequential",
+          "status": "completed",
+          "completedAt": "2026-01-30T17:00:00Z",
+          "approvers": [
+            {
+              "approverId": "APR008",
+              "approverName": "Ravi Mehta",
+              "approverEmail": "ravi.mehta@company.com",
+              "role": "Managing Director",
+              "avatar": "assets/img/profiles/avatar-09.jpg",
+              "status": "approved",
+              "remarks": "Final approval granted. Send to procurement.",
+              "actionAt": "2026-01-30T17:00:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PKG004",
+      "title": "Whey Protein – Vanilla Packaging Redesign",
+      "description": "Complete redesign of Whey Protein Vanilla 1kg packaging with new brand guidelines.",
+      "productName": "Whey Protein – Vanilla",
+      "productCategory": "Sports Nutrition",
+      "batchRef": "WP-VN-2026-004",
+      "files": [
+        {
+          "id": "F006",
+          "name": "whey-vanilla-redesign-draft.pdf",
+          "type": "pdf",
+          "size": 4123456,
+          "url": "assets/json/sample.pdf",
+          "uploadedAt": "2026-02-28T14:00:00Z"
+        }
+      ],
+      "workflowType": "sequential",
+      "status": "rejected",
+      "initiator": "Amit Kulkarni",
+      "initiatorEmail": "amit.kulkarni@company.com",
+      "initiatorAvatar": "assets/img/profiles/avatar-10.jpg",
+      "createdAt": "2026-02-28T13:30:00Z",
+      "updatedAt": "2026-03-01T09:00:00Z",
+      "currentStepIndex": 0,
+      "approvalSteps": [
+        {
+          "id": "STEP010",
+          "stepNumber": 1,
+          "stepType": "sequential",
+          "status": "rejected",
+          "completedAt": "2026-03-01T09:00:00Z",
+          "approvers": [
+            {
+              "approverId": "APR001",
+              "approverName": "Rajesh Kumar",
+              "approverEmail": "rajesh.kumar@company.com",
+              "role": "Head of Quality",
+              "avatar": "assets/img/profiles/avatar-02.jpg",
+              "status": "rejected",
+              "remarks": "Protein content claims do not match lab reports. Please revise and resubmit.",
+              "actionAt": "2026-03-01T09:00:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PKG005",
+      "title": "Energy Drink – Citrus Burst Packaging",
+      "description": "New packaging for Energy Drink Citrus Burst 250ml can.",
+      "productName": "Energy Drink – Citrus Burst",
+      "productCategory": "Beverages",
+      "batchRef": "ED-CB-2026-005",
+      "files": [
+        {
+          "id": "F007",
+          "name": "energy-drink-citrus-can-design.pdf",
+          "type": "pdf",
+          "size": 2987654,
+          "url": "assets/json/sample.pdf",
+          "uploadedAt": "2026-03-01T11:00:00Z"
+        }
+      ],
+      "workflowType": "hybrid",
+      "status": "draft",
+      "initiator": "Sneha Patil",
+      "initiatorEmail": "sneha.patil@company.com",
+      "initiatorAvatar": "assets/img/profiles/avatar-11.jpg",
+      "createdAt": "2026-03-01T10:45:00Z",
+      "updatedAt": "2026-03-01T11:00:00Z",
+      "currentStepIndex": 0,
+      "approvalSteps": []
+    }
+  ]
+}

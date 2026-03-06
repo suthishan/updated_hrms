@@ -1,0 +1,38 @@
+.workflow-card {
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover { background: rgba(var(--bs-primary-rgb), 0.05); }
+  &.selected {
+    border-color: var(--bs-primary) !important;
+    background: rgba(var(--bs-primary-rgb), 0.08);
+  }
+}
+
+.workflow-icon { font-size: 32px; }
+
+.step-block .step-approvers { min-height: 60px; }
+
+.approver-chip {
+  background: #fff;
+  transition: background 0.15s;
+  &:hover { background: rgba(var(--bs-primary-rgb), 0.04); }
+}
+
+.approver-item {
+  transition: background 0.15s;
+  &:hover { background: rgba(var(--bs-primary-rgb), 0.04); }
+  &.selected-approver { background: rgba(var(--bs-primary-rgb), 0.06); }
+}
+
+.badge-soft-primary  { background: rgba(var(--bs-primary-rgb), 0.1);   color: var(--bs-primary); }
+.badge-soft-success  { background: rgba(var(--bs-success-rgb), 0.1);   color: var(--bs-success); }
+.badge-soft-info     { background: rgba(var(--bs-info-rgb), 0.1);      color: var(--bs-info); }
+.badge-soft-warning  { background: rgba(var(--bs-warning-rgb), 0.1);   color: var(--bs-warning); }
+.badge-soft-secondary{ background: rgba(var(--bs-secondary-rgb), 0.1); color: var(--bs-secondary); }
+
+.avatar-sm {
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+.btn-xs { padding: 0.15rem 0.5rem; font-size: 0.75rem; }

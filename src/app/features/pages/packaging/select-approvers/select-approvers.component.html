@@ -1,0 +1,264 @@
+<div class="content">
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Select Approvers & Workflow" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <a routerLink="/pages/packaging/upload" class="btn btn-outline-secondary">
+      <i class="ti ti-arrow-left me-1"></i>Back
+    </a>
+  </div>
+
+  <!-- Step Indicator -->
+  <div class="card mb-4">
+    <div class="card-body py-3">
+      <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+        <div class="d-flex align-items-center">
+          <span class="avatar avatar-sm bg-success rounded-circle me-2 fw-bold text-white">
+            <i class="ti ti-check fs-14"></i>
+          </span>
+          <span class="text-success fw-medium">Upload Creative</span>
+        </div>
+        <i class="ti ti-chevron-right text-muted"></i>
+        <div class="d-flex align-items-center">
+          <span class="avatar avatar-sm bg-primary rounded-circle me-2 fw-bold text-white">2</span>
+          <span class="fw-semibold text-primary">Select Approvers</span>
+        </div>
+        <i class="ti ti-chevron-right text-muted"></i>
+        <div class="d-flex align-items-center">
+          <span class="avatar avatar-sm bg-light rounded-circle me-2 fw-bold text-muted">3</span>
+          <span class="text-muted">Confirmation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center mb-3">
+    <i class="ti ti-circle-check me-2 fs-20"></i><div>{{ successMessage }}</div>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center mb-3">
+    <i class="ti ti-alert-circle me-2 fs-20"></i><div>{{ errorMessage }}</div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Left: Workflow Type + Steps Builder -->
+    <div class="col-xl-7">
+      <!-- Workflow Type Selection -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-sitemap me-2 text-primary"></i>Choose Workflow Type
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <!-- Sequential -->
+            <div class="col-md-4">
+              <div class="workflow-card p-3 rounded border text-center"
+                [class.selected]="workflowType === 'sequential'"
+                (click)="setWorkflowType('sequential')" role="button">
+                <i class="ti ti-arrow-right workflow-icon text-primary mb-2 d-block"></i>
+                <h6 class="fw-semibold mb-1">Sequential</h6>
+                <p class="text-muted fs-12 mb-0">One after another</p>
+              </div>
+            </div>
+            <!-- Parallel -->
+            <div class="col-md-4">
+              <div class="workflow-card p-3 rounded border text-center"
+                [class.selected]="workflowType === 'parallel'"
+                (click)="setWorkflowType('parallel')" role="button">
+                <i class="ti ti-arrows-split workflow-icon text-success mb-2 d-block"></i>
+                <h6 class="fw-semibold mb-1">Parallel</h6>
+                <p class="text-muted fs-12 mb-0">All simultaneously</p>
+              </div>
+            </div>
+            <!-- Hybrid -->
+            <div class="col-md-4">
+              <div class="workflow-card p-3 rounded border text-center"
+                [class.selected]="workflowType === 'hybrid'"
+                (click)="setWorkflowType('hybrid')" role="button">
+                <i class="ti ti-chart-arrows workflow-icon text-warning mb-2 d-block"></i>
+                <h6 class="fw-semibold mb-1">Hybrid</h6>
+                <p class="text-muted fs-12 mb-0">Mixed approach</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approval Steps Builder -->
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-list-numbers me-2 text-primary"></i>Approval Steps
+          </h5>
+          <button type="button" class="btn btn-sm btn-outline-primary" (click)="addStep()">
+            <i class="ti ti-plus me-1"></i>Add Step
+          </button>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let step of workflowSteps; let si = index" class="step-block mb-4">
+            <!-- Step Header -->
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <div class="d-flex align-items-center">
+                <span class="avatar avatar-sm rounded-circle me-2 fw-bold"
+                  [class.bg-primary]="step.stepType === 'sequential'"
+                  [class.bg-success]="step.stepType === 'parallel'"
+                  [class.text-white]="true">
+                  {{ step.stepNumber }}
+                </span>
+                <span class="fw-semibold me-3">Step {{ step.stepNumber }}</span>
+                <div *ngIf="workflowType === 'hybrid'" class="btn-group btn-group-sm">
+                  <button type="button" class="btn btn-outline-primary"
+                    [class.active]="step.stepType === 'sequential'"
+                    (click)="step.stepType = 'sequential'">
+                    <i class="ti ti-arrow-right me-1"></i>Sequential
+                  </button>
+                  <button type="button" class="btn btn-outline-success"
+                    [class.active]="step.stepType === 'parallel'"
+                    (click)="step.stepType = 'parallel'">
+                    <i class="ti ti-arrows-split me-1"></i>Parallel
+                  </button>
+                </div>
+                <span *ngIf="workflowType !== 'hybrid'" class="badge"
+                  [class.badge-soft-primary]="step.stepType === 'sequential'"
+                  [class.badge-soft-success]="step.stepType === 'parallel'">
+                  {{ step.stepType | titlecase }}
+                </span>
+              </div>
+              <button *ngIf="workflowSteps.length > 1" type="button"
+                class="btn btn-icon btn-sm btn-outline-danger" (click)="removeStep(si)" title="Remove step">
+                <i class="ti ti-trash"></i>
+              </button>
+            </div>
+
+            <!-- Step Approvers -->
+            <div class="step-approvers border rounded p-3"
+              [class.border-primary]="step.stepType === 'sequential'"
+              [class.border-success]="step.stepType === 'parallel'">
+              <div *ngIf="step.selectedApprovers.length === 0" class="text-center text-muted py-2">
+                <i class="ti ti-user-plus d-block fs-24 mb-1"></i>
+                <small>Select approvers from the panel →</small>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                <div *ngFor="let approver of step.selectedApprovers"
+                  class="approver-chip d-flex align-items-center border rounded-pill px-3 py-1">
+                  <img [src]="approver.avatar || 'assets/img/profiles/avatar-02.jpg'"
+                    [alt]="approver.name" class="rounded-circle me-2" width="24" height="24">
+                  <div>
+                    <span class="fs-13 fw-medium">{{ approver.name }}</span>
+                    <small class="text-muted ms-1">({{ approver.role }})</small>
+                  </div>
+                  <button type="button" class="btn btn-icon btn-xs text-danger ms-2"
+                    (click)="removeApproverFromStep(step, approver.id)">
+                    <i class="ti ti-x fs-12"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step connector -->
+            <div *ngIf="si < workflowSteps.length - 1" class="step-connector text-center my-2">
+              <i class="ti ti-arrow-down text-muted fs-18"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Approver Selection Panel -->
+    <div class="col-xl-5">
+      <div class="card" style="position: sticky; top: 80px;">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="ti ti-users me-2 text-primary"></i>
+            Approvers
+            <span class="badge bg-primary ms-2">{{ totalApprovers }} selected</span>
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <!-- Search -->
+          <div class="p-3 border-bottom">
+            <div class="input-group">
+              <span class="input-group-text bg-transparent">
+                <i class="ti ti-search text-muted"></i>
+              </span>
+              <input type="text" class="form-control border-start-0 ps-0" placeholder="Search approvers..."
+                [(ngModel)]="searchQuery">
+            </div>
+          </div>
+
+          <!-- Step selector bar -->
+          <div class="p-2 border-bottom bg-light">
+            <div class="d-flex flex-wrap gap-1">
+              <small class="text-muted fw-medium me-1 align-self-center">Add to step:</small>
+              <button *ngFor="let step of workflowSteps"
+                type="button"
+                class="btn btn-xs"
+                [class.btn-primary]="editingStepIndex === step.stepNumber - 1"
+                [class.btn-outline-secondary]="editingStepIndex !== step.stepNumber - 1"
+                (click)="editingStepIndex = step.stepNumber - 1">
+                Step {{ step.stepNumber }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Approver Cards -->
+          <div class="approver-list" style="max-height: 500px; overflow-y: auto;">
+            <div *ngFor="let approver of filteredApprovers"
+              class="approver-item d-flex align-items-center justify-content-between p-3 border-bottom"
+              [class.selected-approver]="editingStepIndex >= 0 && isApproverInStep(workflowSteps[editingStepIndex], approver)">
+              <div class="d-flex align-items-center">
+                <img [src]="approver.avatar || 'assets/img/profiles/avatar-02.jpg'"
+                  [alt]="approver.name" class="rounded-circle me-3" width="40" height="40">
+                <div>
+                  <p class="mb-0 fw-medium">{{ approver.name }}</p>
+                  <small class="text-primary fw-medium">{{ approver.role }}</small>
+                  <div class="d-flex align-items-center gap-1 mt-1">
+                    <i class="ti ti-building fs-11 text-muted"></i>
+                    <small class="text-muted">{{ approver.department }}</small>
+                    <span class="badge badge-sm ms-1" [class]="getLocationBadgeClass(approver.location)">
+                      {{ approver.location }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button *ngIf="editingStepIndex >= 0" type="button"
+                  class="btn btn-icon btn-sm"
+                  [class.btn-primary]="isApproverInStep(workflowSteps[editingStepIndex], approver)"
+                  [class.btn-outline-primary]="!isApproverInStep(workflowSteps[editingStepIndex], approver)"
+                  (click)="toggleApproverInStep(workflowSteps[editingStepIndex], approver)"
+                  [title]="isApproverInStep(workflowSteps[editingStepIndex], approver) ? 'Remove from step' : 'Add to step'">
+                  <i [class]="isApproverInStep(workflowSteps[editingStepIndex], approver) ? 'ti ti-check' : 'ti ti-plus'"></i>
+                </button>
+                <span *ngIf="editingStepIndex < 0 && isApproverUsed(approver)"
+                  class="badge badge-soft-success fs-11">Added</span>
+              </div>
+            </div>
+            <div *ngIf="filteredApprovers.length === 0" class="text-center py-4 text-muted">
+              <i class="ti ti-search-off d-block fs-28 mb-1"></i>
+              <small>No approvers found</small>
+            </div>
+          </div>
+
+          <div class="p-3 border-top text-muted fs-12" *ngIf="editingStepIndex < 0">
+            <i class="ti ti-info-circle me-1"></i>
+            Select a step above to add approvers to it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="d-flex align-items-center justify-content-between mt-4">
+    <a routerLink="/pages/packaging/upload" class="btn btn-outline-secondary">
+      <i class="ti ti-arrow-left me-1"></i>Previous
+    </a>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="isSubmitting">
+      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+      <i *ngIf="!isSubmitting" class="ti ti-send me-1"></i>
+      {{ isSubmitting ? 'Submitting...' : 'Submit for Approval' }}
+    </button>
+  </div>
+</div>

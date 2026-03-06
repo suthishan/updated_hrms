@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Suthishan Murali\\nodejs\\intranet-backend\\logs\\.1df9a02d89e3ef8b13ef721ccb74c61889d17be2-audit.json",
+    "files": [
+        {
+            "date": 1772106478731,
+            "name": "D:\\Suthishan Murali\\nodejs\\intranet-backend\\logs\\combined-2026-02-26.log",
+            "hash": "9938e0b642411ce91d9df7e59eca5a135fb6ee9cc562d2e8e59abef7283e211a"
+        }
+    ],
+    "hashType": "sha256"
+}

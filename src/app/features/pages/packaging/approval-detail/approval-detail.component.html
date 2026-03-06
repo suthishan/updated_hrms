@@ -1,0 +1,314 @@
+<div class="content">
+  <!-- Breadcrumb -->
+  <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <app-breadcrumbs title="Document Detail" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <a routerLink="/pages/packaging/inbox" class="btn btn-outline-secondary">
+      <i class="ti ti-arrow-left me-1"></i>Back to Inbox
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+    <p class="text-muted mt-2">Loading document...</p>
+  </div>
+
+  <!-- Not Found -->
+  <div *ngIf="!isLoading && !document" class="card">
+    <div class="card-body text-center py-5">
+      <i class="ti ti-file-off fs-48 text-muted d-block mb-2"></i>
+      <h5>Document Not Found</h5>
+      <p class="text-muted">The document you are looking for does not exist or has been removed.</p>
+      <a routerLink="/pages/packaging/inbox" class="btn btn-primary">Go to Inbox</a>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!isLoading && document">
+    <!-- Alerts -->
+    <div *ngIf="decisionSuccess" class="alert alert-success d-flex align-items-center mb-3">
+      <i class="ti ti-circle-check me-2 fs-20"></i><div>{{ decisionSuccess }}</div>
+    </div>
+    <div *ngIf="decisionError" class="alert alert-danger d-flex align-items-center mb-3">
+      <i class="ti ti-alert-circle me-2 fs-20"></i><div>{{ decisionError }}</div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Column -->
+      <div class="col-xl-8">
+        <!-- Document Info Card -->
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-file-description me-2 text-primary"></i>Creative Details
+            </h5>
+            <span class="badge fs-13" [class]="getStatusClass(document.status)">
+              {{ getStatusLabel(document.status) }}
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Creative Title</label>
+                <p class="fw-semibold mb-0">{{ document.title }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Product Name</label>
+                <p class="fw-medium mb-0">{{ document.productName }}</p>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Category</label>
+                <p class="mb-0">{{ document.productCategory }}</p>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Batch / SKU Ref</label>
+                <p class="mb-0 text-primary fw-medium">{{ document.batchRef }}</p>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Workflow Type</label>
+                <p class="mb-0">
+                  <span class="badge badge-soft-primary">{{ document.workflowType | titlecase }}</span>
+                </p>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Description / Change Notes</label>
+                <p class="mb-0 text-muted">{{ document.description }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Initiator</label>
+                <div class="d-flex align-items-center">
+                  <img [src]="document.initiatorAvatar || 'assets/img/profiles/avatar-02.jpg'"
+                    [alt]="document.initiator" class="rounded-circle me-2" width="32" height="32">
+                  <div>
+                    <p class="mb-0 fw-medium">{{ document.initiator }}</p>
+                    <small class="text-muted">{{ document.initiatorEmail }}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted fs-12 fw-medium mb-1">Submitted On</label>
+                <p class="mb-0">{{ document.createdAt | date:'dd MMMM yyyy, HH:mm' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Uploaded Files -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-paperclip me-2 text-primary"></i>Uploaded Files ({{ document.files.length }})
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6" *ngFor="let file of document.files">
+                <div class="file-card d-flex align-items-center p-3 border rounded">
+                  <div class="file-icon me-3">
+                    <i [class]="file.type === 'pdf' ? 'ti ti-file-type-pdf text-danger' : 'ti ti-file-type-jpg text-warning'"
+                      style="font-size: 36px;"></i>
+                  </div>
+                  <div class="flex-grow-1 overflow-hidden">
+                    <p class="mb-0 fw-medium text-truncate" [title]="file.name">{{ file.name }}</p>
+                    <small class="text-muted d-block">{{ formatFileSize(file.size) }}</small>
+                    <small class="text-muted">{{ file.uploadedAt | date:'dd MMM, HH:mm' }}</small>
+                  </div>
+                  <div class="ms-2">
+                    <button class="btn btn-icon btn-sm btn-outline-primary"
+                      (click)="openFile(file.url, file.name)"
+                      data-bs-toggle="modal" data-bs-target="#fileViewModal" title="View File">
+                      <i class="ti ti-eye"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decision Panel -->
+        <div class="card" *ngIf="canTakeAction">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-writing me-2 text-primary"></i>Your Decision
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3" *ngIf="currentStep">
+              <div class="alert alert-info py-2 fs-13 d-flex align-items-start">
+                <i class="ti ti-info-circle me-2 mt-1"></i>
+                <div>
+                  <strong>Current Step {{ currentStep.stepNumber }}:</strong>
+                  Awaiting action from
+                  <strong>{{ pendingApproverRoles }}</strong>.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Remarks <span class="text-danger">*</span> <small class="text-muted fw-normal">(Required for rejection)</small></label>
+              <textarea class="form-control" rows="4" [(ngModel)]="decisionRemarks"
+                placeholder="Enter your remarks, observations, or reason for decision..."></textarea>
+            </div>
+
+            <div class="d-flex gap-3">
+              <button class="btn btn-success btn-lg flex-fill" (click)="submitDecision('approved')"
+                [disabled]="isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!isSubmitting" class="ti ti-circle-check me-2"></i>
+                Approve
+              </button>
+              <button class="btn btn-danger btn-lg flex-fill" (click)="submitDecision('rejected')"
+                [disabled]="isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!isSubmitting" class="ti ti-circle-x me-2"></i>
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Already Decided -->
+        <div class="card" *ngIf="!canTakeAction">
+          <div class="card-body text-center py-4">
+            <i class="ti ti-lock fs-36 mb-2"
+              [class.text-success]="document.status === 'approved'"
+              [class.text-danger]="document.status === 'rejected'"
+              [class.text-muted]="document.status === 'draft'"></i>
+            <h6 class="fw-semibold">This document is <span class="text-capitalize">{{ document.status }}</span></h6>
+            <p class="text-muted mb-0 fs-13">No further action is required from you for this request.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Approval Timeline -->
+      <div class="col-xl-4">
+        <!-- Progress -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-progress me-2 text-primary"></i>Overall Progress
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <small class="text-muted">Completion</small>
+              <small class="fw-semibold">{{ getProgressPercent(document) }}%</small>
+            </div>
+            <div class="progress mb-3" style="height: 8px;">
+              <div class="progress-bar"
+                [class.bg-success]="document.status === 'approved'"
+                [class.bg-danger]="document.status === 'rejected'"
+                [style.width.%]="getProgressPercent(document)">
+              </div>
+            </div>
+            <div class="row g-2 text-center">
+              <div class="col-4">
+                <p class="mb-0 fw-semibold fs-16">{{ document.approvalSteps.length }}</p>
+                <small class="text-muted">Total Steps</small>
+              </div>
+              <div class="col-4">
+                <p class="mb-0 fw-semibold fs-16 text-success">
+                  {{ getCompletedSteps(document) }}
+                </p>
+                <small class="text-muted">Done</small>
+              </div>
+              <div class="col-4">
+                <p class="mb-0 fw-semibold fs-16 text-warning">
+                  {{ document.approvalSteps.length - getCompletedSteps(document) }}
+                </p>
+                <small class="text-muted">Remaining</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Approval Timeline -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="ti ti-timeline me-2 text-primary"></i>Approval Timeline
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="timeline-steps p-3">
+              <div *ngFor="let step of document.approvalSteps; let si = index" class="timeline-step mb-4">
+                <!-- Step Header -->
+                <div class="d-flex align-items-center mb-2">
+                  <div class="step-dot me-3"
+                    [class.dot-completed]="step.status === 'completed'"
+                    [class.dot-progress]="step.status === 'in-progress'"
+                    [class.dot-rejected]="step.status === 'rejected'"
+                    [class.dot-pending]="step.status === 'pending'">
+                    <i *ngIf="step.status === 'completed'" class="ti ti-check"></i>
+                    <i *ngIf="step.status === 'rejected'" class="ti ti-x"></i>
+                    <i *ngIf="step.status === 'in-progress'" class="ti ti-clock"></i>
+                    <span *ngIf="step.status === 'pending'">{{ si + 1 }}</span>
+                  </div>
+                  <div>
+                    <p class="mb-0 fw-semibold fs-14">Step {{ step.stepNumber }}
+                      <span class="badge badge-sm ms-1" [class]="getStatusClass(step.status)">
+                        {{ step.stepType | titlecase }}
+                      </span>
+                    </p>
+                    <small class="text-muted" *ngIf="step.completedAt">
+                      Completed {{ step.completedAt | date:'dd MMM, HH:mm' }}
+                    </small>
+                  </div>
+                </div>
+                <!-- Step Approvers -->
+                <div class="ms-4 ps-3 border-start border-2"
+                  [class.border-success]="step.status === 'completed'"
+                  [class.border-warning]="step.status === 'in-progress'"
+                  [class.border-danger]="step.status === 'rejected'"
+                  [class.border-light]="step.status === 'pending'">
+                  <div *ngFor="let approver of step.approvers" class="approver-entry mb-2">
+                    <div class="d-flex align-items-start">
+                      <img [src]="approver.avatar || 'assets/img/profiles/avatar-02.jpg'"
+                        [alt]="approver.approverName" class="rounded-circle me-2 flex-shrink-0"
+                        width="28" height="28">
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div>
+                            <p class="mb-0 fw-medium fs-13">{{ approver.approverName }}</p>
+                            <small class="text-muted">{{ approver.role }}</small>
+                          </div>
+                          <i [class]="getApproverStatusIcon(approver.status)"></i>
+                        </div>
+                        <div *ngIf="approver.remarks" class="mt-1 p-2 rounded bg-light">
+                          <small class="text-muted fst-italic">"{{ approver.remarks }}"</small>
+                        </div>
+                        <small class="text-muted" *ngIf="approver.actionAt">
+                          {{ approver.actionAt | date:'dd MMM, HH:mm' }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<!-- File View Modal -->
+<div class="modal fade" id="fileViewModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="ti ti-file me-2"></i>{{ selectedFileName }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-0" style="min-height: 500px;">
+        <iframe *ngIf="selectedFileUrl.endsWith('.pdf') || selectedFileName.endsWith('.pdf')"
+          [src]="selectedFileUrl" width="100%" height="600px" style="border:none;"></iframe>
+        <img *ngIf="!selectedFileName.endsWith('.pdf')"
+          [src]="selectedFileUrl" [alt]="selectedFileName" class="img-fluid w-100">
+      </div>
+    </div>
+  </div>
+</div>

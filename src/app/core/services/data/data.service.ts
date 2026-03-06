@@ -565,6 +565,26 @@ export class DataService {
     );
   }
 
+  // ─── Packaging Creative Approval Portal ───────────────────────────────────
+  public getPackagingDocuments(): Observable<apiResultFormat> {
+    return this.http.get<apiResultFormat>('assets/json/packaging-documents.json').pipe(
+      map((res: apiResultFormat) => res)
+    );
+  }
+
+  public getPackagingApprovers(): Observable<apiResultFormat> {
+    return this.http.get<apiResultFormat>('assets/json/packaging-approvers.json').pipe(
+      map((res: apiResultFormat) => res)
+    );
+  }
+
+  public getPackagingAuditTrail(): Observable<apiResultFormat> {
+    return this.http.get<apiResultFormat>('assets/json/packaging-audit-trail.json').pipe(
+      map((res: apiResultFormat) => res)
+    );
+  }
+  // ─── End Packaging Creative Approval Portal ───────────────────────────────
+
   public getassetCategories(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/asset-categories.json')

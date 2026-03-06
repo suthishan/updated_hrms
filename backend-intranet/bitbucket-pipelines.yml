@@ -1,0 +1,14 @@
+image: atlassian/default-image:3
+
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Deploy to VM using Podman
+          script:
+            - ssh $VM_USER@$VM_HOST "
+                cd var/www/intranet-backend &&
+                git pull origin dev &&
+                podman-compose down &&
+                podman-compose up -d --build
+              "
