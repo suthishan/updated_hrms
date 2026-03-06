@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { BreadcrumbsComponent } from '../../../../shared/breadcrumbs/breadcrumbs.component';
+import { PackagingService } from '../services/packaging.service';
 import { breadCrumbItems, PackagingFile } from '../../../../core/models/models';
 
 @Component({
@@ -24,11 +25,16 @@ export class UploadCreativeComponent implements OnInit {
   validationError = '';
   successMessage = '';
   isSubmitting = false;
+  draftRequestId: number | null = null;
 
   private readonly ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg'];
   private readonly MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  private get empUuid(): string     { return localStorage.getItem('emp_uuid') ?? ''; }
+  private get empName(): string     { return localStorage.getItem('emp_name') ?? ''; }
+  private get department(): string  { return localStorage.getItem('department') ?? 'General'; }
+
+  constructor(private fb: FormBuilder, private router: Router, private packaging: PackagingService) {}
 
   ngOnInit(): void {
     this.uploadForm = this.fb.group({
@@ -86,11 +92,13 @@ export class UploadCreativeComponent implements OnInit {
         uploadedAt: new Date().toISOString()
       };
       this.uploadedFiles.push(packagingFile);
+      this._rawFiles.push(file);
     }
   }
 
   removeFile(index: number): void {
     this.uploadedFiles.splice(index, 1);
+    this._rawFiles.splice(index, 1);
   }
 
   formatFileSize(bytes: number): string {
@@ -120,15 +128,44 @@ export class UploadCreativeComponent implements OnInit {
       return;
     }
     this.isSubmitting = true;
-    // Simulate save — in real app, call backend API
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.successMessage = 'Creative uploaded successfully! Proceed to configure approvers.';
-      setTimeout(() => {
-        this.router.navigate(['/pages/packaging/select-approvers']);
-      }, 1500);
-    }, 1200);
+
+    // Step 1: create a DRAFT record, then upload files, then navigate with the draft id
+    this.packaging.createDraft({
+      emp_uuid:       this.empUuid,
+      requester_name: this.empName,
+      department:     this.department,
+    }).subscribe({
+      next: (draft) => {
+        this.draftRequestId = draft.id;
+        // Step 2: upload the actual File objects against the new draft id
+        this.packaging.uploadFiles(draft.id, this._rawFiles).subscribe({
+          next: (saved: PackagingFile[]) => {
+            this.isSubmitting   = false;
+            this.successMessage = 'Creative uploaded successfully! Proceed to configure approvers.';
+            // Pass form values + draft id via session storage for SelectApprovers
+            const meta = {
+              ...this.uploadForm.value,
+              requestId: draft.id,
+              files: saved
+            };
+            sessionStorage.setItem('pkg_draft', JSON.stringify(meta));
+            setTimeout(() => this.router.navigate(['/pages/packaging/select-approvers']), 1200);
+          },
+          error: (err: Error) => {
+            this.isSubmitting    = false;
+            this.validationError = err.message;
+          }
+        });
+      },
+      error: (err: Error) => {
+        this.isSubmitting    = false;
+        this.validationError = err.message;
+      }
+    });
   }
+
+  /** Raw File objects parallel to uploadedFiles[] */
+  private _rawFiles: File[] = [];
 
   isFieldInvalid(field: string): boolean {
     const ctrl = this.uploadForm.get(field);

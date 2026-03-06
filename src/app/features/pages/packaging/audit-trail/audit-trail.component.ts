@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../../../core/services/data/data.service';
-import { apiResultFormat, breadCrumbItems, PackagingAuditTrail } from '../../../../core/models/models';
+import { PackagingService } from '../services/packaging.service';
+import { breadCrumbItems, PackagingAuditTrail } from '../../../../core/models/models';
 import { BreadcrumbsComponent } from '../../../../shared/breadcrumbs/breadcrumbs.component';
 
 @Component({
@@ -37,18 +37,25 @@ export class AuditTrailComponent implements OnInit {
     { label: 'Rejected', value: 'rejected' }
   ];
 
-  constructor(private data: DataService) {}
+  isLoading = true;
+  errorMessage = '';
+
+  constructor(private packaging: PackagingService) {}
 
   ngOnInit(): void {
-    this.data.getPackagingAuditTrail().subscribe((res: apiResultFormat) => {
-      this.allLogs = (res.data as unknown as PackagingAuditTrail[]).map((log, i) => ({
-        ...log,
-        sNo: i + 1
-      }));
-      const docMap = new Map<string, string>();
-      this.allLogs.forEach(l => docMap.set(l.documentId, l.documentTitle));
-      this.uniqueDocuments = Array.from(docMap.entries()).map(([id, title]) => ({ id, title }));
-      this.applyFilter();
+    this.packaging.getAuditTrail().subscribe({
+      next: (logs: PackagingAuditTrail[]) => {
+        this.allLogs = logs;
+        const docMap = new Map<string, string>();
+        logs.forEach(l => docMap.set(l.documentId, l.documentTitle));
+        this.uniqueDocuments = Array.from(docMap.entries()).map(([id, title]) => ({ id, title }));
+        this.isLoading = false;
+        this.applyFilter();
+      },
+      error: (err: Error) => {
+        this.errorMessage = err.message;
+        this.isLoading    = false;
+      }
     });
   }
 

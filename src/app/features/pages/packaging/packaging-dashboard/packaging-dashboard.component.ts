@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DataService } from '../../../../core/services/data/data.service';
-import { apiResultFormat, PackagingDocument, breadCrumbItems } from '../../../../core/models/models';
+import { PackagingService, DashboardStats } from '../services/packaging.service';
+import { PackagingDocument, breadCrumbItems } from '../../../../core/models/models';
 import { BreadcrumbsComponent } from '../../../../shared/breadcrumbs/breadcrumbs.component';
 
 @Component({
@@ -25,18 +25,39 @@ export class PackagingDashboardComponent implements OnInit {
   rejectedDocs = 0;
   inReviewDocs = 0;
   recentDocuments: PackagingDocument[] = [];
+  isLoading = true;
+  errorMessage = '';
 
-  constructor(private data: DataService) {}
+  /** Read from localStorage — set by your AuthService on login */
+  private get empUuid(): string { return localStorage.getItem('emp_uuid') ?? ''; }
+  private get empRole(): 'REQUESTER' | 'APPROVER' | 'ADMIN' {
+    const r = localStorage.getItem('emp_role') ?? 'REQUESTER';
+    return r as 'REQUESTER' | 'APPROVER' | 'ADMIN';
+  }
+
+  constructor(private packaging: PackagingService) {}
 
   ngOnInit(): void {
-    this.data.getPackagingDocuments().subscribe((res: apiResultFormat) => {
-      this.documents = res.data as unknown as PackagingDocument[];
-      this.totalDocs = res.totalData;
-      this.pendingDocs = this.documents.filter(d => d.status === 'pending' || d.status === 'draft').length;
-      this.approvedDocs = this.documents.filter(d => d.status === 'approved').length;
-      this.rejectedDocs = this.documents.filter(d => d.status === 'rejected').length;
-      this.inReviewDocs = this.documents.filter(d => d.status === 'in-review').length;
-      this.recentDocuments = this.documents.slice(0, 5);
+    this.packaging.getDashboardStats(this.empUuid, this.empRole).subscribe({
+      next: (stats: DashboardStats) => {
+        this.totalDocs    = stats.totalRequests;
+        this.pendingDocs  = stats.pending + stats.draft;
+        this.approvedDocs = stats.approved;
+        this.rejectedDocs = stats.rejected;
+        this.inReviewDocs = stats.inReview;
+      },
+      error: () => {}
+    });
+    this.packaging.getRequests(this.empUuid, this.empRole, 10).subscribe({
+      next: (docs: PackagingDocument[]) => {
+        this.documents       = docs;
+        this.recentDocuments = docs.slice(0, 5);
+        this.isLoading       = false;
+      },
+      error: (err: Error) => {
+        this.errorMessage = err.message;
+        this.isLoading    = false;
+      }
     });
   }
 

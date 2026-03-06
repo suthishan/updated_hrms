@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../../../core/services/data/data.service';
+import { PackagingService, SubmitPayload } from '../services/packaging.service';
 import {
-  apiResultFormat,
   breadCrumbItems,
   PackagingApprover,
   PackagingWorkflowStep,
@@ -38,11 +37,19 @@ export class SelectApproversComponent implements OnInit {
   stepType: 'sequential' | 'parallel' = 'sequential';
   editingStepIndex = -1;
 
-  constructor(private data: DataService, private router: Router) {}
+  draftMeta: { requestId?: number; title?: string; productName?: string; productCategory?: string; batchRef?: string; description?: string } = {};
+
+  constructor(private packaging: PackagingService, private router: Router) {}
 
   ngOnInit(): void {
-    this.data.getPackagingApprovers().subscribe((res: apiResultFormat) => {
-      this.approvers = res.data as unknown as PackagingApprover[];
+    // Read draft metadata stored by UploadCreativeComponent
+    const raw = sessionStorage.getItem('pkg_draft');
+    if (raw) {
+      try { this.draftMeta = JSON.parse(raw); } catch { /* ignore */ }
+    }
+    this.packaging.getApprovers().subscribe({
+      next: (approvers: PackagingApprover[]) => { this.approvers = approvers; },
+      error: () => {}
     });
     this.addStep();
   }
@@ -115,12 +122,44 @@ export class SelectApproversComponent implements OnInit {
       this.errorMessage = 'Each approval step must have at least one approver assigned.';
       return;
     }
+    if (!this.draftMeta.requestId) {
+      this.errorMessage = 'Draft request not found. Please go back and re-upload the creative.';
+      return;
+    }
     this.isSubmitting = true;
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.successMessage = 'Approval workflow configured successfully! Document sent for review.';
-      setTimeout(() => this.router.navigate(['/pages/packaging/inbox']), 1500);
-    }, 1200);
+
+    const payload: SubmitPayload = {
+      requestId:       this.draftMeta.requestId,
+      title:           this.draftMeta.title           ?? '',
+      productName:     this.draftMeta.productName     ?? '',
+      productCategory: this.draftMeta.productCategory ?? '',
+      batchRef:        this.draftMeta.batchRef        ?? '',
+      description:     this.draftMeta.description     ?? '',
+      workflowType:    this.workflowType,
+      workflowSteps:   this.workflowSteps.map(s => ({
+        stepNumber: s.stepNumber,
+        stepType:   s.stepType,
+        approvers:  s.selectedApprovers.map(a => ({
+          emp_uuid: a.id,
+          name:     a.name,
+          email:    a.email,
+          role:     a.role,
+        })),
+      })),
+    };
+
+    this.packaging.submitRequest(payload).subscribe({
+      next: () => {
+        this.isSubmitting   = false;
+        this.successMessage = 'Approval workflow configured successfully! Document sent for review.';
+        sessionStorage.removeItem('pkg_draft');
+        setTimeout(() => this.router.navigate(['/pages/packaging/inbox']), 1500);
+      },
+      error: (err: Error) => {
+        this.isSubmitting = false;
+        this.errorMessage = err.message;
+      }
+    });
   }
 
   getLocationBadgeClass(location: string): string {

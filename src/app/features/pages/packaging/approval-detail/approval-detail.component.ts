@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../../../core/services/data/data.service';
+import { PackagingService } from '../services/packaging.service';
 import {
-  apiResultFormat, breadCrumbItems, PackagingDocument,
+  breadCrumbItems, PackagingDocument,
   PackagingApprovalStep, PackagingStepApprover
 } from '../../../../core/models/models';
 import { BreadcrumbsComponent } from '../../../../shared/breadcrumbs/breadcrumbs.component';
@@ -37,18 +37,27 @@ export class ApprovalDetailComponent implements OnInit {
   selectedFileUrl = '';
   selectedFileName = '';
 
+  private get empRole(): 'REQUESTER' | 'APPROVER' | 'ADMIN' {
+    return (localStorage.getItem('emp_role') ?? 'APPROVER') as 'REQUESTER' | 'APPROVER' | 'ADMIN';
+  }
+
   constructor(
-    private data: DataService,
+    private packaging: PackagingService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.docId = this.route.snapshot.paramMap.get('id') || '';
-    this.data.getPackagingDocuments().subscribe((res: apiResultFormat) => {
-      const docs = res.data as unknown as PackagingDocument[];
-      this.document = docs.find(d => d.id === this.docId) || null;
-      this.isLoading = false;
+    this.packaging.getRequestById(this.docId).subscribe({
+      next: (doc: PackagingDocument) => {
+        this.document  = doc;
+        this.isLoading = false;
+      },
+      error: (err: Error) => {
+        this.decisionError = err.message;
+        this.isLoading     = false;
+      }
     });
   }
 
@@ -76,16 +85,31 @@ export class ApprovalDetailComponent implements OnInit {
       this.decisionError = 'Please provide a reason for rejection.';
       return;
     }
+    if (!this.document) return;
+    const level = (this.document.currentStepIndex ?? 0) + 1;
     this.isSubmitting = true;
-    setTimeout(() => {
-      this.isSubmitting = false;
-      if (action === 'approved') {
-        this.decisionSuccess = 'Document approved successfully! Moving to next approval step.';
-      } else {
-        this.decisionSuccess = 'Document rejected. Initiator has been notified with your remarks.';
+    this.packaging.approve({
+      request_id: Number(this.document.id),
+      level,
+      decision:   action === 'approved' ? 'APPROVED' : 'REJECTED',
+      remarks:    this.decisionRemarks || undefined,
+    }).subscribe({
+      next: (result) => {
+        this.isSubmitting = false;
+        if (result.success) {
+          this.decisionSuccess = action === 'approved'
+            ? 'Document approved successfully! Moving to next approval step.'
+            : 'Document rejected. Initiator has been notified with your remarks.';
+          setTimeout(() => this.router.navigate(['/pages/packaging/inbox']), 2000);
+        } else {
+          this.decisionError = result.message;
+        }
+      },
+      error: (err: Error) => {
+        this.isSubmitting  = false;
+        this.decisionError = err.message;
       }
-      setTimeout(() => this.router.navigate(['/pages/packaging/inbox']), 2000);
-    }, 1200);
+    });
   }
 
   getStatusClass(status: string): string {

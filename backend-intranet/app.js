@@ -90,7 +90,8 @@ app.use('/api/master', require('./routes/master.routes'));
 app.use('/api/requests', authenticate,require('./routes/request.routes'));
 app.use('/api/auth', basicAuth, require('./routes/auth.routes'));
 app.use('/api/policy', require('./routes/policy.routes'));
-app.use('/api/audit',  require('./routes/car.audit.routes'));
+app.use('/api/audit',     require('./routes/car.audit.routes'));
+app.use('/api/packaging', require('./routes/packaging.routes'));
 
 
 app.use('/api/budgets', require('./routes/budgetRoutes'));
